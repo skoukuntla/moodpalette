@@ -9,7 +9,7 @@ export default function Login() {
           <div className="loginLeft">
             <h3 className="loginLogo">Mood Palette</h3>
             <span className="loginDesc">
-              Track your mood and write diary entries for a personalized song of the day!
+            Track your mood, write diary entries, customize your Moo Pal, and get a personalized song everyday!
             </span>
           </div>
           <div className="loginRight">
