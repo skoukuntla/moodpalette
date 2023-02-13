@@ -19,7 +19,12 @@ const UserSchema = new mongoose.Schema({
     age:{
         type:Number,
         required:true
-    }
+    },
+
+    mooPal: {
+        type: String,
+        default: "",
+      },
 
 
 },
