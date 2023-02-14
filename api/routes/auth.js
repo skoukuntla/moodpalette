@@ -23,6 +23,7 @@ const bcrypt = require("bcrypt");
 //Register
 router.post("/register", async (req, res) => {
 
+
     try {
         //encrypting the password that user entered
         const salt = await bcrypt.genSalt(10);
@@ -35,6 +36,8 @@ router.post("/register", async (req, res) => {
             password: hashedPassword,
             age: req.body.age
         }); 
+
+        console.log("newUser", newUser)
 
         //save user and respond
         const user = await newUser.save(); //insert into database
