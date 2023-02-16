@@ -13,7 +13,7 @@ export default function Login() {
   const username = useRef(); // useRef will auto update this value with whatever user types in form immediately
   const password = useRef(); // just say ref={varName} with associated form input
 
-  const {user, isFetching,error, dispatch} = useContext(AuthContext) // use the auth context to get this info
+  const {user, isFetching, dispatch} = useContext(AuthContext) // use the auth context to get this info
 
   // method for when user clicks login button
   const handleLoginSubmit = (e) => {
