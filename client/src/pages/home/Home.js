@@ -2,6 +2,8 @@
 import { React, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import "./home.css"
+import Calendar from "./calendar/calendar"
+import NavBar from "../navbar/index"
 export default function Home() {
 
     
@@ -10,7 +12,8 @@ export default function Home() {
 
     return (
         <div>
-            Welcome {user.username}!
+            {<NavBar></NavBar>}
+            { <Calendar></Calendar> }
         </div>
     )
 }
