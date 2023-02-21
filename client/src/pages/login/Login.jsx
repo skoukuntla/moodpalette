@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 import { CircularProgress } from "@material-ui/core";
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
 
@@ -15,6 +16,7 @@ export default function Login() {
 
   const {user, isFetching, dispatch} = useContext(AuthContext) // use the auth context to get this info
 
+  const navigate = useNavigate();
   // method for when user clicks login button
   const handleLoginSubmit = (e) => {
     e.preventDefault(); // stops page from refreshing on button click
@@ -29,6 +31,9 @@ export default function Login() {
     );
   }
 
+  const registerRedirect = () => {
+    navigate('/register');
+	};
 
     console.log("user", user);
 
@@ -54,7 +59,7 @@ export default function Login() {
               )}
             </button>
               <span className="loginForgot">Forgot Password?</span>
-              <button className="loginRegisterButton">
+              <button className="loginRegisterButton" onClick={registerRedirect}>
               {isFetching ? (
                 <CircularProgress size="20px" />
               ) : (
