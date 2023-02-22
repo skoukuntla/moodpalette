@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
 const AccessibilityContainer = styled.div`
   display: flex;
@@ -30,9 +33,19 @@ const LogoutButton = styled.button`
 `;
 
 export default function Accessibility(props) {
+  const navigate = useNavigate();
+  const {user, dispatch} = useContext(AuthContext);
+
+    const logoutRedirect = () => {
+      console.log("in here")
+      // user.authenticated=false;
+      dispatch({type:"LOGOUT", payload: user})
+      navigate('/login');
+    };
+
   return (
     <AccessibilityContainer>
-      <LogoutButton>Logout</LogoutButton>
+      <LogoutButton onClick={logoutRedirect}>Logout</LogoutButton>
     </AccessibilityContainer>
   );
 }

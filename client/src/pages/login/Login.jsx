@@ -4,7 +4,6 @@ import "./login.css"
 import { loginCall } from "../../attemptLogin";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-
 import { CircularProgress } from "@material-ui/core";
 import { useNavigate } from 'react-router-dom';
 
@@ -17,8 +16,10 @@ export default function Login() {
   const {user, isFetching, dispatch} = useContext(AuthContext) // use the auth context to get this info
 
   const navigate = useNavigate();
+
+  //console.log(dispatch)
   // method for when user clicks login button
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async e => {
     e.preventDefault(); // stops page from refreshing on button click
     //username.current.value holds whatever user submitted as username
     //password.current.value holds whatever user submitted as password
@@ -26,9 +27,10 @@ export default function Login() {
     console.log("password", password.current.value);
 
     loginCall(
-      { username: username.current.value, password: password.current.value },
-      dispatch
+       { username: username.current.value, password: password.current.value },
+       dispatch
     );
+
   }
 
   const registerRedirect = () => {

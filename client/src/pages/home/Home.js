@@ -9,7 +9,7 @@ export default function Home() {
     
     
     const { user } = useContext(AuthContext);
-
+    console.log(user);
     return (
         <div>
             {<NavBar></NavBar>}

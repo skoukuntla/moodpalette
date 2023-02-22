@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const loginCall = async (userCredential, dispatch) => {
+  console.log("entered the login_start")
   dispatch({ type: "LOGIN_START" });  
   try {
     const res = await axios.post("/auth/login", userCredential);  // call login api call

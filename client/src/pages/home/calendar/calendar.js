@@ -6,8 +6,12 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './calendar.css';
 import {Slider } from '@mui/material';
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
 
 function App() {
+  // use the auth context to get this user
+  const {user} = useContext(AuthContext)
  //to trak selected date
  const [date, setDate] = useState(new Date())
  //to specify popups for specific dates
@@ -38,7 +42,7 @@ const marks = [
 
 return (
  <div className="app">
-   <h1 className="header"> Mood Palette Calendar !! </h1>
+   <h1 className="header"> {user.username}'s Calendar !! </h1>
    <div className="calendar-container">
      <Calendar 
         onChange={setDate} 
