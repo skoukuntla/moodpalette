@@ -28,6 +28,14 @@ const LogoText = styled.h2`
   font-weight: 500;
 `;
 
+const PointsText = styled.h2`
+  font-size: 20px;
+  margin: 0;
+  margin-left: 4px;
+  color: #222;
+  font-weight: 500;
+`;
+
 export default function Logo(props) {
   return (
     <LogoWrapper>
@@ -36,7 +44,10 @@ export default function Logo(props) {
           <img src={MooPalImg} alt="Cow Logo" />
         </LogoButton>
       </Link>
-      <LogoText>Mood Palette</LogoText>
+      <div>
+        <LogoText>Mood Palette</LogoText>
+        <PointsText>Moo Lahs: 0</PointsText>
+      </div>
     </LogoWrapper>
   );
 }
