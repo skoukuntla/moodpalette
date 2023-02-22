@@ -16,7 +16,6 @@ const NavBarContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 0 1.5em;
-    margin-top: 80px;
     box-sizing: border-box;
 `;
 
@@ -114,7 +113,7 @@ export default function NavBar(props) {
                     <LinkItem><Link href="/calendar-view">Calendar View</Link></LinkItem>
                     <LinkItem><Link href="#">Habit Tracker</Link></LinkItem>
                     <LinkItem><Link href="#">Moo Pal Shop</Link></LinkItem>
-                    <LinkItem><Link href="/profile">Account</Link></LinkItem>
+                    <LinkItem><Link href="#">My Profile</Link></LinkItem>
                     <Accessibility />
                 </LinksWrapper>}
         </MobileNavContainer>}
