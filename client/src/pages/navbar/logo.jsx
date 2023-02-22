@@ -1,15 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import MooPalImg from "./MooPal.jpeg";
+import { Link } from 'react-router-dom';
 
 const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const LogoImg = styled.div`
+const LogoButton = styled.button`
   width: 90px;
   height: 90px;
+  border: none;
+  background: none;
 
   img {
     width: 100%;
@@ -28,10 +31,12 @@ const LogoText = styled.h2`
 export default function Logo(props) {
   return (
     <LogoWrapper>
-      <LogoImg>
-        <img src={MooPalImg} alt="Moo Pal Logo" />
-      </LogoImg>
-      <LogoText>Moo Pal</LogoText>
+      <Link to="/home">
+        <LogoButton>
+          <img src={MooPalImg} alt="Cow Logo" />
+        </LogoButton>
+      </Link>
+      <LogoText>Mood Palette</LogoText>
     </LogoWrapper>
   );
 }
