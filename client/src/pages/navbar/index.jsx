@@ -16,7 +16,6 @@ const NavBarContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 0 1.5em;
-    margin-top: 80px;
     box-sizing: border-box;
 `;
 
