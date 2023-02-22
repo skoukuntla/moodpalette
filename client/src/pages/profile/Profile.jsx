@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import "./profile.css";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
@@ -6,27 +5,65 @@ import NavBar from "../navbar/index";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useRef } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  const { user } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
+  console.log(user)
 
   const username = useRef();
   const email = useRef();
   const age = useRef();
 
+  const navigate = useNavigate();
+
   const handleEdit = async (e) => {
     e.preventDefault();
-    const userInput = {
-      username: username.current.value,
-      email: email.current.value,
-      age: age.current.value,
-    };
-    console.log("user data", userInput);
+     console.log("username entered", username.current.value)
+	if (username.current.value.length !== 0) {
+		try {
+			axios.put("/users/" + user._id, {
+				username: username.current.value
+			});
+		} catch (err) {
+			console.log("error with editing username");
+		}
+	}
+
+	if (email.current.value.length !== 0) {
+		try {
+			axios.put("/users/" + user._id, { email: email.current.value });
+		} catch (err) {
+			console.log("error with editing email");
+		}
+	}
+
+	if (age.current.value.length !== 0) {
+		try {
+			axios.put("/users/" + user._id, { age: age.current.value });
+		} catch (err) {
+			console.log("error with editing age");
+		}
+	}
+
+	// when user updates their credentials, they must login again
+	dispatch({type:"LOGOUT", payload: user})
+	navigate('/login');
+
   };
 
   const handleDelete = async (e) => {
-    e.preventDefault();
-    console.log("clicked delete");
+	e.preventDefault();
+	try {
+		const res = await axios.delete(`/users/${user._id}`);
+		console.log(res)
+		
+		dispatch({type:"LOGOUT", payload: user})
+		navigate("/register");
+	} catch (err) {
+		console.log("error with deleting");
+	}
   };
 
   let editButton = (
@@ -58,6 +95,7 @@ export default function Profile() {
         <div className="entireProfile">
           <img
             className="profileUserImg"
+			alt="mooPal"
             src="https://img.freepik.com/free-vector/cute-cow-sitting-eating-grass-cartoon-vector-icon-illustration-animal-nature-icon-isolated-flat_138676-4780.jpg?w=2000"
           />
           <h4 className="profileInfoName">{user.username}</h4>
