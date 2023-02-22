@@ -36,11 +36,11 @@
     margin:10px;
 }
 
-.blueBtnCancel {
+.greenBtnCancel {
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: cornflowerblue;
+    background-color: darkseagreen;
     color: white;
     font-size: 20px;
     font-weight: 500;
@@ -48,11 +48,11 @@
 
 }
 
-.greenBtnFinal{
+.blueBtnFinal{
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: darkseagreen;
+    background-color: cornflowerblue;
     color: white;
     font-size: 20px;
     font-weight: 500;

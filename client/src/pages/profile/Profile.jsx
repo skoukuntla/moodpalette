@@ -44,7 +44,7 @@ export default function Profile() {
   let deleteFinal = (
     <button
       variant="contained"
-      className="greenBtnFinal"
+      className="blueBtnFinal"
       onClick={handleDelete}
     >
       {" "}
@@ -95,7 +95,7 @@ export default function Profile() {
                           className="loginRegisterButton"
                           onClick={() => close()}
                         >
-                          Close modal
+                          Cancel
                         </button>
                       </form>
                     </div>
@@ -122,7 +122,7 @@ export default function Profile() {
                       {deleteFinal}{" "}
                       <button
                         variant="contained"
-                        className="blueBtnCancel"
+                        className="greenBtnCancel"
                         onClick={() => close()}
                       >
                         Cancel
