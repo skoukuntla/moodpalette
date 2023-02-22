@@ -54,7 +54,7 @@ export default function Register() {
         </div>
         <div className="registerRight">
           <form className="registerBox" onSubmit={handleRegisterClick}>
-            <input placeholder="Username"  ref = {username} className="registerInput" />
+            <input placeholder="Username" max={16} ref = {username} className="registerInput" />
             <input placeholder="Email"  ref={email}c type="email" className="registerInput" />
             <input placeholder="Password"  ref={password1} type="password" className="registerInput" />
             <input placeholder="Retype Password"  ref={password2} type="password" className="registerInput" />

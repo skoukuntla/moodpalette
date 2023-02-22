@@ -2,6 +2,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Calendar from "./pages/calendar/calendarView";
+import Profile from "./pages/profile/Profile";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
@@ -21,8 +22,7 @@ function App() {
       <Route path="/login" element = {user ? <Navigate to="/" /> : <Login />}/> {/* can't login if a;ready logged in */}d
       <Route path="/home" element={<Home />} />
       <Route path="/calendar-view" element={<Calendar />} />
-
-      {/*<Route path="/profile/:username" element = {<Profile/>} />*/}
+      <Route path="/profile" element = {<Profile/>} />
 
 			</Routes>
 		</Router>
