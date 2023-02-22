@@ -56,12 +56,13 @@ export default function Register() {
 			document.getElementById("passError").innerHTML = "Please enter password!";
 			console.log("no password written");
 			setValidP(0);
-		} else if (
+		} else if ( //currently the password checker does NOT need an uppercase letter (will have to figure the regex later)
 			!(
 				password.current.value.length >= 8 &&
-				password.current.value.length <= 16 &&
-				(password.current.value.match(/(?=.*[^a-zA-Z0-9])/) &&
-					!/\s/g.test(password.current.value))
+				password.current.value.length <= 15 &&
+				(password.current.value.match(/^(?=.*[A-Z])/ && /(?=.*[^a-z])/ && /(?=.*\d)/ && /(?=.*[@$!%*#?&])/) &&
+				
+					!/\s/g.test(password.current.value)) //this is checking for spaces in the password
 			)
 		) {
 			document.getElementById("passError").innerHTML =
@@ -98,7 +99,7 @@ export default function Register() {
 		} else if (
 			!(
 				username.current.value.length <= 16 &&
-				!/\s/g.test(username.current.value)
+				!/\s/g.test(username.current.value) //checking for spaces
 			)
 		) {
 			document.getElementById("usernameError").innerHTML =
@@ -181,8 +182,8 @@ export default function Register() {
             <input placeholder="Password"  ref={password} type="password" className="registerInput" onBlur={validatePassword}/>
             <div id="passError" style={{ color: "red" }}></div>
 						<small style={{ textAlign: "center", color: "darkseagreen" }}>
-							Your password must be 8-15 characters long and contain the following: one uppercase letter, one lowercase letter,
-              one number, one special character, and must not contain spaces.
+							Your password must be 8-15 characters long and contain the following: one uppercase letter, one lowercase letter, 
+							one special character (not including numbers), and must not contain spaces.
 						</small>
 
             {/* CONFIRMATION PASSWORD INFO AND ERROR */}
