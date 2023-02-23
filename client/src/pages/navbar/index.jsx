@@ -17,6 +17,7 @@ const NavBarContainer = styled.div`
     align-items: center;
     padding: 0 1.5em;
     box-sizing: border-box;
+    margin-top: 50px;
 `;
 
 const LeftSection = styled.div`
