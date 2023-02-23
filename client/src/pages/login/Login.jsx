@@ -26,11 +26,11 @@ export default function Login() {
     console.log("username", username.current.value);
     console.log("password", password.current.value);
 
-    loginCall(
-       { username: username.current.value, password: password.current.value },
-       dispatch, totalLogins
-    );
-
+    loginCall({ username: username.current.value, password: password.current.value }, dispatch, totalLogins)
+      .then(function(data) {
+        console.log(data);
+        document.getElementById("loginError").innerHTML = data;
+      })   
   }
 
   const registerRedirect = () => {
@@ -60,6 +60,7 @@ export default function Login() {
                 "Log In"
               )}
             </button>
+            <div id="loginError" style={{ color: "red" }}></div>
               <span className="loginForgot">Forgot Password?</span>
               <button className="loginRegisterButton" onClick={registerRedirect}>
               {isFetching ? (

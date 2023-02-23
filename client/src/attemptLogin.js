@@ -23,6 +23,20 @@ export const loginCall = async (userCredential, dispatch, totalLogins) => {
     }
     else {
       console.log("In lockout period, can't login yet");
+
+      // notify user of time left in lockout
+      var timeLeft = 120000 - (now - lockedAt);
+      var min = Math.floor(timeLeft / 60000);
+      var sec = ((timeLeft % 60000) / 1000).toFixed(0);
+      if (min === 0) {
+        return `You are still locked out and cannot try logging in for another ${sec} seconds.`;
+      }
+      else if (sec == 1) {
+        return `You are still locked out and cannot try logging in for another ${min} minute and ${sec} second.`;
+      }
+      else {
+        return `You are still locked out and cannot try logging in for another ${min} minute and ${sec} seconds.`;
+      }
     }
   }
 
@@ -42,5 +56,8 @@ export const loginCall = async (userCredential, dispatch, totalLogins) => {
     lockedAt = new Date(); // keep track of when lockout period started
     isLockedOut = true;
     console.log("Lockout period has started at", lockedAt);
+    return "You have been locked out for having 3 unsuccessful login attempts. You must wait for 2 minutes before trying to login again."
   }
+
+  return "";
 };
