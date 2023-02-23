@@ -13,7 +13,7 @@ export default function Login() {
   const username = useRef(); // useRef will auto update this value with whatever user types in form immediately
   const password = useRef(); // just say ref={varName} with associated form input
 
-  const {user, isFetching, dispatch} = useContext(AuthContext) // use the auth context to get this info
+  const {user, isFetching, totalLogins, dispatch} = useContext(AuthContext) // use the auth context to get this info
 
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ export default function Login() {
 
     loginCall(
        { username: username.current.value, password: password.current.value },
-       dispatch
+       dispatch, totalLogins
     );
 
   }
