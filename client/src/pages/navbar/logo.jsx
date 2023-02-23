@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import MooPalImg from "./MooPal.jpeg";
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
 const LogoWrapper = styled.div`
   display: flex;
@@ -37,6 +39,7 @@ const PointsText = styled.h2`
 `;
 
 export default function Logo(props) {
+  const { user } = useContext(AuthContext);
   return (
     <LogoWrapper>
       <Link to="/home">
@@ -46,7 +49,7 @@ export default function Logo(props) {
       </Link>
       <div>
         <LogoText>Mood Palette</LogoText>
-        <PointsText>Moo Lahs: 0</PointsText>
+        <PointsText>Moo Lahs: {user.mooLahs}</PointsText>
       </div>
     </LogoWrapper>
   );
