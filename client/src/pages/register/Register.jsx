@@ -60,9 +60,12 @@ export default function Register() {
 			!(
 				password.current.value.length >= 8 &&
 				password.current.value.length <= 15 &&
-				(password.current.value.match(/^(?=.*[A-Z])/ && /(?=.*[^a-z])/ && /(?=.*\d)/ && /(?=.*[@$!%*#?&])/) &&
+				(password.current.value.match(/^(?=.*[A-Z])/)) &&
+				(password.current.value.match(/^(?=.*[a-z])/)) &&
+				(password.current.value.match(/(?=.*\d)/)) &&
+				(password.current.value.match(/(?=.*[@$!%*#?&])/)) &&
 				
-					!/\s/g.test(password.current.value)) //this is checking for spaces in the password
+				!/\s/g.test(password.current.value) //this is checking for spaces in the password
 			)
 		) {
 			document.getElementById("passError").innerHTML =
