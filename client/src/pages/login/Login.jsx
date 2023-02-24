@@ -82,7 +82,7 @@ export default function Login() {
         loginCall({ username: username.current.value, password: password.current.value }, dispatch, totalLogins)
         .then(function(data) {
           console.log(data);
-          document.getElementById("loginError").innerHTML = data;
+          document.getElementById("lockoutError").innerHTML = data;
         })     
     } else {
 			document.getElementById("overallError").innerHTML =
@@ -143,7 +143,7 @@ export default function Login() {
             <button className="loginButton" type="submit" disabled={isFetching}>
               {isFetching ? <CircularProgress size="20px" /> : "Log In"}
             </button>
-            <div id="loginError" style={{ color: "red" }}></div>
+            <div id="lockoutError" style={{ color: "red" }}></div>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton" onClick={registerRedirect}>
               {isFetching ? (
