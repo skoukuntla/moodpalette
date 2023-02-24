@@ -48,11 +48,22 @@
     border: 1px solid gray;
     font-size: 18px;
     padding-left: 20px;
+    margin: 5px;
+
 }
+
+/* [type="checkbox"]
+{
+    vertical-align:middle;
+} */
 
 .registerInput:focus{
     outline: none;
 }
+
+/* .trial{
+  word-wrap:break-word
+} */
 
 .registerButton{
     height: 50px;
@@ -63,6 +74,7 @@
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .loginRegisterButton{
@@ -76,4 +88,5 @@
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
+    margin-top: 10px;
 }

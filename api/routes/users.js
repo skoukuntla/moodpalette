@@ -7,7 +7,8 @@ const bcrypt = require("bcrypt");
 
 //update user
 router.put("/:userId", async (req, res) => {
-    if (req.body.userId === req.params.userId) {
+  console.log(req.body.userId, req.params.userId )
+   
       if (req.body.password) {
         try {
           const salt = await bcrypt.genSalt(10);
@@ -24,23 +25,18 @@ router.put("/:userId", async (req, res) => {
       } catch (err) {
         return res.status(500).json(err);
       }
-    } else {
-      return res.status(403).json("You can update only your account!");
-    }
+    
   });
   
   //delete user
   router.delete("/:userId", async (req, res) => {
-    if (req.body.userId === req.params.userId) {
       try {
         await User.findByIdAndDelete(req.params.userId);
         res.status(200).json("Account has been deleted");
       } catch (err) {
         return res.status(500).json(err);
       }
-    } else {
-      return res.status(403).json("You can delete only your account!");
-    }
+    
   });
   
   //get a user

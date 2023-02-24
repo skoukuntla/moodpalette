@@ -48,6 +48,9 @@ export const loginCall = async (userCredential, dispatch, totalLogins) => {
       lastLockout = 0;
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err }); // if not valid, return error
+      document.getElementById("overallError").innerHTML = 
+      "Invalid credentials!";
+      console.log("Invalid credentials!")
     }
   }
 
