@@ -211,14 +211,14 @@ export default function Profile() {
                 <input className="from_email" type="email" name="from_email" />
                 <br/>
                 <label>Time</label>
-                <input className="from_time" type="time" name="from_time" />
+                <input type="time" className="from_time" name="from_time" />
                 <br/>
                 <label>Subscribe</label>
                 <input  type="checkbox" name="from_checkbox"/>
                 <br/>
                 <input className="submit" type="submit" value="Send" />
                 <br/>
-                <button className="notify" onClick={notify}>Notify!</button>
+                <button className="notify" value="Notify!" onClick={notify}></button>
                 </form>
 
             </div>
