@@ -12,7 +12,7 @@ export default function Login() {
   const username = useRef(); // useRef will auto update this value with whatever user types in form immediately
   const password = useRef(); // just say ref={varName} with associated form input
 
-  const { user, isFetching, dispatch } = useContext(AuthContext); // use the auth context to get this info
+  const {user, isFetching, totalLogins, dispatch} = useContext(AuthContext) // use the auth context to get this info
 
   const navigate = useNavigate();
 
@@ -79,11 +79,11 @@ export default function Login() {
     console.log(validU + validP);
     if (validU + validP === 2) {
         console.log("trying to validate user")
-        loginCall(
-          { username: username.current.value, password: password.current.value },
-          dispatch
-        );
-      
+        loginCall({ username: username.current.value, password: password.current.value }, dispatch, totalLogins)
+        .then(function(data) {
+          console.log(data);
+          document.getElementById("loginError").innerHTML = data;
+        })     
     } else {
 			document.getElementById("overallError").innerHTML =
 				"Please fill all fields!";
@@ -143,6 +143,7 @@ export default function Login() {
             <button className="loginButton" type="submit" disabled={isFetching}>
               {isFetching ? <CircularProgress size="20px" /> : "Log In"}
             </button>
+            <div id="loginError" style={{ color: "red" }}></div>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton" onClick={registerRedirect}>
               {isFetching ? (

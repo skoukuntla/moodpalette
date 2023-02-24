@@ -7,6 +7,7 @@ const AuthReducer = (state, action) => { // depending on action,, reducer will u
           isFetching: true,
           error: false,
           authenticated: false,
+          totalLogins: state.totalLogins
         };
       case "LOGIN_SUCCESS":
         return {
@@ -14,6 +15,7 @@ const AuthReducer = (state, action) => { // depending on action,, reducer will u
           isFetching: false,
           error: false,
           authenticated: true,
+          totalLogins: 1
         };
       case "LOGIN_FAILURE":
         return {
@@ -21,6 +23,7 @@ const AuthReducer = (state, action) => { // depending on action,, reducer will u
           isFetching: false,
           error: true,
           authenticated: false,
+          totalLogins: state.totalLogins + 1
         };
 
         case "LOGOUT":
@@ -28,8 +31,8 @@ const AuthReducer = (state, action) => { // depending on action,, reducer will u
             user: null,
             isFetching: false,
             error: false,
-            authenticated:false
-                  
+            authenticated:false,
+            totalLogins: 1
           };
   
       default:

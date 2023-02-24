@@ -26,6 +26,11 @@ const UserSchema = new mongoose.Schema({
         default: "",
     },
 
+    mooLahs: {
+        type:Number,
+        default: 0
+      },
+
     explicit: {
         type: Boolean,
         default: "",
