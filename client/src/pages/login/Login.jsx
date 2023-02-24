@@ -16,6 +16,46 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  //BELOW ARE TWO FUNCTIONS THAT WILL HELP US TO VALIDATE THE EMAIL/PASSWORD THAT A USER LOGINS WITH
+  const [validU, setValidU] = useState(0);
+	const [validP, setValidP] = useState(0);
+
+	function validateUsername() {
+		if (username.current.value.length === 0) {
+			document.getElementById("usernameError").innerHTML = "Please enter a username!";
+			console.log("username length is 0");
+			setValidU(0);
+		}  else {
+			document.getElementById("usernameError").innerHTML = "";
+			setValidU(1);
+		}
+	}
+
+	function validatePassword() {
+		// add regex check
+		// var re = ^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$;
+		if (password.current.value.length === 0) {
+			document.getElementById("passError").innerHTML = "Please enter password!";
+			console.log("password length is 0");
+			setValidP(0);
+		} else if (
+			!(
+				password.current.value.length >= 8 &&
+				password.current.value.length <= 16 
+				// && (password.current.value.match(/(?=.*[^a-zA-Z0-9])/) &&
+				// 	!/\s/g.test(password.current.value))
+			)
+		) {
+			document.getElementById("passError").innerHTML =
+				"Please enter a valid password!";
+			console.log("password is not valid type");
+			setValidP(0);
+		} else {
+			document.getElementById("passError").innerHTML = "";
+			setValidP(1);
+		}
+	}
+
   const [passwordType, setPasswordType] = useState("password");
 
   const togglePassword = (e) => {
@@ -36,12 +76,20 @@ export default function Login() {
     //password.current.value holds whatever user submitted as password
     console.log("username", username.current.value);
     console.log("password", password.current.value);
+    console.log(validU + validP);
+    if (validU + validP === 2) {
+        console.log("trying to validate user")
+        loginCall(
+          { username: username.current.value, password: password.current.value },
+          dispatch
+        );
+      
+    } else {
+			document.getElementById("overallError").innerHTML =
+				"Please fill all fields!";
+		}
 
-    loginCall(
-      { username: username.current.value, password: password.current.value },
-      dispatch
-    );
-  };
+  }
 
   const registerRedirect = () => {
     navigate("/register");
@@ -66,8 +114,8 @@ export default function Login() {
               placeholder="Username"
               className="loginInput"
               ref={username}
-              required
-            />
+              onBlur={validateUsername}/>
+            <div id="usernameError" style={{ color: "red" }}></div>
 
             {/* PASSWORD AND VISIBILITY BELOW */}
             <input
@@ -75,8 +123,8 @@ export default function Login() {
               type={passwordType}
               className="loginInput"
               ref={password}
-              required
-            />
+              onBlur={validatePassword}/>
+            <div id="passError" style={{ color: "red" }}></div>
             <div className="input-group-btn">
               Show/Hide password&nbsp;&nbsp;&nbsp;
               <button
@@ -95,7 +143,6 @@ export default function Login() {
             <button className="loginButton" type="submit" disabled={isFetching}>
               {isFetching ? <CircularProgress size="20px" /> : "Log In"}
             </button>
-
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton" onClick={registerRedirect}>
               {isFetching ? (
@@ -104,7 +151,8 @@ export default function Login() {
                 "Create a New Account"
               )}
             </button>
-          </form>
+            <div id="overallError" style={{ color: "red" }}></div>
+            </form>
         </div>
       </div>
     </div>

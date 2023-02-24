@@ -8,5 +8,8 @@ export const loginCall = async (userCredential, dispatch) => {
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data }); // if valid user, return user object
   } catch (err) {
     dispatch({ type: "LOGIN_FAILURE", payload: err }); // if not valid, return error
+    document.getElementById("overallError").innerHTML = 
+    "Invalid credentials!";
+    console.log("Invalid credentials!")
   }
 };
