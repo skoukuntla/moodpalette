@@ -112,8 +112,8 @@ export default function NavBar(props) {
         {isMobile && <MobileNavContainer>
             {isOpen && <LinksWrapper>
                     <LinkItem><Link href="/calendar-view">Calendar View</Link></LinkItem>
-                    <LinkItem><Link href="#">Habit Tracker</Link></LinkItem>
-                    <LinkItem><Link href="#">Moo Pal Shop</Link></LinkItem>
+                    <LinkItem><Link href="/habit">Habit Tracker</Link></LinkItem>
+                    <LinkItem><Link href="/shop">Moo Pal Shop</Link></LinkItem>
                     <LinkItem><Link href="/profile">My Profile</Link></LinkItem>
                     <Accessibility />
                 </LinksWrapper>}

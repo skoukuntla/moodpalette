@@ -3,6 +3,9 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Calendar from "./pages/calendar/calendarView";
 import Profile from "./pages/profile/Profile";
+import MooPalShop from "./pages/shop/MooPal";
+import HabitTracker from "./pages/habits/HabitTracker";
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
@@ -23,6 +26,8 @@ function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/calendar-view" element={<Calendar />} />
       <Route path="/profile" element = {<Profile/>} />
+      <Route path="/shop" element = {<MooPalShop/>} />
+      <Route path="/habit" element = {<HabitTracker/>} />
 
 			</Routes>
 		</Router>
