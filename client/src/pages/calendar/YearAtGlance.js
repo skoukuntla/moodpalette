@@ -8,6 +8,8 @@ function App() {
         const context = canvasRef.current.getContext("2d");
         const validDays = data.calendarDataSource.percentData;
         let count = 0
+        let width = window.innerWidth;
+        console.log("width", width);
         for (let i = 0; i < 7; i++) {
             for (let j = 0; j < 53; j++) {
                 var n = (Math.random() * 0xfffff * 1000000).toString(16);
@@ -30,13 +32,14 @@ function App() {
     const writeText = (info, style = {}) => {
         const context = canvasRef.current.getContext("2d");
         const { text, x, y } = info;
-        const { fontSize = 12, fontFamily = 'Times', color = 'black', textAlign = 'right', textBaseline = 'top' } = style;        
+        const { fontSize = 12, fontFamily = 'Raleway', color = 'grey', textAlign = 'right', textBaseline = 'top'} = style;        
     
         context.beginPath();
         context.font = fontSize + 'px ' + fontFamily;
         context.textAlign = textAlign;
         context.textBaseline = textBaseline;
         context.fillStyle = color;
+        context.fontWeight = 'thin';
         context.fillText(text, x, y);
         context.stroke();
     };
@@ -58,7 +61,7 @@ function App() {
             }
             var numWeeks = Math.floor(numDays/7);
             console.log(numWeeks);
-            writeText({ text: monthNames[i], x: 60 + (numWeeks * 24.5), y: 0})
+            writeText({ text: monthNames[i], x: 64 + (numWeeks * 24.5), y: 0})
         }
         drawRectangle();
     }, []);
@@ -66,9 +69,10 @@ function App() {
     return (
         <div>
             <canvas
+            id="preview"
             ref={canvasRef}
             height={200}
-            width={1500}
+            width={1348}
             />
         </div>
     );

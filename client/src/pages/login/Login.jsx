@@ -1,22 +1,20 @@
 //LOGIN PAGE FRONTEND CODE
 import { React, useRef, useState } from "react";
-import "./login.css"
+import "./login.css";
 import { loginCall } from "../../attemptLogin";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-
   //*Note: we could also use state but since this refreshes with each letter,, better to use reference
   const username = useRef(); // useRef will auto update this value with whatever user types in form immediately
   const password = useRef(); // just say ref={varName} with associated form input
 
-  const {user, isFetching, dispatch} = useContext(AuthContext) // use the auth context to get this info
+  const { user, isFetching, dispatch } = useContext(AuthContext); // use the auth context to get this info
 
   const navigate = useNavigate();
-
 
   //BELOW ARE TWO FUNCTIONS THAT WILL HELP US TO VALIDATE THE EMAIL/PASSWORD THAT A USER LOGINS WITH
   const [validU, setValidU] = useState(0);
@@ -58,10 +56,21 @@ export default function Login() {
 		}
 	}
 
+  const [passwordType, setPasswordType] = useState("password");
+
+  const togglePassword = (e) => {
+    e.preventDefault(); //THIS PREVENTS THE PAGE FROM REFRESHING!!
+    if (passwordType === "password") {
+      setPasswordType("text");
+      // return;
+    } else {
+      setPasswordType("password");
+    }
+  };
 
   //console.log(dispatch)
   // method for when user clicks login button
-  const handleLoginSubmit = async e => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault(); // stops page from refreshing on button click
     //username.current.value holds whatever user submitted as username
     //password.current.value holds whatever user submitted as password
@@ -83,36 +92,59 @@ export default function Login() {
   }
 
   const registerRedirect = () => {
-    navigate('/register');
-	};
+    navigate("/register");
+  };
 
-    console.log("user", user);
+  console.log("user", user);
 
-    // page
-    return (
-      <div className="login">
-        <div className="loginWrapper">
-          <div className="loginLeft">
-            <h3 className="loginLogo">Mood Palette</h3>
-            <span className="loginDesc">
-            Track your mood, write diary entries, customize your Moo Pal, and get a personalized song everyday!
-            </span>
-          </div>
-          <div className="loginRight">
-            <form className="loginBox" onSubmit = {handleLoginSubmit}>
-              <input placeholder="Username" className="loginInput" ref={username} onBlur={validateUsername}/>
-              <div id="usernameError" style={{ color: "red" }}></div>
-              <input placeholder="Password" type="password" className="loginInput" ref={password} onBlur={validatePassword}/>
-              <div id="passError" style={{ color: "red" }}></div>
-              <button className="loginButton" type="submit" disabled={isFetching}>
-              {isFetching ? (
-                <CircularProgress size="20px" />
-              ) : (
-                "Log In"
-              )}
+  // page
+  return (
+    <div className="login">
+      <div className="loginWrapper">
+        <div className="loginLeft">
+          <h3 className="loginLogo">Mood Palette</h3>
+          <span className="loginDesc">
+            Track your mood, write diary entries, customize your Moo Pal, and
+            get a personalized song everyday!
+          </span>
+        </div>
+        <div className="loginRight">
+          <form className="loginBox" onSubmit={handleLoginSubmit}>
+            <input
+              placeholder="Username"
+              className="loginInput"
+              ref={username}
+              onBlur={validateUsername}/>
+            <div id="usernameError" style={{ color: "red" }}></div>
+
+            {/* PASSWORD AND VISIBILITY BELOW */}
+            <input
+              placeholder="Password"
+              type={passwordType}
+              className="loginInput"
+              ref={password}
+              onBlur={validatePassword}/>
+            <div id="passError" style={{ color: "red" }}></div>
+            <div className="input-group-btn">
+              Show/Hide password&nbsp;&nbsp;&nbsp;
+              <button
+                className="btn btn-outline-primary"
+                onClick={togglePassword}
+              >
+                {passwordType === "password" ? (
+                  <i className="bi bi-eye-slash"></i>
+                ) : (
+                  <i className="bi bi-eye"></i>
+                )}
+              </button>
+            </div>
+            {/* PASSWORD AND VISIBILITY ABOVE */}
+
+            <button className="loginButton" type="submit" disabled={isFetching}>
+              {isFetching ? <CircularProgress size="20px" /> : "Log In"}
             </button>
-              {/* <span className="loginForgot">Forgot Password?</span> */}
-              <button className="loginRegisterButton" onClick={registerRedirect}>
+            <span className="loginForgot">Forgot Password?</span>
+            <button className="loginRegisterButton" onClick={registerRedirect}>
               {isFetching ? (
                 <CircularProgress size="20px" />
               ) : (
@@ -121,8 +153,8 @@ export default function Login() {
             </button>
             <div id="overallError" style={{ color: "red" }}></div>
             </form>
-          </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
