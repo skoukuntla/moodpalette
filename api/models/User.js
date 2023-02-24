@@ -24,8 +24,12 @@ const UserSchema = new mongoose.Schema({
     mooPal: {
         type: String,
         default: "",
-      },
+    },
 
+    explicit: {
+        type: Boolean,
+        default: "",
+    },
 
 },
 
