@@ -125,6 +125,7 @@ export default function Login() {
               ref={password}
               onBlur={validatePassword}/>
             <div id="passError" style={{ color: "red" }}></div>
+           {/*
             <div className="input-group-btn">
               Show/Hide password&nbsp;&nbsp;&nbsp;
               <button
@@ -138,6 +139,8 @@ export default function Login() {
                 )}
               </button>
             </div>
+
+                */}
             {/* PASSWORD AND VISIBILITY ABOVE */}
 
             <button className="loginButton" type="submit" disabled={isFetching}>
