@@ -16,7 +16,7 @@ export const loginCall = async (userCredential, dispatch, totalLogins) => {
 
   if (isLockedOut) { // currently in a lockout period
     var now = new Date(); 
-    if ((now - lockedAt) > 120000) { // check if lockout period is over (for debugging purposes, the period is 2 min, which is 120000 ms)
+    if ((now - lockedAt) > 30000) { // check if lockout period is over (for debugging purposes, the period is 30 sec, which is 30000 ms)
       lockedAt = null;
       isLockedOut = false;
       console.log("Lockout is over!");
@@ -25,13 +25,17 @@ export const loginCall = async (userCredential, dispatch, totalLogins) => {
       console.log("In lockout period, can't login yet");
 
       // notify user of time left in lockout
-      var timeLeft = 120000 - (now - lockedAt);
+      var timeLeft = 30000 - (now - lockedAt);
       var min = Math.floor(timeLeft / 60000);
-      var sec = ((timeLeft % 60000) / 1000).toFixed(0);
-      if (min === 0) {
+      var sec = parseInt(((timeLeft % 60000) / 1000).toFixed(0));
+      console.log("min: ", min, ", sec: ", sec);
+      if (min === 0 && sec === 1) {
+        return `You are still locked out and cannot try logging in for another ${sec} second.`;
+      }
+      else if (min === 0) {
         return `You are still locked out and cannot try logging in for another ${sec} seconds.`;
       }
-      else if (sec == 1) {
+      else if (sec === 1) {
         return `You are still locked out and cannot try logging in for another ${min} minute and ${sec} second.`;
       }
       else {
@@ -59,7 +63,7 @@ export const loginCall = async (userCredential, dispatch, totalLogins) => {
     lockedAt = new Date(); // keep track of when lockout period started
     isLockedOut = true;
     console.log("Lockout period has started at", lockedAt);
-    return "You have been locked out for having 3 unsuccessful login attempts. You must wait for 2 minutes before trying to login again."
+    return "You have been locked out for having 3 unsuccessful login attempts. You must wait for 30 seconds before trying to login again."
   }
 
   return "";

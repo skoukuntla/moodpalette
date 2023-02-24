@@ -22,7 +22,7 @@ function GetDailyQuote() {
     },[])*/
 
     function callQuoteAPI() {
-        fetch('http://quotes.rest/qod.json?category=inspire')
+        fetch('http://quotes.rest/qod.json?category=life')
         .then(res => res.json())
         .then(data => {
             console.log(data);
