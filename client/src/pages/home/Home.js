@@ -5,6 +5,7 @@ import "./home.css"
 import Calendar from "./calendar/calendar"
 import NavBar from "../navbar/index"
 import GetDailyQuote from "./quotes/dailyQuote";
+import Spotify from "./spotify/spotify";
 export default function Home() {
 
     
@@ -15,6 +16,7 @@ export default function Home() {
         <div>
             {<NavBar></NavBar>}
             { <Calendar></Calendar> }
+            {<Spotify></Spotify>}
             { <GetDailyQuote></GetDailyQuote> }
         </div>
     )
