@@ -36,6 +36,15 @@ const UserSchema = new mongoose.Schema({
         default: "",
     },
 
+    spotifyAccessToken: {
+        type: String,
+        default: "",
+    },
+
+    spotifyRefreshToken: {
+        type: String,
+        default: "",
+    }
 },
 
 {timestamps:true});
