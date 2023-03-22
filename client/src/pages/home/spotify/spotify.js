@@ -2,7 +2,7 @@ import axios from "axios";
 import { AuthContext } from "../../../context/AuthContext";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Buffer } from 'buffer';
+import qs from 'qs';
 
 const CLIENT_ID = "1f57088263ff49bebe219245a8e8c6c9"
 const CLIENT_SECRET = "c26a902aef59405684bd3fd3c7a372c9"
@@ -19,40 +19,39 @@ function Spotify() {
             if (window.location.search) {
                 const afterQuestion = window.location.search.toString().substring(1);
                 const [key, value] = afterQuestion.split("=");
-
+                
                 if (key !== "error") {
                     // get access token and refresh token -- THE ERROR IS WITH THIS POST
-                    var authOptions = {
-                        url: 'https://accounts.spotify.com/api/token',
-                        data: JSON.stringify({
+                    const res = await axios.post('https://accounts.spotify.com/api/token', 
+                        qs.stringify (
+                        ({
+                            grant_type: "authorization_code",
                             code: value,
                             redirect_uri: REDIRECT_URI,
-                            grant_type: 'authorization_code'
+                            client_id: CLIENT_ID,
+                            client_secret: CLIENT_SECRET
                         }),
-                        headers: {
-                        'Authorization': 'Basic ' + (Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET, 'base64')),
-                        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-                        //'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
-                        },
-                        json: true
-                    };
-        
-                    try {
-                        const res = await axios.post(authOptions); 
-                        const jsonRes = JSON.parse(res);
-        
+                        {
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            json: true
+                        }
+                    ))
+                    .then((res) => {
+                        console.log(res);
+
                         // store Spotify credentials in user object
                         try {
                             axios.put("/users/" + user._id, {
-                                spotifyAccessToken: jsonRes.access_token,
-                                spotifyRefreshToken: jsonRes.refresh_token
+                                spotifyAccessToken: res.data.access_token,
+                                spotifyRefreshToken: res.data.refresh_token
                             });
-                        } catch (err) {
-                            console.log(err);
+                        } catch (error) {
+                            console.log(error);
                         }
-                    } catch(err) {
-                        console.log(err);
-                    }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
                 }
                 else {
                     console.log("error with Spotify authorization")
