@@ -8,6 +8,7 @@ import './calendar.css';
 import {Slider } from '@mui/material';
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
+import ColorWheel from './colorwheel';
 
 function App() {
   // use the auth context to get this user
@@ -32,6 +33,7 @@ function App() {
 };
 
 const marks = [
+  { value: 0, label: '0'},
   { value: 10, label: '10' },
   { value: 20, label: '20' },
   { value: 30, label: '30' },
@@ -107,11 +109,13 @@ return (
           <div className="popup-content">
             <h2>{date.toDateString()}</h2>
             <p>Color of the day: </p>
+            <ColorWheel />
+            <br />
             <p>Vibe Meter: </p>
             <Slider
                   aria-label="Restricted values"
-                  defaultValue={20}
-                  step={null}
+                  defaultValue={25}
+                  step={1}
                   valueLabelDisplay="auto"
                   marks={marks}
                   max={50}
@@ -140,3 +144,4 @@ return (
 
 
 export default App;
+
