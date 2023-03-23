@@ -8,10 +8,10 @@ import './calendar.css';
 import {Slider } from '@mui/material';
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
-import ColorWheel from './colorwheel';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { ChromePicker } from 'react-color'
+
 
 function App() {
   // use the auth context to get this user
@@ -23,6 +23,10 @@ function App() {
  const [openPast, setOpenPast] = useState(false)
  //to open a popup when the user hasn't inputted their thought log
  const [openExtra, setOpenExtra] = useState(false)
+ //to track the color
+ const[color, setColor] = useState('#fff');
+ //to track the vibe
+ const[vibe, setVibe] = useState(25);
  //to track emotion
  const [emotion, setEmotion] = useState();
  //to save text within the textbox
@@ -115,8 +119,12 @@ return (
         <Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
           <div className="popup-content">
             <h2>{date.toDateString()}</h2>
+            <br />
             <p>Color of the day: </p>
-            <ColorWheel />
+            <br />
+            <center>
+              <ChromePicker color={color} onChange={updatedColor => setColor(updatedColor)} disableAlpha={true}/>
+            </center>
             <br />
             <p>Vibe Meter: </p>
             <Slider
@@ -127,9 +135,10 @@ return (
                   marks={marks}
                   max={50}
                   min={0}
+                  onChange={(value) => {setVibe(value)}}
               />
             <p>Thought Log: </p>
-            <textarea rows="4" cols="40" value={text} onChange={(event) => setText(event.target.value)}></textarea>
+            <textarea rows="4" cols="50" value={text} onChange={(event) => setText(event.target.value)}></textarea>
             <div style={{ width: "100%", textAlign: "center" }}>
                 <button style={{ display: "block", marginTop: "20px" }} onClick={() => {
                   setOpen(false);
@@ -190,6 +199,7 @@ return (
                 setOpen(true);
             }}>Back</button>
             <button onClick={() => (emotion == null) ? setOpenExtra(true) : setOpenExtra(false)}>Done</button>
+            {console.log("color", color.hex, "vibe", vibe.target.value, "text", text, "emotion", emotion)}
           </div>
         </Popup>
       </div>
