@@ -2,3 +2,7 @@
     margin: 0;
     font-family: 'Raleway',  sans-serif;
 }
+canvas {
+    position: absolute;
+    left: 0
+}
