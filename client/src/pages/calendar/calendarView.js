@@ -11,11 +11,13 @@ export default function calendarView() {
             <div>
             {<NavBar></NavBar>}
             <br></br>
+            <div class="calendars">
             <h2>Habit Tracker Heat Map:</h2>
             <Heatmap></Heatmap>            
             <h2>Year at a glance:</h2>
             <br></br>
             <YearAtGlance></YearAtGlance>
+            </div>
             </div>
 
         </React.StrictMode>

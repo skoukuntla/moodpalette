@@ -4,5 +4,14 @@
 }
 canvas {
     position: absolute;
-    left: 0
+    left: 45px
 }
+
+.emoji-button {
+    text-align: center;
+    font-size: 25px;
+ }
+
+ .calendars {
+    padding: 45px;
+ }

@@ -9,6 +9,9 @@ import {Slider } from '@mui/material';
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import ColorWheel from './colorwheel';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function App() {
   // use the auth context to get this user
@@ -18,6 +21,10 @@ function App() {
  //to specify popups for specific dates
  const [open, setOpen] = useState(false)
  const [openPast, setOpenPast] = useState(false)
+ //to open a popup when the user hasn't inputted their thought log
+ const [openExtra, setOpenExtra] = useState(false)
+ //to track emotion
+ const [emotion, setEmotion] = useState();
  //to save text within the textbox
  const [text, setText] = useState("");
 
@@ -124,7 +131,10 @@ return (
             <p>Thought Log: </p>
             <textarea rows="4" cols="40" value={text} onChange={(event) => setText(event.target.value)}></textarea>
             <div style={{ width: "100%", textAlign: "center" }}>
-                <button style={{ display: "block", marginTop: "20px" }} onClick={() => setOpen(false)}>Done</button>
+                <button style={{ display: "block", marginTop: "20px" }} onClick={() => {
+                  setOpen(false);
+                  (text !== '') ?  setOpenExtra(false) : setOpenExtra(true);
+                }}>Done</button>
             </div>
           </div>
         </Popup>
@@ -135,6 +145,51 @@ return (
           <h2>Past Date Popup</h2>
             <p>The selected past date is: {date.toDateString()}</p>
             <button onClick={() => setOpenPast(false)}>Close</button>
+          </div>
+        </Popup>
+      </div>
+      <div className="popup-container3">
+        <Popup open={openExtra} closeOnDocumentClick onClose={() => setOpenExtra(false)}>
+          <div className="popup-content">
+          <h2>Extra Popup</h2>
+            <p>Which mood best represents how you feel?</p>
+            <Container fluid="md">
+                <Row>
+                    <button class = "emoji-button" onClick={() => setEmotion("Happy")}>🙂</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Sad")}>🙁</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Stressed")}>😫</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Angry")}>😡</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Bored")}>😑</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Confused")}>🤔</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Sick")}>🤢</button>
+                </Row>
+                <Row>
+                    <button class = "emoji-button" onClick={() => setEmotion("Calm")}>😌</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Hopeful")}>🙏</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Worried")}>😬</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Annoyed")}>😒</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Proud")}>👏</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Satisfied")}>😊</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Tired")}>🥱</button>
+                </Row>
+                <Row>
+                    <button class = "emoji-button" onClick={() => setEmotion("Loving")}>🥰</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Scared")}>🫣</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Meh")}>🫤</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Distraught")}>😭</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Excited")}>🤩</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Exhausted")}>💀</button>
+                    <button class = "emoji-button" onClick={() => setEmotion("Shocked")}>🤯</button>
+                </Row>
+            </Container>
+            <br />
+            <h3>Your current mood: {emotion}</h3>
+            <br />
+            <button onClick={() => {
+                setOpenExtra(false);
+                setOpen(true);
+            }}>Back</button>
+            <button onClick={() => (emotion == null) ? setOpenExtra(true) : setOpenExtra(false)}>Done</button>
           </div>
         </Popup>
       </div>
