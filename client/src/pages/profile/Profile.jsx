@@ -13,6 +13,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import emailjs from 'emailjs-com';
 
+import SpotifyImg from "./spotify_logo.png";
+import qs from 'qs';
+
+const CLIENT_ID = "1f57088263ff49bebe219245a8e8c6c9"
+const CLIENT_SECRET = "c26a902aef59405684bd3fd3c7a372c9"
+
 const notify = () => {
   toast("Make sure to fill out your Mood Palette for the day!");
 }
@@ -74,6 +80,90 @@ export default function Profile() {
 	navigate('/login');
 
   };
+
+  /*var counter = 0;
+  async function fetchNewSpotifyToken() {
+    // POST request for new access token
+    const res = await axios.post('https://accounts.spotify.com/api/token', 
+      qs.stringify (
+        ({
+            grant_type: "refresh_token",
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            refresh_token: user.spotifyRefreshToken
+        }),
+        {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            json: true
+        }
+      )
+    )
+    .then((res) => {
+      try {
+        console.log(res.data.access_token);
+        //update DB
+        axios.put("/users/" + user._id, {
+            spotifyAccessToken: res.data.access_token
+        });
+
+        // update user object for this page
+        user.spotifyAccessToken = res.data.access_token;
+        
+        // update user object in local (browser) storage
+        const newUser = JSON.parse(localStorage.getItem("user"));
+        newUser["spotifyAccessToken"] = res.data.access_token;
+        localStorage.setItem("user", JSON.stringify(newUser));
+
+        //try fetching user info again
+        fetchSpotifyUser();
+      } catch (error) {
+          console.log(error);
+      }
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+  }
+
+  async function fetchSpotifyUser() {
+    // POST request for user info
+    counter++;
+    const res = await axios({
+      method: 'get',
+      url: `https://api.spotify.com/v1/me`,
+      headers: { 'Authorization': 'Bearer ' + user.spotifyAccessToken },
+      data: {
+        client_id : CLIENT_ID,
+        cliend_secret : CLIENT_SECRET
+      }
+    })
+
+
+    
+    await axios.post('https://api.spotify.com/v1/me', 
+      {
+        headers: {
+            Authorization: `Bearer ${user.spotifyAccessToken}`
+        }
+      }
+    )
+    .then((res) => {
+      try {
+          //update DB
+          console.log(res);
+      } catch (error) {
+          console.log(error);
+      }
+    })
+    .catch((error) => {
+        console.log(counter + " " + error.response.status);
+        if (counter < 2 && error.response.status === 401) {
+          // current token has expired - get new one
+          console.log("Expired token!")
+          //fetchNewSpotifyToken();
+        }
+    });
+  }*/
 
   const handleDelete = async (e) => {
 	e.preventDefault();
@@ -195,6 +285,88 @@ export default function Profile() {
           </div>{" "}
           {/* this div has the two buttons --> leads to popups*/}
         </div>
+        {/*<div className="entireProfile">
+          <img
+            className="profileUserImg"
+			      alt="spotifyLogo"
+            src={SpotifyImg}
+          />
+          <h4 className="profileInfoName">{user.username}</h4>
+          <p className="profileInfoEmail">{user.email}</p>
+          <span className="profileInfoDesc">{user.age}</span>
+          <div className="spacer">
+            <button onClick={fetchSpotifyUser}/>
+            <Popup trigger={editButton} modal nested>
+              {(close) => (
+                <div className="modal">
+                  <div className="content">
+                    <h2>Edit Profile</h2>
+                    <div>
+                      <form className="registerBox" onSubmit={handleEdit}>
+                        <input
+                          placeholder={user.username}
+                          ref={username}
+                          className="registerInput"
+                        />
+                        <input
+                          placeholder={user.email}
+                          ref={email}
+                          c
+                          type="email"
+                          className="registerInput"
+                        />
+                        <input
+                          placeholder={user.age}
+                          ref={age}
+                          className="registerInput"
+                        />
+                        <button className="registerButton" type="submit">
+                          Update Info
+                        </button>
+                        <button
+                          className="loginRegisterButton"
+                          onClick={() => close()}
+                        >
+                          Cancel
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </Popup>{" "}
+            <Popup trigger={deleteButton} modal nested>
+              {(close) => (
+                <div className="modal">
+                  <div className="content">
+                    <h2>Delete Profile</h2>
+                    <br />
+                    <p>
+                      We're sad to see you leave! Are you sure you wish to
+                      delete your account?
+                    </p>
+                    <p>
+                      {" "}
+                      This is permanent and all your information will be lost!{" "}
+                    </p>
+                    <br />
+                    <div className="spacer">
+                      {deleteFinal}{" "}
+                      <button
+                        variant="contained"
+                        className="greenBtnCancel"
+                        onClick={() => close()}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </Popup>
+          </div>{" "}
+          {}
+        </div>*/}
         <div className="email">
             <div classname="emailWrapper">
             <span className="loginDesc">

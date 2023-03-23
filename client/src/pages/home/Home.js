@@ -5,7 +5,7 @@ import "./home.css"
 import Calendar from "./calendar/calendar"
 import NavBar from "../navbar/index"
 import GetDailyQuote from "./quotes/dailyQuote";
-import Spotify from "./spotify/spotify";
+import SpotifyPopup from "./spotify/spotify";
 export default function Home() {
 
     
@@ -14,9 +14,9 @@ export default function Home() {
     console.log(user);
     return (
         <div>
-            {<NavBar></NavBar>}
+            { <NavBar></NavBar> }
             { <Calendar></Calendar> }
-            {<Spotify></Spotify>}
+            { <SpotifyPopup></SpotifyPopup> }
             { <GetDailyQuote></GetDailyQuote> }
         </div>
     )

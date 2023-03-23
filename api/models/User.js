@@ -38,13 +38,19 @@ const UserSchema = new mongoose.Schema({
 
     spotifyAccessToken: {
         type: String,
-        default: "",
+        default: ""
     },
 
     spotifyRefreshToken: {
         type: String,
-        default: "",
+        default: ""
+    },
+
+    justRegistered: {
+        type: Boolean,
+        default: true
     }
+
 },
 
 {timestamps:true});
