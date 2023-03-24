@@ -8,26 +8,37 @@ import { useState, useEffect } from 'react';
 const HabitChecklist = () => {
 
 const {user} = useContext(AuthContext)
-const habits = user.userHabits // all of a user's habits
+const [currentUser, setUser] = useState(user);
+const habits = currentUser.userHabits // all of a user's habits
 
-const userInputedHabits = []
+useEffect(() => {
+    const fetchUser = async () => {
+        const res = await axios.get(`/users?username=${currentUser.username}`);
+        setUser(res.data);
+    };
+    fetchUser();
+}, [currentUser.username]);
+
+console.log("currentUser", currentUser)
 
 const [dbCompletedHabits, setCompHabits] = useState([])
 useEffect(()=>{
     const fetchAllCompHabits = async ()=>{ // async function since making api request
         try{
-            const res = await axios.get(`day/getCompletedHabits/${user.username}`) // have to specify date
-            setCompHabits(res.data[0].completedHabits);
-            console.log(res)
+            const res = await axios.get(`day/getCompletedHabits/${currentUser.username}`) // have to specify date
+            let length = res.data.length
+            setCompHabits(res.data[length-1].completedHabits);
+           
         }catch(err){
             console.log(err)
         }
     }
 
     fetchAllCompHabits()
-},[user.username])
+},[currentUser.username])
 
-console.log(dbCompletedHabits)
+
+console.log("dbCompletedHabits", dbCompletedHabits)
 
 //console.log("completed habits", dbCompletedHabits[0].completedHabits.length)
 
@@ -45,11 +56,12 @@ const checklistSubmit = async (e) => {
 
 
     const habitsLog = {
-        username: user.username,
+        username: currentUser.username,
         completedHabits: completedHabits
       };
 
       await axios.post("/day/addCompletedHabits", habitsLog);
+      window.location.reload(false);
     
   };
 
@@ -78,12 +90,17 @@ const checklistSubmit = async (e) => {
               ))}
     
     </div>
-    
+
+    <br></br>
+
     <button className="loginButton" type="submit"  onClick={checklistSubmit}>
                   Submit
                 </button>
     
-    
+    <br></br>
+    <br></br>
+    <br></br>
+
     </form>
     </div>
     )}
@@ -94,7 +111,7 @@ const checklistSubmit = async (e) => {
               <br></br>
               <br></br>
               <br></br>
-            <h1>My Habits</h1>
+            <h1>My Completed Habits</h1>
             <br></br>
         
            
