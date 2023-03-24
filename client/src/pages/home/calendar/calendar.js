@@ -41,7 +41,8 @@ const marks = [
 ];
 
 return (
- <div className="app">
+<div className="home">
+ <div className="calendarStyle">
    <h1 className="header"> {user.username}'s Calendar !! </h1>
    <div className="calendar-container">
      <Calendar 
@@ -102,6 +103,7 @@ return (
         }}
         />
    </div>
+
    <div className="popup-container">
         <Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
           <div className="popup-content">
@@ -135,6 +137,9 @@ return (
         </Popup>
       </div>
  </div>
+
+</div>
+
   )
 }
 

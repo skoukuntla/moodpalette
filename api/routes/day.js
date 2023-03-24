@@ -26,7 +26,31 @@ router.post("/insertDay", async (req,res)=>{
 })
 
 
-  
+router.post("/addCompletedHabits", async (req, res) => {
+      try {
+                const newDay = new Day({
+                    username: req.body.username,
+                    completedHabits: req.body.completedHabits,
+                });
+                
+                const day = await newDay.save();
+                return res.status(200).json(day); // send success (200)
+        
+      } catch (err) {
+        return res.status(500).json(err);
+      }
+   
+  });
+
+  router.get("/getCompletedHabits/:username", async (req, res) => {
+	try {
+		//const user = await User.findOne({ username: req.params.username });
+		const habitsDays = await Day.find({ username: req.params.username });
+		res.status(200).json(habitsDays);
+	} catch (err) {
+		res.status(500).json("error fetching completed habits");
+	}
+});
 
   
 

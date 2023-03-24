@@ -12,11 +12,15 @@ const DaySchema = new mongoose.Schema({
 
     vibes:{
         type:Number,
-        required:true
     },
 
     journal:{
         type:String,
+    },
+
+    completedHabits: {
+        type: Array,
+        default: [],
     },
 
 },

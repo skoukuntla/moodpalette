@@ -2,6 +2,7 @@ import React from 'react'
 import NavBar from "../navbar/index"
 
 const HabitTracker = () => {
+  
   return (
     <div>
     {<NavBar></NavBar>}
