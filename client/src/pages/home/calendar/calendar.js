@@ -26,7 +26,7 @@ function App() {
  //to track the color
  const[color, setColor] = useState('#fff');
  //to track the vibe
- const[vibe, setVibe] = useState(25);
+ const[vibe, setVibe] = useState(50);
  //to track emotion
  const [emotion, setEmotion] = useState();
  //to save text within the textbox
@@ -135,7 +135,7 @@ return (
                   marks={marks}
                   max={50}
                   min={0}
-                  onChange={(value) => {setVibe(value)}}
+                  onChange={(value) => {setVibe(value.target.value)}}
               />
             <p>Thought Log: </p>
             <textarea rows="4" cols="50" value={text} onChange={(event) => setText(event.target.value)}></textarea>
@@ -190,7 +190,7 @@ return (
                     <button class = "emoji-button" onClick={() => setEmotion("Exhausted")}>💀</button>
                     <button class = "emoji-button" onClick={() => setEmotion("Shocked")}>🤯</button>
                 </Row>
-            </Container>
+              </Container>
             <br />
             <h3>Your current mood: {emotion}</h3>
             <br />
@@ -199,10 +199,10 @@ return (
                 setOpen(true);
             }}>Back</button>
             <button onClick={() => (emotion == null) ? setOpenExtra(true) : setOpenExtra(false)}>Done</button>
-            {console.log("color", color.hex, "vibe", vibe.target.value, "text", text, "emotion", emotion)}
+            {console.log("color", color.hex, "vibe", vibe, "text", text, "emotion", emotion)}
           </div>
         </Popup>
-      </div>
+          </div>
  </div>
   )
 }
