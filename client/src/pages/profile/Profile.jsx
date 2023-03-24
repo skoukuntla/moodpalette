@@ -41,10 +41,8 @@ export default function Profile() {
     function getUserInfo() {
       console.log(isLoggingIn)
       while (isLoggingIn) { //wait for async fetchTokens() function to return
-        console.log("still here")
         // do nothing
       }
-      console.log("LOOK HERE: " + user.spotifyAccessToken)
       if (!user.spotifyAccessToken) {
         // user opted out of logging into Spotify account - do nothing
         console.log("No Spotify account has been linked")
@@ -127,8 +125,6 @@ export default function Profile() {
                     newUser["spotifyAccessToken"] = res.data.access_token;
                     newUser["spotifyRefreshToken"] = res.data.refresh_token;
                     localStorage.setItem("user", JSON.stringify(newUser));
-
-                    console.log("LOOK HEREEEE: " + user.spotifyAccessToken)
                     setIsLoggingIn(false)
                 } catch (error) {
                     console.log(error);
@@ -147,7 +143,6 @@ export default function Profile() {
         }    
       }
       if (!success & isLoggingIn) {
-        console.log("HERE dd")
         setIsLoggingIn(false)
       }
     }
