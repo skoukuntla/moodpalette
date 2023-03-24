@@ -3,7 +3,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { useContext, useEffect } from "react";
 import qs from 'qs';
 import Popup from 'reactjs-popup';
-
+import "./spotify.css"
 
 const CLIENT_ID = "1f57088263ff49bebe219245a8e8c6c9"
 const CLIENT_SECRET = "c26a902aef59405684bd3fd3c7a372c9"

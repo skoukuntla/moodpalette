@@ -1,6 +1,6 @@
 import "./profile.css";
 import { AuthContext } from "../../context/AuthContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import NavBar from "../navbar/index";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
@@ -21,6 +21,11 @@ const CLIENT_ID = "1f57088263ff49bebe219245a8e8c6c9"
 const CLIENT_SECRET = "c26a902aef59405684bd3fd3c7a372c9"
 const spotifyApi = new SpotifyWebApi();
 
+const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize"; //TODO: put this in separate file
+const REDIRECT_URI = "http://localhost:3000/profile/"
+const SCOPES = ["user-read-email user-read-playback-state"] // Spotify account info that we want to have access to
+const SCOPES_URL = SCOPES.join("%20");
+
 const notify = () => {
   toast("Make sure to fill out your Mood Palette for the day!");
 }
@@ -28,6 +33,129 @@ const notify = () => {
 export default function Profile() {
 
   const [currRec, setCurrRec] = useState("");
+  const [spotifyName, setSpotifyName] = useState(null);
+  const [spotifyEmail, setSpotifyEmail] = useState(null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  useEffect(() => {
+    function getUserInfo() {
+      console.log(isLoggingIn)
+      while (isLoggingIn) { //wait for async fetchTokens() function to return
+        console.log("still here")
+        // do nothing
+      }
+      console.log("LOOK HERE: " + user.spotifyAccessToken)
+      if (!user.spotifyAccessToken) {
+        // user opted out of logging into Spotify account - do nothing
+        console.log("No Spotify account has been linked")
+      }
+      else {
+        spotifyApi.setAccessToken(user.spotifyAccessToken);
+        console.log(user.spotifyAccessToken);
+    
+        var hasExpired = false;
+        spotifyApi.getMe().then((response) => {
+          setSpotifyName(response.display_name)
+          setSpotifyEmail(response.email)
+        })
+        .catch((error) => {
+          if (error.status === 401) // access token has expired
+            console.log("Access token has expired")
+            user.spotifyAccessToken = null;
+            fetchNewSpotifyToken();
+            hasExpired = true;
+        });;
+    
+        if (hasExpired) {
+          // wait for fetchNewSpotifyToken() to finish
+          while (user.spotifyAccessToken == null) {
+            // do nothing
+          }
+          // try everything again
+          console.log("trying again")
+          spotifyApi.setAccessToken(user.spotifyAccessToken);
+          spotifyApi.getMe().then((response) => {
+            setSpotifyName(response.display_name)
+            setSpotifyEmail(response.email)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }
+      } 
+    }
+
+    async function fetchTokens() { // TODO: put this in separate file
+      var success = false;
+      if (window.location.search) {
+        const afterQuestion = window.location.search.toString().substring(1);
+        const [key, value] = afterQuestion.split("=");
+        
+        if (key !== "error") {
+            // POST request for access token and refresh token
+            const res = await axios.post('https://accounts.spotify.com/api/token', 
+                qs.stringify (
+                ({
+                    grant_type: "authorization_code",
+                    code: value,
+                    redirect_uri: REDIRECT_URI,
+                    client_id: CLIENT_ID,
+                    client_secret: CLIENT_SECRET
+                }),
+                {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    json: true
+                }
+            ))
+            .then((res) => {
+                // store Spotify credentials in user object
+                try {
+                    success = true;
+
+                    //update DB
+                    axios.put("/users/" + user._id, {
+                        spotifyAccessToken: res.data.access_token,
+                        spotifyRefreshToken: res.data.refresh_token
+                    });
+
+                    // update user object for this page
+                    user.spotifyAccessToken = res.data.access_token;
+                    user.spotifyRefreshToken = res.data.refresh_token;
+                    
+                    // update user object in local (browser) storage
+                    const newUser = JSON.parse(localStorage.getItem("user"));
+                    newUser["spotifyAccessToken"] = res.data.access_token;
+                    newUser["spotifyRefreshToken"] = res.data.refresh_token;
+                    localStorage.setItem("user", JSON.stringify(newUser));
+
+                    console.log("LOOK HEREEEE: " + user.spotifyAccessToken)
+                    setIsLoggingIn(false)
+                } catch (error) {
+                    console.log(error);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+        else if (value === "access_denied") {
+            // user denied Spotify authorization, so create popup warning
+            // TODO
+        }
+        else {
+            console.log("ERROR WITH SPOTIFY AUTH")
+        }    
+      }
+      if (!success & isLoggingIn) {
+        console.log("HERE dd")
+        setIsLoggingIn(false)
+      }
+    }
+
+    getUserInfo();
+    fetchTokens();
+  });
+
   const form = useRef();
     function sendEmail(e) {
         e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
@@ -84,7 +212,6 @@ export default function Profile() {
 
   };
 
-  var counter = 0;
   async function fetchNewSpotifyToken() {
     // POST request for new access token
     const res = await axios.post('https://accounts.spotify.com/api/token', 
@@ -103,7 +230,7 @@ export default function Profile() {
     )
     .then((res) => {
       try {
-        console.log(res.data.access_token);
+        console.log("New access token: " + res.data.access_token);
         //update DB
         axios.put("/users/" + user._id, {
             spotifyAccessToken: res.data.access_token
@@ -116,9 +243,6 @@ export default function Profile() {
         const newUser = JSON.parse(localStorage.getItem("user"));
         newUser["spotifyAccessToken"] = res.data.access_token;
         localStorage.setItem("user", JSON.stringify(newUser));
-
-        //try fetching user info again
-        //fetchSpotifyUser();
       } catch (error) {
           console.log(error);
       }
@@ -128,47 +252,32 @@ export default function Profile() {
     });
   }
 
-  /*
-  async function fetchSpotifyUser() {
-    // POST request for user info
-    counter++;
-    const res = await axios({
-      method: 'get',
-      url: `https://api.spotify.com/v1/me`,
-      headers: { 'Authorization': 'Bearer ' + user.spotifyAccessToken },
-      data: {
-        client_id : CLIENT_ID,
-        cliend_secret : CLIENT_SECRET
-      }
-    })
-
-
-    
-    await axios.post('https://api.spotify.com/v1/me', 
-      {
-        headers: {
-            Authorization: `Bearer ${user.spotifyAccessToken}`
-        }
-      }
-    )
-    .then((res) => {
-      try {
-          //update DB
-          console.log(res);
-      } catch (error) {
-          console.log(error);
-      }
-    })
-    .catch((error) => {
-        console.log(counter + " " + error.response.status);
-        if (counter < 2 && error.response.status === 401) {
-          // current token has expired - get new one
-          console.log("Expired token!")
-          //fetchNewSpotifyToken();
-        }
-    });
+  const loginSpotify = () => {
+    // redirect to Spotify authorization page
+    setIsLoggingIn(true)
+    window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`;
   }
-  */
+
+  const logoutSpotify = () => {
+    //update DB
+      axios.put("/users/" + user._id, {
+        spotifyAccessToken: "",
+        spotifyRefreshToken: ""
+    });
+
+    // update user object for this page
+    user.spotifyAccessToken = "";
+    user.spotifyRefreshToken = "";
+    
+    // update user object in local (browser) storage
+    const newUser = JSON.parse(localStorage.getItem("user"));
+    newUser["spotifyAccessToken"] = "";
+    newUser["spotifyRefreshToken"] = "";
+    localStorage.setItem("user", JSON.stringify(newUser));
+
+    setSpotifyName(null);
+    setSpotifyEmail(null);
+  }
 
   const handleDelete = async (e) => {
 	e.preventDefault();
@@ -194,6 +303,18 @@ export default function Profile() {
       Delete Profile
     </button>
   );
+  let logoutButton = (
+    <button variant="contained" className="blueBtnEdit" onClick={logoutSpotify}>
+    {" "}
+    Logout
+  </button> 
+  );
+  let loginButton = (
+    <button variant="contained" className="greenBtnChoose" onClick={loginSpotify}>
+    {" "}
+    Log In
+  </button> 
+  );
 
   let deleteFinal = (
     <button
@@ -207,7 +328,7 @@ export default function Profile() {
   );
 
   const getRecs = () => {
-    fetchNewSpotifyToken();
+    //fetchNewSpotifyToken();
     spotifyApi.setAccessToken(user.spotifyAccessToken);
 
     return spotifyApi.getRecommendations({
@@ -225,16 +346,6 @@ export default function Profile() {
 
     });
   }
-
-  const getUserInfo = () => {
-    fetchNewSpotifyToken();
-    spotifyApi.setAccessToken(user.spotifyAccessToken);
-
-    return spotifyApi.getMe().then((response) => {
-        console.log("THIS IS MY REC:", response)
-    });
-  }
-  //npm install spotify-web-api-js
 
   return (
     <>
@@ -320,88 +431,18 @@ export default function Profile() {
           </div>{" "}
           {/* this div has the two buttons --> leads to popups*/}
         </div>
-        {/*<div className="entireProfile">
+        <div className="entireProfile"> {/* this popup is for displaying Spotify info */}
           <img
             className="profileUserImg"
 			      alt="spotifyLogo"
             src={SpotifyImg}
           />
-          <h4 className="profileInfoName">{user.username}</h4>
-          <p className="profileInfoEmail">{user.email}</p>
-          <span className="profileInfoDesc">{user.age}</span>
+          <h4 className="profileInfoName">{spotifyName ? spotifyName : ""}</h4>
+          <p className="profileInfoEmail">{spotifyEmail ? spotifyEmail : ""}</p>
           <div className="spacer">
-            <button onClick={fetchSpotifyUser}/>
-            <Popup trigger={editButton} modal nested>
-              {(close) => (
-                <div className="modal">
-                  <div className="content">
-                    <h2>Edit Profile</h2>
-                    <div>
-                      <form className="registerBox" onSubmit={handleEdit}>
-                        <input
-                          placeholder={user.username}
-                          ref={username}
-                          className="registerInput"
-                        />
-                        <input
-                          placeholder={user.email}
-                          ref={email}
-                          c
-                          type="email"
-                          className="registerInput"
-                        />
-                        <input
-                          placeholder={user.age}
-                          ref={age}
-                          className="registerInput"
-                        />
-                        <button className="registerButton" type="submit">
-                          Update Info
-                        </button>
-                        <button
-                          className="loginRegisterButton"
-                          onClick={() => close()}
-                        >
-                          Cancel
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </Popup>{" "}
-            <Popup trigger={deleteButton} modal nested>
-              {(close) => (
-                <div className="modal">
-                  <div className="content">
-                    <h2>Delete Profile</h2>
-                    <br />
-                    <p>
-                      We're sad to see you leave! Are you sure you wish to
-                      delete your account?
-                    </p>
-                    <p>
-                      {" "}
-                      This is permanent and all your information will be lost!{" "}
-                    </p>
-                    <br />
-                    <div className="spacer">
-                      {deleteFinal}{" "}
-                      <button
-                        variant="contained"
-                        className="greenBtnCancel"
-                        onClick={() => close()}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </Popup>
+            {spotifyName ? logoutButton : loginButton}
           </div>{" "}
-          {}
-        </div>*/}
+        </div>
         <div className="email">
             <div classname="emailWrapper">
             <span className="loginDesc">
@@ -434,7 +475,6 @@ export default function Profile() {
                 Song Recs!
                 <br></br>
                 <button onClick={getRecs}>get song recs</button>
-                <button onClick={getUserInfo}>get user info!</button>
                 <div>
                   <img src={currRec.albumArt} style={{height: 150}}/>
                   <script type="text/javascript">
