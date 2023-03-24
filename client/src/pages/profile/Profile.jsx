@@ -1,6 +1,6 @@
 import "./profile.css";
 import { AuthContext } from "../../context/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import NavBar from "../navbar/index";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SpotifyWebApi from 'spotify-web-api-js';
 
 import emailjs from 'emailjs-com';
 
@@ -18,6 +19,7 @@ import qs from 'qs';
 
 const CLIENT_ID = "1f57088263ff49bebe219245a8e8c6c9"
 const CLIENT_SECRET = "c26a902aef59405684bd3fd3c7a372c9"
+const spotifyApi = new SpotifyWebApi();
 
 const notify = () => {
   toast("Make sure to fill out your Mood Palette for the day!");
@@ -25,6 +27,7 @@ const notify = () => {
 
 export default function Profile() {
 
+  const [currRec, setCurrRec] = useState("");
   const form = useRef();
     function sendEmail(e) {
         e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
@@ -81,7 +84,7 @@ export default function Profile() {
 
   };
 
-  /*var counter = 0;
+  var counter = 0;
   async function fetchNewSpotifyToken() {
     // POST request for new access token
     const res = await axios.post('https://accounts.spotify.com/api/token', 
@@ -115,7 +118,7 @@ export default function Profile() {
         localStorage.setItem("user", JSON.stringify(newUser));
 
         //try fetching user info again
-        fetchSpotifyUser();
+        //fetchSpotifyUser();
       } catch (error) {
           console.log(error);
       }
@@ -125,6 +128,7 @@ export default function Profile() {
     });
   }
 
+  /*
   async function fetchSpotifyUser() {
     // POST request for user info
     counter++;
@@ -163,7 +167,8 @@ export default function Profile() {
           //fetchNewSpotifyToken();
         }
     });
-  }*/
+  }
+  */
 
   const handleDelete = async (e) => {
 	e.preventDefault();
@@ -200,6 +205,36 @@ export default function Profile() {
       Delete Profile
     </button>
   );
+
+  const getRecs = () => {
+    fetchNewSpotifyToken();
+    spotifyApi.setAccessToken(user.spotifyAccessToken);
+
+    return spotifyApi.getRecommendations({
+      limit:5,
+      market:"ES",
+      seed_artists:"4NHQUGzhtTLFvgF5SZesLK",
+      seed_genres:"rock,pop,classical",
+      seed_tracks:"0c6xIDDpzE81m2q797ordA"
+    }).then((response) => {
+        console.log("THIS IS MY REC:", response)
+        setCurrRec({
+          name: response.tracks[0].name,
+          albumArt: response.tracks[0].album.images[0].url
+        })
+
+    });
+  }
+
+  const getUserInfo = () => {
+    fetchNewSpotifyToken();
+    spotifyApi.setAccessToken(user.spotifyAccessToken);
+
+    return spotifyApi.getMe().then((response) => {
+        console.log("THIS IS MY REC:", response)
+    });
+  }
+  //npm install spotify-web-api-js
 
   return (
     <>
@@ -393,6 +428,19 @@ export default function Profile() {
                 <button className="notify" value="Notify!" onClick={notify}></button>
                 </form>
 
+            </div>
+            <br></br>
+            <div>
+                Song Recs!
+                <br></br>
+                <button onClick={getRecs}>get song recs</button>
+                <button onClick={getUserInfo}>get user info!</button>
+                <div>
+                  <img src={currRec.albumArt} style={{height: 150}}/>
+                  <script type="text/javascript">
+                    document.write(currRec.name)
+                  </script>
+                </div>
             </div>
             <ToastContainer/>
             </div>

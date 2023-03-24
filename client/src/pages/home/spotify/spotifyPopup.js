@@ -3,13 +3,13 @@ import { AuthContext } from "../../../context/AuthContext";
 import { useContext, useEffect } from "react";
 import qs from 'qs';
 import Popup from 'reactjs-popup';
-import "./spotify.css"
+
 
 const CLIENT_ID = "1f57088263ff49bebe219245a8e8c6c9"
 const CLIENT_SECRET = "c26a902aef59405684bd3fd3c7a372c9"
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URI = "http://localhost:3000/"
-const SCOPES = ["user-read-email"] // Spotify account info that we want to have access to
+const SCOPES = ["user-read-email user-read-playback-state"] // Spotify account info that we want to have access to
 const SCOPES_URL = SCOPES.join("%20");
 
 function SpotifyPopup() {
