@@ -2,16 +2,18 @@ const Day=require("../models/Day")
 const router = require("express").Router();
 
 // insert into db
-router.post("/insertDay", async (req,res)=>{ 
+router.post("/calendar", async (req,res)=>{ 
   
     try{
        
         // create new day
         const newDay = new Day({
             username: req.body.username,
+            date: req.body.date,
             color: req.body.color,
-            vibes: req.body.vibes,
+            vibes: req.body.vibe,
             journal: req.body.journal,
+            emotion: req.body.emotion,
         });
         
                 const day = await newDay.save();

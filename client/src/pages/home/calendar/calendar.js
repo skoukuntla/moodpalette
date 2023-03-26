@@ -11,12 +11,14 @@ import { AuthContext } from "../../../context/AuthContext";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { ChromePicker } from 'react-color'
+import axios from "axios";
 
 
 function App() {
+  //userContext for storing/accessing user specific data 
   // use the auth context to get this user
   const {user} = useContext(AuthContext)
- //to trak selected date
+ //to track selected date
  const [date, setDate] = useState(new Date())
  //to specify popups for specific dates
  const [open, setOpen] = useState(false)
@@ -29,8 +31,31 @@ function App() {
  const[vibe, setVibe] = useState(50);
  //to track emotion
  const [emotion, setEmotion] = useState();
- //to save text within the textbox
- const [text, setText] = useState("");
+ //to save text within the textbox- for journal
+ const [journal, setText] = useState("");
+
+ //to save data for API request
+ const [apiData, setApiData] = useState({
+  date: "",
+  color: "",
+  vibe: "",
+  journal: "",
+  emotion: "",
+});
+
+// to handle submission of data to the backend API
+const handleSubmit = () => {
+  axios
+    .post("/day/", apiData)
+    .then((response) => {
+      console.log(response.data);
+      // handle successful response
+    })
+    .catch((error) => {
+      console.error(error);
+      // handle error response
+    });
+};
 
  //to specify popups
  const handleDateClick = (clickedDate) => {
@@ -41,6 +66,19 @@ function App() {
     setOpenPast(true);
     setDate(clickedDate);
   }
+
+  // set apiData with the data you want to send to the API
+  setApiData({
+    username: user.username,
+    date: clickedDate.toDateString(),
+    color: color,
+    vibe: vibe,
+    journal: journal,
+    emotion: emotion,
+  });
+
+  // submit the data to the API
+  handleSubmit();
 };
 
 const marks = [
@@ -53,6 +91,11 @@ const marks = [
   { value: 100, label: '100' },
 ];
 
+
+
+
+
+
 return (
  <div className="app">
    <h1 className="header"> {user.username}'s Calendar !! </h1>
@@ -60,10 +103,6 @@ return (
      <Calendar 
         onChange={setDate} 
         value={date}
-
-        //minDate={new Date(date.getFullYear() - 10, 0, 1)}
-        //maxDate={new Date(date.getFullYear() + 10, 11, 31)}
-      
         tileClassName={({date, view}) => {
           if (view === 'month' && date <= new Date()) {
             return "react-calendar__tile--prev";
@@ -73,12 +112,6 @@ return (
         //adding click event to each date in calendar 
         //tileContent prop takes a function that returns a date button to be rendered in each date tile
         tileContent={({ date, view }) => {
-          // check if the date is in the future
-          //const monthNames = ["January", "February", "March", "April", "May", "June",
-          //"July", "August", "September", "October", "November", "December"];
-          
-          //let decadeStart = ((date.getFullYear() / 10).toFixed(0) * 10) + 1;
-          //let decadeEnd = decadeStart + 9;
 
           if (date > new Date()) {
             return null;
@@ -91,27 +124,6 @@ return (
           
             );
           }
-          /*
-          else if (view === 'year') {
-            return(
-              <div>
-              </div>
-            )
-            }
-          else if (view === 'decade') {
-            return(
-              <button>
-                {date.getFullYear()}
-              </button>
-            )
-          }
-          else {
-            return(
-              <button>
-                {decadeStart} - {decadeEnd}
-              </button>
-            )
-          }*/
         }}
         />
    </div>
@@ -138,11 +150,11 @@ return (
                   onChange={(value) => {setVibe(value.target.value)}}
               />
             <p>Thought Log: </p>
-            <textarea rows="4" cols="50" value={text} onChange={(event) => setText(event.target.value)}></textarea>
+            <textarea rows="4" cols="50" value={journal} onChange={(event) => setText(event.target.value)}></textarea>
             <div style={{ width: "100%", textAlign: "center" }}>
                 <button style={{ display: "block", marginTop: "20px" }} onClick={() => {
                   setOpen(false);
-                  (text !== '') ?  setOpenExtra(false) : setOpenExtra(true);
+                  (journal !== '') ?  setOpenExtra(false) : setOpenExtra(true);
                 }}>Done</button>
             </div>
           </div>
@@ -199,7 +211,7 @@ return (
                 setOpen(true);
             }}>Back</button>
             <button onClick={() => (emotion == null) ? setOpenExtra(true) : setOpenExtra(false)}>Done</button>
-            {console.log("color", color.hex, "vibe", vibe, "text", text, "emotion", emotion)}
+            {console.log("color", color.hex, "vibe", vibe, "journal", journal, "emotion", emotion)}
           </div>
         </Popup>
           </div>
@@ -209,4 +221,3 @@ return (
 
 
 export default App;
-
