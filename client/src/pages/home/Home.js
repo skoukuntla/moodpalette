@@ -6,7 +6,8 @@ import Calendar from "./calendar/calendar"
 import NavBar from "../navbar/index"
 import GetDailyQuote from "./quotes/dailyQuote";
 import SpotifyPopup from "./spotify/spotifyPopup";
- 
+import SongRecs from "./songRecs/songRecs"; 
+
 export default function Home() {
 
     
@@ -18,6 +19,7 @@ export default function Home() {
             { <Calendar></Calendar> }
             { <SpotifyPopup></SpotifyPopup> }
             { <GetDailyQuote></GetDailyQuote> }
+            { <SongRecs></SongRecs> }
          </div>
     )
 }

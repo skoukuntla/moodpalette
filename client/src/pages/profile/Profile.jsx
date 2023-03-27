@@ -433,13 +433,9 @@ export default function Profile() {
             <div>
                 Song Recs!
                 <br></br>
-                <button onClick={getRecs}>get song recs</button>
                 <button onClick={getUserInfo}>get user info!</button>
                 <div>
-                  <img src={currRec.albumArt} style={{height: 150}}/>
-                  <script type="text/javascript">
-                    document.write(currRec.name)
-                  </script>
+                   
                 </div>
             </div>
             <ToastContainer/>
