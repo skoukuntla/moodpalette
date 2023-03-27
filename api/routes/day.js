@@ -1,3 +1,4 @@
+const { updateOne } = require("../models/Day");
 const Day=require("../models/Day")
 const router = require("express").Router();
 
@@ -52,6 +53,25 @@ router.post("/addCompletedHabits", async (req, res) => {
 	}
 });
 
+router.put("/updateCompletedHabits/:username", async (req, res) => {
+
+   
+
+        try {
+          /*const day = await Day.find({username: req.body.username}, {
+            $set: req.body.completedHabits,
+          });*/
+
+          const day = await Day.find({username: req.params.username})
+          console.log(day)
+          await day.updateOne({ $set: req.body });
+        
+          res.status(200).json("habits have been updated");
+        } catch (err) {
+          return res.status(500).json(err);
+        }
+      
+    });
   
 
  module.exports = router

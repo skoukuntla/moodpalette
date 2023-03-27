@@ -11,6 +11,8 @@ const {user} = useContext(AuthContext)
 const [currentUser, setUser] = useState(user);
 const habits = currentUser.userHabits // all of a user's habits
 
+const[edit, setEdit] = useState(false)
+
 useEffect(() => {
     const fetchUser = async () => {
         const res = await axios.get(`/users?username=${currentUser.username}`);
@@ -59,10 +61,26 @@ const checklistSubmit = async (e) => {
         username: currentUser.username,
         completedHabits: completedHabits
       };
+      
+      console.log(completedHabits)
+      /*if(!edit){
+        await axios.post("/day/addCompletedHabits", habitsLog);
+      }else{
+
+        await axios.put("/day/updateCompletedHabits/"+ currentUser.username, {
+            completedHabits: completedHabits
+          });
+        
+      }*/
 
       await axios.post("/day/addCompletedHabits", habitsLog);
       window.location.reload(false);
     
+  };
+
+
+  const onEditClick = (e) => {
+   setEdit(true)
   };
 
 
@@ -71,7 +89,7 @@ const checklistSubmit = async (e) => {
   
 <>
 
-{ dbCompletedHabits.length === 0 && (
+{ (dbCompletedHabits.length === 0 || edit) && (
               <div>
               <br></br>
               <br></br>
@@ -106,7 +124,7 @@ const checklistSubmit = async (e) => {
     )}
 
 
-{ dbCompletedHabits.length > 0 && (
+{ dbCompletedHabits.length > 0 && !edit && (
               <div>
               <br></br>
               <br></br>
@@ -122,6 +140,11 @@ const checklistSubmit = async (e) => {
                 </div>
                
               ))}
+
+        <br></br>
+        <button className="loginButton" type="submit"  onClick={onEditClick}>
+                  Edit
+                </button>
     
     </div>
     <br></br>
