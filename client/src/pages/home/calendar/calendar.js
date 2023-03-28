@@ -15,9 +15,9 @@ import axios from "axios";
 
 
 function App() {
-  //userContext for storing/accessing user specific data 
-  // use the auth context to get this user
-  const {user} = useContext(AuthContext)
+//userContext for storing/accessing user specific data 
+// use the auth context to get this user //from AuthContext.js
+const {user} = useContext(AuthContext)
  //to track selected date
  const [date, setDate] = useState(new Date())
  //to specify popups for specific dates
@@ -28,14 +28,15 @@ function App() {
  //to track the color
  const[color, setColor] = useState('#fff');
  //to track the vibe
- const[vibe, setVibe] = useState(50);
+ const[vibe, setVibe] = useState(25);
  //to track emotion
- const [emotion, setEmotion] = useState();
+ const [emotion, setEmotion] = useState("");
  //to save text within the textbox- for journal
  const [journal, setText] = useState("");
 
  //to save data for API request
  const [apiData, setApiData] = useState({
+  username: "",
   date: "",
   color: "",
   vibe: "",
@@ -45,16 +46,21 @@ function App() {
 
 // to handle submission of data to the backend API
 const handleSubmit = () => {
-  axios
-    .post("/day/", apiData)
-    .then((response) => {
+  {/*axios.post("/day/insertDay", apiData).then((response) => {
       console.log(response.data);
       // handle successful response
     })
     .catch((error) => {
       console.error(error);
+      //console.log(err);
       // handle error response
-    });
+    }); */}
+
+    try {
+     axios.post("/day/insertDay", apiData);
+    } catch (err) {
+      console.log(err);
+    }
 };
 
  //to specify popups
@@ -76,9 +82,6 @@ const handleSubmit = () => {
     journal: journal,
     emotion: emotion,
   });
-
-  // submit the data to the API
-  handleSubmit();
 };
 
 const marks = [
@@ -90,11 +93,6 @@ const marks = [
   { value: 50, label: '50' },
   { value: 100, label: '100' },
 ];
-
-
-
-
-
 
 return (
  <div className="app">
@@ -112,7 +110,6 @@ return (
         //adding click event to each date in calendar 
         //tileContent prop takes a function that returns a date button to be rendered in each date tile
         tileContent={({ date, view }) => {
-
           if (date > new Date()) {
             return null;
           }
@@ -121,27 +118,22 @@ return (
               <button onClick={() => handleDateClick(date)}>
                 {date.getDate()}
               </button>
-          
-            );
-          }
+          );}
         }}
         />
    </div>
    <div className="popup-container">
         <Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
           <div className="popup-content">
-            <h2>{date.toDateString()}</h2>
-            <br />
-            <p>Color of the day: </p>
-            <br />
+            <h2>{date.toDateString()}</h2><br />
+            <p>Color of the day: </p><br />
             <center>
               <ChromePicker color={color} onChange={updatedColor => setColor(updatedColor)} disableAlpha={true}/>
-            </center>
-            <br />
+            </center> <br />
             <p>Vibe Meter: </p>
             <Slider
                   aria-label="Restricted values"
-                  defaultValue={25}
+                  defaultValue={vibe}
                   step={1}
                   valueLabelDisplay="auto"
                   marks={marks}
@@ -153,6 +145,15 @@ return (
             <textarea rows="4" cols="50" value={journal} onChange={(event) => setText(event.target.value)}></textarea>
             <div style={{ width: "100%", textAlign: "center" }}>
                 <button style={{ display: "block", marginTop: "20px" }} onClick={() => {
+                  setApiData({
+                    username: user.username,
+                    date: date.toDateString(),
+                    color: color,
+                    vibe: vibe,
+                    journal: journal,
+                    emotion: emotion,
+                  });
+                  handleSubmit(); // submit the data to the API
                   setOpen(false);
                   (journal !== '') ?  setOpenExtra(false) : setOpenExtra(true);
                 }}>Done</button>
@@ -207,6 +208,15 @@ return (
             <h3>Your current mood: {emotion}</h3>
             <br />
             <button onClick={() => {
+                setApiData({
+                  username: user.username,
+                  date: date.toDateString(),
+                  color: color,
+                  vibe: vibe,
+                  journal: journal,
+                  emotion: emotion,
+                });
+                handleSubmit(); // submit the data to the API
                 setOpenExtra(false);
                 setOpen(true);
             }}>Back</button>
@@ -215,7 +225,7 @@ return (
           </div>
         </Popup>
           </div>
- </div>
+  </div>
   )
 }
 

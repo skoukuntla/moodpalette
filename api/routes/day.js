@@ -2,7 +2,8 @@ const Day=require("../models/Day")
 const router = require("express").Router();
 
 // insert into db
-router.post("/calendar", async (req,res)=>{ 
+//post request route defined for the path "/inserDay"
+router.post("/insertDay", async (req,res)=>{ 
   
     try{
        

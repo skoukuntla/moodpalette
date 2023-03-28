@@ -10,12 +10,16 @@ const DaySchema = new mongoose.Schema({
         type:String,
     },
 
-    vibes:{
+    vibe:{
         type:Number,
         required:true
     },
 
     journal:{
+        type:String,
+    },
+
+    emotion:{
         type:String,
     },
 
