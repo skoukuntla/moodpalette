@@ -26,7 +26,7 @@ const {user} = useContext(AuthContext)
  //to open a popup when the user hasn't inputted their thought log
  const [openExtra, setOpenExtra] = useState(false)
  //to track the color
- const[color, setColor] = useState('#fff');
+ const[color, setColor] = useState('#ffffff');
  //to track the vibe
  const[vibe, setVibe] = useState(25);
  //to track emotion
@@ -45,7 +45,7 @@ const {user} = useContext(AuthContext)
 });
 
 // to handle submission of data to the backend API
-const handleSubmit = () => {
+const handleSubmit = async (e) => {
   {/*axios.post("/day/insertDay", apiData).then((response) => {
       console.log(response.data);
       // handle successful response
@@ -55,12 +55,8 @@ const handleSubmit = () => {
       //console.log(err);
       // handle error response
     }); */}
-
-    try {
-     axios.post("/day/insertDay", apiData);
-    } catch (err) {
-      console.log(err);
-    }
+    console.log(apiData);
+    await axios.post("/day/insertDay", apiData);
 };
 
  //to specify popups
@@ -133,7 +129,7 @@ return (
             <p>Vibe Meter: </p>
             <Slider
                   aria-label="Restricted values"
-                  defaultValue={vibe}
+                  defaultValue={25}
                   step={1}
                   valueLabelDisplay="auto"
                   marks={marks}
