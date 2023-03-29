@@ -22,6 +22,8 @@ var counter = 0;
 const { user, dispatch } = useContext(AuthContext);
 console.log(user)
 
+const {date} = useState();
+
 const username = useRef();
 const email = useRef();
 const age = useRef();
@@ -85,9 +87,14 @@ const getRecs = () => {
         setCurrRec({
           name: response.tracks[0].name,
           albumArt: response.tracks[0].album.images[0].url,
-          artist: response.tracks[0].artists[0].name
+          artist: response.tracks[0].artists[0].name,
+          url: response.tracks[0].external_urls.spotify
         })
-
+        try {
+          axios.put("/days/" + date._id, { url: currRec.url });
+        } catch (err) {
+          console.log("error with editing age");
+        }
     });
   }
 
@@ -116,12 +123,12 @@ const getRecs = () => {
                 <div className="recsRight"></div>
                 <button className="songButton" onClick={getRecs}>Song of the Day!</button>
                 <div className="song">
-                  <img src={currRec.albumArt}/>
+                <a href={currRec.url}><img src={currRec.albumArt}/></a>
                   <br/> <br/>
                   <span className="recsDesc">
-                  Song: {currRec.name}
+                  {currRec.name}
                   <br/> <br/>
-                  Artist: {currRec.artist}
+                  {currRec.artist}
                   <br/> <br/> <br/>
                   </span>
                 </div>
