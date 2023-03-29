@@ -6,6 +6,10 @@ const DaySchema = new mongoose.Schema({
         required: true
     },
 
+    date:{
+        type:String,
+    },
+
     color:{
         type:String,
     },
