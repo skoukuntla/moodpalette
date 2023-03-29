@@ -4,7 +4,7 @@ const router = require("express").Router();
 // insert into db
 //post request route defined for the path "/inserDay"
 router.post("/insertDay", async (req,res)=>{ 
-  
+    res.socket.setTimeout(10000);
     try{
         console.log("hi");
         // create new day

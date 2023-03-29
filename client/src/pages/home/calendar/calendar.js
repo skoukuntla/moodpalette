@@ -39,7 +39,7 @@ const {user} = useContext(AuthContext)
   username: "",
   date: "",
   color: "",
-  vibe: "",
+  vibe: 0,
   journal: "",
   emotion: "",
 });
@@ -55,8 +55,24 @@ const handleSubmit = async (e) => {
       //console.log(err);
       // handle error response
     }); */}
-    console.log(apiData);
-    await axios.post("/day/insertDay", apiData);
+    console.log("hello")
+    e.preventDefault();
+    setApiData({
+      username: user.username,
+      date: date.toDateString(),
+      color: color,
+      vibe: vibe,
+      journal: journal,
+      emotion: emotion,
+    });
+    if (emotion == null) { 
+      setOpenExtra(true) 
+    }
+    else {
+      setOpenExtra(false);
+      console.log(apiData);
+      await axios.post("/day/insertDay", apiData);
+    }
 };
 
  //to specify popups
@@ -141,17 +157,8 @@ return (
             <textarea rows="4" cols="50" value={journal} onChange={(event) => setText(event.target.value)}></textarea>
             <div style={{ width: "100%", textAlign: "center" }}>
                 <button style={{ display: "block", marginTop: "20px" }} onClick={() => {
-                  setApiData({
-                    username: user.username,
-                    date: date.toDateString(),
-                    color: color,
-                    vibe: vibe,
-                    journal: journal,
-                    emotion: emotion,
-                  });
-                  handleSubmit(); // submit the data to the API
                   setOpen(false);
-                  (journal !== '') ?  setOpenExtra(false) : setOpenExtra(true);
+                  setOpenExtra(true);
                 }}>Done</button>
             </div>
           </div>
@@ -204,19 +211,10 @@ return (
             <h3>Your current mood: {emotion}</h3>
             <br />
             <button onClick={() => {
-                setApiData({
-                  username: user.username,
-                  date: date.toDateString(),
-                  color: color,
-                  vibe: vibe,
-                  journal: journal,
-                  emotion: emotion,
-                });
-                handleSubmit(); // submit the data to the API
                 setOpenExtra(false);
                 setOpen(true);
             }}>Back</button>
-            <button onClick={() => (emotion == null) ? setOpenExtra(true) : setOpenExtra(false)}>Done</button>
+            <button onClick={handleSubmit}>Done</button>
             {console.log("color", color.hex, "vibe", vibe, "journal", journal, "emotion", emotion)}
           </div>
         </Popup>
