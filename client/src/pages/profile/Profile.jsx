@@ -14,7 +14,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 
 import emailjs from 'emailjs-com';
 
-import { checkAccessToken } from "../home/spotify/spotifyAuth";
+//import { checkAccessToken } from "../home/spotify/spotifyAuth";
 const spotifyApi = new SpotifyWebApi();
 
 const notify = () => {
@@ -117,24 +117,26 @@ export default function Profile() {
     </button>
   );
 
-  const getRecs = () => {
-    checkAccessToken();
-    console.log("back here")
-    spotifyApi.setAccessToken(localStorage.getItem("spotify_token"));
-
-    return spotifyApi.getRecommendations({
-      limit:5,
-      market:"ES",
-      seed_artists:"4NHQUGzhtTLFvgF5SZesLK",
-      seed_genres:"rock,pop,classical",
-      seed_tracks:"0c6xIDDpzE81m2q797ordA"
-    }).then((response) => {
-        console.log("THIS IS MY REC:", response)
-        setCurrRec({
-          name: response.tracks[0].name,
-          albumArt: response.tracks[0].album.images[0].url
-        })
-
+  const getRecs = async () => {
+    const res = await axios.get("/spotify/fetchAccessToken", {})
+    .then((res) => {
+      spotifyApi.setAccessToken(res.data.accessToken);
+      return spotifyApi.getRecommendations({
+        limit:5,
+        market:"ES",
+        seed_artists:"4NHQUGzhtTLFvgF5SZesLK",
+        seed_genres:"rock,pop,classical",
+        seed_tracks:"0c6xIDDpzE81m2q797ordA"
+      }).then((response) => {
+          console.log("THIS IS MY REC:", response)
+          setCurrRec({
+            name: response.tracks[0].name,
+            albumArt: response.tracks[0].album.images[0].url
+          }) 
+      });
+    })
+    .catch((error) => {
+        console.log(error);
     });
   }
 
