@@ -19,6 +19,10 @@ const DaySchema = new mongoose.Schema({
         type:String,
     },
 
+    url:{
+        type:String //url
+    },
+
 },
 
 {timestamps:true});
