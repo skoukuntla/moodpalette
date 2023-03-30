@@ -35,36 +35,27 @@ const {user} = useContext(AuthContext)
  const [journal, setText] = useState("");
 
  //to save data for API request
- const [apiData, setApiData] = useState({
-  username: "",
-  date: "",
-  color: "",
-  vibe: 0,
-  journal: "",
-  emotion: "",
-});
+//  const [apiData, setApiData] = useState({
+//   username: "",
+//   date: "",
+//   color: "",
+//   vibe: 0,
+//   journal: "",
+//   emotion: "",
+// });
 
 // to handle submission of data to the backend API
 const handleSubmit = async (e) => {
-  {/*axios.post("/day/insertDay", apiData).then((response) => {
-      console.log(response.data);
-      // handle successful response
-    })
-    .catch((error) => {
-      console.error(error);
-      //console.log(err);
-      // handle error response
-    }); */}
     e.preventDefault();
-
-    setApiData({
+    console.log("user: ", user.username, " date: ", date.toDateString, " color: ", color, " vibe: ", vibe, " journal: ", journal, " emotion: ", emotion);
+    const apiData = {
       username: user.username,
       date: date.toDateString(),
       color: color,
       vibe: vibe,
       journal: journal,
       emotion: emotion,
-    });
+    };
     if (emotion == null) { 
       setOpenExtra(true) 
     }
@@ -97,14 +88,14 @@ const handleSubmit = async (e) => {
   }
 
   // set apiData with the data you want to send to the API
-  setApiData({
-    username: user.username,
-    date: clickedDate.toDateString(),
-    color: color.hex,
-    vibe: vibe,
-    journal: journal,
-    emotion: emotion,
-  });
+  // setApiData({
+  //   username: user.username,
+  //   date: clickedDate.toDateString(),
+  //   color: color.hex,
+  //   vibe: vibe,
+  //   journal: journal,
+  //   emotion: emotion,
+  // });
 };
 
 const marks = [
@@ -226,7 +217,7 @@ return (
                 setOpen(true);
             }}>Back</button>
             <button onClick={handleSubmit}>Done</button>
-            {console.log("color", color.hex, "vibe", vibe, "journal", journal, "emotion", emotion)}
+            {console.log("color", color, "vibe", vibe, "journal", journal, "emotion", emotion)}
           </div>
         </Popup>
           </div>
