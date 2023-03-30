@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
     else {
       setOpenExtra(false);
       console.log(apiData);
-      await axios.post("/day/addDayInput", apiData).then((response) => {
+      await axios.post("/day/addDayInputs", apiData).then((response) => {
         console.log(response.data);
         // handle successful response
       })
@@ -100,7 +100,7 @@ const handleSubmit = async (e) => {
   setApiData({
     username: user.username,
     date: clickedDate.toDateString(),
-    color: color,
+    color: color.hex,
     vibe: vibe,
     journal: journal,
     emotion: emotion,
