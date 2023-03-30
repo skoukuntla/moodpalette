@@ -24,6 +24,7 @@
     "mongoose": "^6.9.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
-    "react-spotify-api": "^3.0.0"
+    "react-spotify-api": "^3.0.0",
+    "spotify-web-api-node": "^5.0.2"
   }
 }
