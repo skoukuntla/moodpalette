@@ -6,7 +6,7 @@ import Calendar from "./calendar/calendar"
 import NavBar from "../navbar/index"
 import GetDailyQuote from "./quotes/dailyQuote";
 import SpotifyAuth from "./spotify/spotifyAuth";
- 
+
 export default function Home() {
 
     
@@ -18,6 +18,7 @@ export default function Home() {
             { <NavBar></NavBar> }
             { <Calendar></Calendar> }
             { <GetDailyQuote></GetDailyQuote> }
+            { <SongRecs></SongRecs> }
          </div>
     )
 }
