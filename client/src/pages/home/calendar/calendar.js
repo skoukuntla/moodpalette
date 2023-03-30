@@ -55,8 +55,8 @@ const handleSubmit = async (e) => {
       //console.log(err);
       // handle error response
     }); */}
-    console.log("hello")
     e.preventDefault();
+
     setApiData({
       username: user.username,
       date: date.toDateString(),
@@ -71,8 +71,19 @@ const handleSubmit = async (e) => {
     else {
       setOpenExtra(false);
       console.log(apiData);
-      await axios.post("/day/insertDay", apiData);
+      await axios.post("/day/addDayInput", apiData).then((response) => {
+        console.log(response.data);
+        // handle successful response
+      })
+      .catch((error) => {
+        //console.error(error);
+        console.log(error);
+        // handle error response
+      });
+      //await axios.post("/day/addDayInput", apiData);
     }
+    console.log("done")
+    return "";
 };
 
  //to specify popups
@@ -159,7 +170,7 @@ return (
                 <button style={{ display: "block", marginTop: "20px" }} onClick={() => {
                   setOpen(false);
                   setOpenExtra(true);
-                }}>Done</button>
+                }}>Next</button>
             </div>
           </div>
         </Popup>

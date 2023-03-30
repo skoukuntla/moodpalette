@@ -3,8 +3,9 @@ const router = require("express").Router();
 
 // insert into db
 //post request route defined for the path "/inserDay"
-router.post("/insertDay", async (req,res)=>{ 
-    res.socket.setTimeout(10000);
+router.post("/addDayInputs", async (req,res)=>{ 
+    console.log("hello there")
+    req.setTimeout(60 * 1000); //attempt to manually delay the timeout
     try{
         console.log("hi");
         // create new day
@@ -17,20 +18,18 @@ router.post("/insertDay", async (req,res)=>{
             emotion: req.body.emotion,
         });
         console.log(newDay);
-                const day = await newDay.save();
-                return res.status(200).json(day); // send success (200)
+        const day = await newDay.save();
+        return res.status(200).json(day); // send success (200)
            
         
     }catch(err){
         //console.log(err);
+        console.log("oh shit!");
         return res.status(500).json(err);
     }
    
 })
 
 
-  
-
-  
 
  module.exports = router
