@@ -60,17 +60,19 @@ const handleSubmit = async (e) => {
       setOpenExtra(true) 
     }
     else {
-      setOpenExtra(false);
-      console.log(apiData);
-      await axios.post("/day/addDayInputs", apiData).then((response) => {
-        console.log(response.data);
-        // handle successful response
-      })
-      .catch((error) => {
-        //console.error(error);
-        console.log(error);
-        // handle error response
-      });
+      if (journal !== "") {
+        setOpenExtra(false);
+        console.log(apiData);
+        await axios.post("/day/addDayInputs", apiData).then((response) => {
+          console.log(response.data);
+          // handle successful response
+        })
+        .catch((error) => {
+          //console.error(error);
+          console.log(error);
+          // handle error response
+        });
+      }
       //await axios.post("/day/addDayInput", apiData);
     }
     console.log("done")
@@ -178,8 +180,8 @@ return (
       <div className="popup-container3">
         <Popup open={openExtra} closeOnDocumentClick onClose={() => setOpenExtra(false)}>
           <div className="popup-content">
-          <h2>Extra Popup</h2>
-            <p>Which mood best represents how you feel?</p>
+          <h2>Select your mood</h2>
+          <br />
             <Container fluid="md">
                 <Row>
                     <button class = "emoji-button" onClick={() => setEmotion("Happy")}>🙂</button>
