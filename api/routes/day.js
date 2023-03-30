@@ -30,6 +30,16 @@ router.post("/addDayInputs", async (req,res)=>{
    
 })
 
+router.get("/getDailyData/:username/:date", async (req, res)=>{
+    try {
+		//const user = await User.findOne({ username: req.params.username });
+		const day = await Day.find({ username: req.params.username, date: req.params.date });
+		res.status(200).json(day);
+	} catch (err) {
+		res.status(500).json("error fetching completed habits");
+	}
+})
+
 
 
  module.exports = router

@@ -26,7 +26,7 @@ const {user} = useContext(AuthContext)
  //to open a popup when the user hasn't inputted their thought log
  const [openExtra, setOpenExtra] = useState(false)
  //to track the color
- const[color, setColor] = useState('#ffffff');
+ const[color, setColor] = useState("#ffffff");
  //to track the vibe
  const[vibe, setVibe] = useState(25);
  //to track emotion
@@ -51,7 +51,7 @@ const handleSubmit = async (e) => {
     const apiData = {
       username: user.username,
       date: date.toDateString(),
-      color: color,
+      color: color.hex,
       vibe: vibe,
       journal: journal,
       emotion: emotion,
@@ -60,7 +60,7 @@ const handleSubmit = async (e) => {
       setOpenExtra(true) 
     }
     else {
-      if (journal !== "") {
+      if (emotion !== "") {
         setOpenExtra(false);
         console.log(apiData);
         await axios.post("/day/addDayInputs", apiData).then((response) => {

@@ -1,26 +1,45 @@
-import { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { useEffect, useState, useRef, useContext } from "react";
 import data from './calendar-data-source.json'
+import { AuthContext } from './../../context/AuthContext.js';
+
 
 function App() {
 
+    const {user} = useContext(AuthContext)
+    const [currentUser, setUser] = useState(user);
 
     const canvasRefH = useRef();
   
-    const drawRectangleH = () => {
+    const drawRectangleH = async () => {
         const context = canvasRefH.current.getContext("2d");
-        const validDays = data.calendarDataSource.percentData;
         let count = 0
         let width = window.innerWidth;
         console.log("width", width);
         for (let i = 0; i < 7; i++) {
             for (let j = 0; j < 53; j++) {
-                var n = (Math.random() * 0xfffff * 1000000).toString(16);
-                if (validDays[j][i] === null) {
-                    n = (0xffffff).toString(16);
-                    count--;
+                let day = getDateString(j*7 + i);
+                if (day !== "") {
+                    try {
+                        const res = await axios.get(`day/getDailyData/${currentUser.username}/${getDateString(j*7 + i)}`)
+                        const latestres = res.data[res.data.length - 1];
+                        if (typeof latestres !== 'undefined') {
+                            console.log(latestres)
+                            console.log(latestres.color);
+                            context.fillStyle = latestres.color;
+                        }
+                        else {
+                            context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
+                        }
+                        console.log(latestres);
+                    }
+                    catch (error) {
+                        console.log(error);
+                    }
                 }
-                count++;
-                context.fillStyle = "#" + n.slice(0, 6);
+                else {
+                    context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
+                }
                 context.fillRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
                 context.strokeStyle = '#ffffff';
                 context.lineWidth = 1.2;
@@ -66,36 +85,39 @@ function App() {
         }
         drawRectangleH();
     }, []);
-    
-    // return (
-    //     <div>
-    //         <canvas
-    //         id="horizontal"
-    //         ref={canvasRefH}
-    //         height={255}
-    //         width={1348}
-    //         />
-    //     </div>
-    // );
 
 
     const canvasRefV = useRef();
   
-    const drawRectangleV = () => {
+    const drawRectangleV = async () => {
         const context = canvasRefV.current.getContext("2d");
-        const validDays = data.calendarDataSource.percentData;
         let count = 0
         let width = window.innerWidth;
         console.log("width", width);
         for (let i = 0; i < 53; i++) {
             for (let j = 0; j < 7; j++) {
-                var n = (Math.random() * 0xfffff * 1000000).toString(16);
-                if (validDays[i][j] === null) {
-                    n = (0xffffff).toString(16);
-                    count--;
+                let day = getDateString(i*7 + j);
+                if (day !== "") {
+                    try {
+                        const res = await axios.get(`day/getDailyData/${currentUser.username}/${getDateString(i*7 + j)}`)
+                        const latestres = res.data[res.data.length - 1];
+                        if (typeof latestres !== 'undefined') {
+                            console.log(latestres)
+                            console.log(latestres.color);
+                            context.fillStyle = latestres.color;
+                        }
+                        else {
+                            context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
+                        }
+                        console.log(latestres);
+                    }
+                    catch (error) {
+                        console.log(error);
+                    }
                 }
-                count++;
-                context.fillStyle = "#" + n.slice(0, 6);
+                else {
+                    context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
+                }
                 context.fillRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
                 context.strokeStyle = '#ffffff';
                 context.lineWidth = 1.2;
@@ -140,6 +162,25 @@ function App() {
         drawRectangleV();
     }, []);
     
+    function getDateString(dayOfYear) {
+        console.log(dayOfYear)
+        if (dayOfYear > 364) {
+            return "";
+        }
+        const monthTab = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        let monthIndex = 0;
+        while (dayOfYear >= monthTab[monthIndex]) {
+            dayOfYear -= monthTab[monthIndex];
+            monthIndex++;
+        }
+        let dateString = (monthIndex + 1) + "/" + (dayOfYear + 1) + "/2023";
+        const date = new Date(dateString);
+        if (date > new Date()) {
+            return "";
+        }
+        console.log(dateString, date.toDateString());
+        return date.toDateString();
+    }
     // return (
     //     <div>
     //         <canvas
