@@ -55,4 +55,38 @@ router.put("/:userId", async (req, res) => {
     }
   });
 
+  //add genre
+  router.post("/addGenre", async (req, res) => {
+    try {
+      const currentUser = await User.findOne({ username: req.body.username });
+      await currentUser.updateOne({ $push: { spotifyGenres: req.body.genre } });
+      return res.status(200).json("Genre has been added!");
+    } catch (err) {
+      return res.status(500).json(err);
+    } 
+  });
+
+   //delete genre
+   router.post("/deleteGenre", async (req, res) => {
+    try {
+      const currentUser = await User.findOne({ username: req.body.username });
+      await currentUser.updateOne({ $pull: { spotifyGenres: req.body.genre } })
+      return res.status(200).json("Genre has been deleted!");
+    } catch (err) {
+      return res.status(500).json(err);
+    } 
+  });
+
+  //pull genres
+  router.get("/pullGenres/:username", async (req, res) => {
+    try {
+      const currentUser = await User.findOne({ username: req.params.username });
+      res.status(200).json(currentUser.spotifyGenres);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  
+
  module.exports = router

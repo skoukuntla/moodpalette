@@ -35,6 +35,11 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: "",
     },
+    
+    spotifyGenres: {
+        type: Array,
+        default: [],
+    },
 
 },
 
