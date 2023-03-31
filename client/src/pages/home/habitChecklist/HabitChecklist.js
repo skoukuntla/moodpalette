@@ -103,9 +103,9 @@ const HabitChecklist = () => {
           <h1>My Habits</h1>
           <br></br>
           <form>
-            <div classname="habits">
+            <div className="habits">
               {habits.map((habit) => (
-                <div className="habit">
+                <div className="habit" key={habit}>
                   <h3>{habit}</h3>
                   <input type="checkbox" />
                 </div>
@@ -139,9 +139,9 @@ const HabitChecklist = () => {
           <h1>My Completed Habits</h1>
           <br></br>
 
-          <div classname="habits">
+          <div className="habits">
             {dbCompletedHabits.map((habit) => (
-              <div className="habit">
+              <div className="habit" key={habit}>
                 <h3>{habit}</h3>
               </div>
             ))}
