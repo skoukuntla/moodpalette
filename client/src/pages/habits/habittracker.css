@@ -1,0 +1,27 @@
+.header1 {
+    text-align: center;
+}
+
+.addHabitButton{
+    height: 35px;
+    border-radius: 10px;
+    border: none;
+    background-color: cornflowerblue;
+    color: white;
+    font-size: 20px;
+    font-weight: 250;
+    cursor: pointer;
+    margin-left: 40px;
+}
+
+.habitInput {
+    height: 35px;
+    width: 420px;
+    text-align: center;
+    font-size: medium;
+}
+
+.inputHabit {
+    text-align: center;
+    margin-top: 400px;
+}
