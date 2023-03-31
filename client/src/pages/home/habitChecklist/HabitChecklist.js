@@ -94,7 +94,9 @@ const HabitChecklist = () => {
   return (
     <>
       {((habits && dbCompletedHabits.length === 0 && habits.length!==0) || edit) && (
+               
         <div>
+          
           <br></br>
           <br></br>
           <br></br>
@@ -125,7 +127,8 @@ const HabitChecklist = () => {
             <br></br>
           </form>
         </div>
-      )}
+        )}
+      
 
       {dbCompletedHabits && dbCompletedHabits.length > 0 && !edit && (
         <div>
