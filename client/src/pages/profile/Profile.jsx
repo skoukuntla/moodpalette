@@ -178,6 +178,7 @@ export default function Profile() {
                           ref={age}
                           className="registerInput"
                         />
+                        <SpotifyGenres></SpotifyGenres>
                         <button className="registerButton" type="submit">
                           Update Info
                         </button>
@@ -267,7 +268,6 @@ export default function Profile() {
             <ToastContainer/>
             </div>
         </div>
-        { <SpotifyGenres></SpotifyGenres> }
     </>
     
   );
