@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 import emailjs from 'emailjs-com';
+import SpotifyGenres from "./genre";
 
 //import { checkAccessToken } from "../home/spotify/spotifyAuth";
 const spotifyApi = new SpotifyWebApi();
@@ -266,6 +267,7 @@ export default function Profile() {
             <ToastContainer/>
             </div>
         </div>
+        { <SpotifyGenres></SpotifyGenres> }
     </>
     
   );
