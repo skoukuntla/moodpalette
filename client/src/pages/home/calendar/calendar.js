@@ -33,16 +33,22 @@ const {user} = useContext(AuthContext)
  const [emotion, setEmotion] = useState("");
  //to save text within the textbox- for journal
  const [journal, setText] = useState("");
+ 
 
- //to save data for API request
-//  const [apiData, setApiData] = useState({
-//   username: "",
-//   date: "",
-//   color: "",
-//   vibe: 0,
-//   journal: "",
-//   emotion: "",
-// });
+const currUserData = async (clickedDate, e) => {
+  const res = await axios.get(`day/getDailyData/${user.username}/${clickedDate.toDateString}`)
+  const latestres = res.data[res.data.length - 1];
+  e.preventDefault();
+  const currData = {
+    color: latestres.color.hex,
+    vibe: latestres.vibe,
+    journal: latestres.journal,
+    emotion: latestres.emotion,
+  };
+  console.log(currData.vibe)
+  return currData;
+};
+
 
 // to handle submission of data to the backend API
 const handleSubmit = async (e) => {
@@ -168,13 +174,18 @@ return (
           </div>
         </Popup>
       </div>
-   <div className="popup-container2">
-        <Popup open={openPast} closeOnDocumentClick onClose={() => setOpenPast(false)}>
+   <div className="popup-container2" >
+        <Popup open={openPast} closeOnDocumentClick onClose={() => setOpenPast(false)}  >
+         
           <div className="popup-content">
-          <h2>Past Date Popup</h2>
-            <p>The selected past date is: {date.toDateString()}</p>
+            
+
+          <h2>Past Date Popup: {date.toDateString()}</h2><br />
+          <p>Vibe Meter: {currUserData.vibe} </p>
+
             <button onClick={() => setOpenPast(false)}>Close</button>
           </div>
+          
         </Popup>
       </div>
       <div className="popup-container3">
