@@ -51,6 +51,10 @@ function SpotifyGenres() {
                 }
             }
             setPreselected(preChosenGenres);
+
+            if (preChosenGenres.length == 5) {
+                document.getElementById("genreLimitError").innerHTML = "You can only add up to 5 preferred genres";
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -62,6 +66,10 @@ function SpotifyGenres() {
             username: user.username,
             genre: selectedItem.key,
         };
+
+        if (selectedList.length == 5) {
+            document.getElementById("genreLimitError").innerHTML = "You can only add up to 5 preferred genres";
+        }
       
         await axios.post("/users/addGenre", addGenre);
     }
@@ -72,15 +80,19 @@ function SpotifyGenres() {
             genre: removedItem.key,
         };
       
+        document.getElementById("genreLimitError").innerHTML = "";
+
         await axios.post("/users/deleteGenre", deleteGenre);
     }
 
     return (
         <div>
+        <div id="genreLimitError" style={{ color: "red" }}></div>
         <Multiselect
                 options={options}
                 selectedValues={preSelected}
                 displayValue="key"
+                selectionLimit={5}
                 onKeyPressFn={function noRefCheck(){}}
                 onRemove={onRemove}
                 onSearch={function noRefCheck(){}}
