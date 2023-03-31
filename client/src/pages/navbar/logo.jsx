@@ -20,6 +20,7 @@ const LogoButton = styled.button`
     width: 100%;
     height: 100%;
   }
+  cursor: pointer;
 `;
 
 const LogoText = styled.h2`
