@@ -93,6 +93,7 @@ const HabitTracker = () => {
       <br></br>
       <h1 className="header1"> {user.username}'s Habits!!</h1>
       <div className="allHabitsListing">
+        
       {allHabits.map((habit) => (
               <div className="listingHabit">
                 <h3>{habit}</h3>

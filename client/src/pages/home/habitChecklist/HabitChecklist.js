@@ -93,7 +93,7 @@ const HabitChecklist = () => {
 
   return (
     <>
-      {(dbCompletedHabits.length === 0 && habits.length!==0 || edit) && (
+      {((habits && dbCompletedHabits.length === 0 && habits.length!==0) || edit) && (
         <div>
           <br></br>
           <br></br>
@@ -127,7 +127,7 @@ const HabitChecklist = () => {
         </div>
       )}
 
-      {dbCompletedHabits.length > 0 && !edit && (
+      {dbCompletedHabits && dbCompletedHabits.length > 0 && !edit && (
         <div>
           <br></br>
           <br></br>
