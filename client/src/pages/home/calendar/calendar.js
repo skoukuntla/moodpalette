@@ -144,9 +144,7 @@ return (
         }}
         />
    </div>
-   <div className="popup-container">
         <Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
-          <div className="popup-content">
             <h2>{date.toDateString()}</h2><br />
             <p>Color of the day: </p><br />
             <center>
@@ -171,26 +169,18 @@ return (
                   setOpenExtra(true);
                 }}>Next</button>
             </div>
-          </div>
         </Popup>
-      </div>
-   <div className="popup-container2" >
         <Popup open={openPast} closeOnDocumentClick onClose={() => setOpenPast(false)}  >
          
-          <div className="popup-content">
             
 
           <h2>Past Date Popup: {date.toDateString()}</h2><br />
           <p>Vibe Meter: {currUserData.vibe} </p>
 
             <button onClick={() => setOpenPast(false)}>Close</button>
-          </div>
           
         </Popup>
-      </div>
-      <div className="popup-container3">
         <Popup open={openExtra} closeOnDocumentClick onClose={() => setOpenExtra(false)}>
-          <div className="popup-content">
           <h2>Select your mood</h2>
           <br />
             <Container fluid="md">
@@ -231,9 +221,7 @@ return (
             }}>Back</button>
             <button onClick={handleSubmit}>Done</button>
             {console.log("color", color, "vibe", vibe, "journal", journal, "emotion", emotion)}
-          </div>
         </Popup>
-          </div>
   </div>
   )
 }
