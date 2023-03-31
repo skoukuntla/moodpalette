@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 import emailjs from 'emailjs-com';
+import SpotifyGenres from "./genre";
 
 //import { checkAccessToken } from "../home/spotify/spotifyAuth";
 const spotifyApi = new SpotifyWebApi();
@@ -105,6 +106,11 @@ export default function Profile() {
       Delete Profile
     </button>
   );
+  let updateGenreButton = (
+    <button variant="contained" className="blueBtnEdit">
+      Update Genres
+    </button>
+  )
 
   let deleteFinal = (
     <button
@@ -219,6 +225,27 @@ export default function Profile() {
                     </div>
                   </div>
                 </div>
+              )}
+            </Popup>
+            <Popup trigger={updateGenreButton} modal nested>
+              {(close) => (
+                  <div className="modal">
+                    <div className="content">
+                      <center><h2>Update your Spotify genre preferences</h2></center>
+                      <br/>
+                      <SpotifyGenres></SpotifyGenres>
+                      <div className="spacer">
+                        <br/>
+                        <center><button
+                          variant="contained"
+                          className="greenBtnCancel"
+                          onClick={() => close()}
+                        >
+                          Close
+                        </button></center>
+                      </div>
+                    </div>
+                  </div>
               )}
             </Popup>
           </div>{" "}

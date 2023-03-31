@@ -110,6 +110,7 @@ const HabitChecklist = () => {
                   <input type="checkbox" />
                 </div>
               ))}
+            
             </div>
 
             <br></br>
