@@ -123,6 +123,7 @@ export default function Profile() {
     </button>
   );
 
+
   const getRecs = async () => {
     const res = await axios.get("/spotify/fetchAccessToken", {})
     .then((res) => {
@@ -277,18 +278,6 @@ export default function Profile() {
                 <button className="notify" value="Notify!" onClick={notify}></button>
                 </form>
 
-            </div>
-            <br></br>
-            <div>
-                Song Recs!
-                <br></br>
-                <button onClick={getRecs}>get song recs</button>
-                <div>
-                  <img src={currRec.albumArt} style={{height: 150}}/>
-                  <script type="text/javascript">
-                    document.write(currRec.name)
-                  </script>
-                </div>
             </div>
             <ToastContainer/>
             </div>
