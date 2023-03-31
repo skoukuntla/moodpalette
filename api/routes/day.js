@@ -1,3 +1,4 @@
+const { updateOne } = require("../models/Day");
 const Day=require("../models/Day")
 const router = require("express").Router();
 
@@ -53,5 +54,51 @@ router.put("/getDailyData/:username/:date/:url", async (req, res)=>{
 })
 
 
+router.post("/addCompletedHabits", async (req, res) => {
+      try {
+                const newDay = new Day({
+                    username: req.body.username,
+                    completedHabits: req.body.completedHabits,
+                });
+                
+                const day = await newDay.save();
+                return res.status(200).json(day); // send success (200)
+        
+      } catch (err) {
+        return res.status(500).json(err);
+      }
+   
+  });
+
+  router.get("/getCompletedHabits/:username", async (req, res) => {
+	try {
+		//const user = await User.findOne({ username: req.params.username });
+		const habitsDays = await Day.find({ username: req.params.username });
+		res.status(200).json(habitsDays);
+	} catch (err) {
+		res.status(500).json("error fetching completed habits");
+	}
+});
+
+router.put("/updateCompletedHabits/:username", async (req, res) => {
+
+   
+
+        try {
+          /*const day = await Day.find({username: req.body.username}, {
+            $set: req.body.completedHabits,
+          });*/
+
+          const day = await Day.find({username: req.params.username})
+          console.log(day)
+          await day.updateOne({ $set: req.body });
+        
+          res.status(200).json("habits have been updated");
+        } catch (err) {
+          return res.status(500).json(err);
+        }
+      
+    });
+  
 
  module.exports = router

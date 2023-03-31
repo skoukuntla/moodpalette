@@ -1,10 +1,9 @@
-.homePage{ /* artists is an array that holds each of the artist objects and its information. this is styling all of the columns as a whole */
+.habits{ /* artists is an array that holds each of the artist objects and its information. this is styling all of the columns as a whole */
     flex-direction: row;
     justify-content: space-evenly;
-    
   }
   
-  .sprint{ /* artist is each artist on its own (styling each of the artist columns */
+  .habit{ /* artist is each artist on its own (styling each of the artist columns */
     flex: 1; /*makes everything the same size*/ 
     display: flex;
     flex-direction: row; 

@@ -36,6 +36,12 @@ const UserSchema = new mongoose.Schema({
         default: "",
     },
 
+    userHabits: {
+        type: Array,
+        default: [],
+      },
+
+
 },
 
 {timestamps:true});
