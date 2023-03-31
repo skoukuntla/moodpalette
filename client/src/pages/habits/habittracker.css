@@ -11,17 +11,56 @@
     font-size: 20px;
     font-weight: 250;
     cursor: pointer;
-    margin-left: 40px;
+    margin-left: 30px;
 }
 
 .habitInput {
     height: 35px;
-    width: 420px;
+    width: 300px;
     text-align: center;
     font-size: medium;
 }
 
 .inputHabit {
     text-align: center;
-    margin-top: 400px;
+    margin-top: 40px;
+}
+
+.listingHabit {
+    margin: 20px;
+    text-align: center;
+    color: cornflowerblue;
+    /* flex: 1; makes everything the same size  */
+    /* display: flex;
+    flex-direction: row; 
+    justify-content: space-evenly; */
+}
+
+/* .allHabitsListing {
+    flex-direction: row;
+    justify-content: space-evenly;
+} */
+
+.updateButton{
+    height: 25px;
+    border-radius: 10px;
+    border: none;
+    background-color:darkseagreen;
+    color: white;
+    font-size: 15px;
+    font-weight: 250;
+    cursor: pointer;
+    margin-left: 30px;
+}
+
+.deleteButton{
+    height: 25px;
+    border-radius: 10px;
+    border: none;
+    background-color:indianred;
+    color: white;
+    font-size: 15px;
+    font-weight: 250;
+    cursor: pointer;
+    margin-left: 30px;
 }

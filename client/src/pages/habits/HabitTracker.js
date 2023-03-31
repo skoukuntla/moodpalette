@@ -34,6 +34,31 @@ const HabitTracker = () => {
     console.log("updated:", updatedUser);
   };
 
+
+  const deleteHabit = async (e, habitD) => {
+    e.preventDefault(); // stops page from refreshing on button click
+    console.log("habit to be deleted:",habitD.habit);
+
+    const deleteHabit = {
+      username: user.username,
+      habit: habitD.habit,
+    };
+
+    console.log("deleteHabit1", deleteHabit)
+    const test = await axios.put("/users/deleteHabit", deleteHabit);
+    console.log("test",test)
+
+    const res = await axios.get(`/users/${user._id}`);
+    
+    console.log("res.data", res.data)
+    //setUser(res.data);
+
+    //localStorage.setItem("user", JSON.stringify(updatedUser.user))
+    localStorage.setItem("user", JSON.stringify(res.data))
+
+    //window.location.reload(false);
+    console.log("updated:", updatedUser);
+  };
  
 
 
@@ -42,11 +67,15 @@ const HabitTracker = () => {
       {<NavBar></NavBar>}
       <br></br>
       <h1 className="header1"> {user.username}'s Habits!!</h1>
+      <div className="allHabitsListing">
       {allHabits.map((habit) => (
-              <div className="habit">
+              <div className="listingHabit">
                 <h3>{habit}</h3>
+                <button className="deleteButton" onClick={(e) => deleteHabit(e, {habit})}>Delete</button>
+                <button className="updateButton">Update</button>
               </div>
       ))}
+      </div>
 
       <form className="inputHabit" onSubmit={enterHabit}>
         <input
