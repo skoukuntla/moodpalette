@@ -8,7 +8,7 @@ import axios from "axios";
 const HabitTracker = () => {
   const { user } = useContext(AuthContext);
   const [updatedUser, setUser] = useState({user});
-
+  const allHabits = user.userHabits; 
   const habit = useRef();
 
   const enterHabit = async (e) => {
@@ -36,11 +36,18 @@ const HabitTracker = () => {
 
  
 
+
   return (
     <div>
       {<NavBar></NavBar>}
       <br></br>
       <h1 className="header1"> {user.username}'s Habits!!</h1>
+      {allHabits.map((habit) => (
+              <div className="habit">
+                <h3>{habit}</h3>
+              </div>
+      ))}
+
       <form className="inputHabit" onSubmit={enterHabit}>
         <input
           placeholder="Enter your habit here!"
