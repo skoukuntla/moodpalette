@@ -88,6 +88,7 @@ function SpotifyGenres() {
     return (
         <div>
         <div id="genreLimitError" style={{ color: "red" }}></div>
+        <br/>
         <Multiselect
                 options={options}
                 selectedValues={preSelected}

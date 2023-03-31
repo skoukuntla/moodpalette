@@ -106,6 +106,11 @@ export default function Profile() {
       Delete Profile
     </button>
   );
+  let updateGenreButton = (
+    <button variant="contained" className="blueBtnEdit">
+      Update Genres
+    </button>
+  )
 
   let deleteFinal = (
     <button
@@ -178,7 +183,6 @@ export default function Profile() {
                           ref={age}
                           className="registerInput"
                         />
-                        <SpotifyGenres></SpotifyGenres>
                         <button className="registerButton" type="submit">
                           Update Info
                         </button>
@@ -221,6 +225,27 @@ export default function Profile() {
                     </div>
                   </div>
                 </div>
+              )}
+            </Popup>
+            <Popup trigger={updateGenreButton} modal nested>
+              {(close) => (
+                  <div className="modal">
+                    <div className="content">
+                      <center><h2>Update your Spotify genre preferences</h2></center>
+                      <br/>
+                      <SpotifyGenres></SpotifyGenres>
+                      <div className="spacer">
+                        <br/>
+                        <center><button
+                          variant="contained"
+                          className="greenBtnCancel"
+                          onClick={() => close()}
+                        >
+                          Close
+                        </button></center>
+                      </div>
+                    </div>
+                  </div>
               )}
             </Popup>
           </div>{" "}
