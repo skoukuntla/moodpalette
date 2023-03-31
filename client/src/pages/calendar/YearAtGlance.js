@@ -16,8 +16,8 @@ function App() {
         let count = 0
         let width = window.innerWidth;
         console.log("width", width);
-        for (let i = 0; i < 7; i++) {
-            for (let j = 0; j < 53; j++) {
+        for (let i = 6; i >= 0; i--) {
+            for (let j = 52; j >= 0; j--) {
                 let day = getDateString(j*7 + i);
                 if (day !== "") {
                     try {
@@ -41,8 +41,13 @@ function App() {
                     context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
                 }
                 context.fillRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
-                context.strokeStyle = '#ffffff';
-                context.lineWidth = 1.2;
+                if (j*7 + i < 365) {
+                    context.strokeStyle = '#000000';
+                }
+                else {
+                    context.strokeStyle = "#ffffff";
+                }
+                context.lineWidth = 0.5;
                 context.strokeRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
             }
         }
@@ -94,8 +99,8 @@ function App() {
         let count = 0
         let width = window.innerWidth;
         console.log("width", width);
-        for (let i = 0; i < 53; i++) {
-            for (let j = 0; j < 7; j++) {
+        for (let i = 52; i >= 0; i--) {
+            for (let j = 6; j >= 0; j--) {
                 let day = getDateString(i*7 + j);
                 if (day !== "") {
                     try {
@@ -118,8 +123,13 @@ function App() {
                 else {
                     context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
                 }
+                if (i*7 + j < 365) {
+                    context.strokeStyle = '#000000';
+                }
+                else {
+                    context.strokeStyle = "#ffffff";
+                }
                 context.fillRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
-                context.strokeStyle = '#ffffff';
                 context.lineWidth = 1.2;
                 context.strokeRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
             }
@@ -214,7 +224,7 @@ function App() {
                 <canvas
                 id="vertical"
                 ref={canvasRefV}
-                height={1348}
+                height={1365}
                 width={255}
                 style={{visibility: clicked ? 'visible' : 'hidden' }}
                 />
