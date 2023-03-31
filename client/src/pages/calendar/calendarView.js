@@ -8,20 +8,18 @@ import Grid from '@mui/material/Grid';
 export default function calendarView() {
     return (
         <React.StrictMode>
-            <div class='heatmap-display'>
+            <div>
             {<NavBar></NavBar>}
             <br></br>
-            <center>
+            <div class="calendars">
             <h2>Habit Tracker Heat Map:</h2>
-            <Heatmap></Heatmap>
+            <Heatmap></Heatmap>            
             <h2>Year at a glance:</h2>
             <br></br>
             <YearAtGlance></YearAtGlance>
-            </center>
             </div>
-            <div>
-            
             </div>
+
         </React.StrictMode>
     )
 }
