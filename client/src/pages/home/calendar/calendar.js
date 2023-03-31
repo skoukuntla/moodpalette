@@ -47,13 +47,15 @@ const {user} = useContext(AuthContext)
 const getUserData = async (e) => {
   console.log("DATE:", date.toDateString());
   const res = await axios.get(`day/getDailyData/${user.username}/${date.toDateString()}`)
+  console.log("inside getUserData");
   const latestres = res.data[res.data.length - 1];
+  console.log("inside getUserData");
   console.log("latestres:", latestres);
   if (typeof latestres !== 'undefined') {
     setUserData({username: user.username, date: date.toDateString(), color: latestres.color, vibe: latestres.vibe, journal: latestres.journal, emotion: latestres.emotion});
   }
   else {
-    setUserData({username: user.username, date: date.toDateString(), color: "", vibe: 25, journal: "", emotion: ""});
+    setUserData({username: user.username, date: date.toDateString(), color: "#ffffff", vibe: 25, journal: "", emotion: ""});
   }
   return "";
 };
@@ -77,6 +79,7 @@ const handleSubmit = async (e) => {
     else {
       if (emotion !== "") {
         setOpenExtra(false);
+        setOpenPast(true);
         console.log(apiData);
         await axios.post("/day/addDayInputs", apiData).then((response) => {
           console.log(response.data);
@@ -179,11 +182,12 @@ return (
                 }}>Next</button>
             </div>
         </Popup>
-        <Popup open={openPast} closeOnDocumentClick onClose={() => setOpenPast(false)} onOpen={(e) => getUserData(e)}>
+        <Popup open={openPast} closeOnDocumentClick onClose={() => setOpenPast(false)} onOpen={(e) => getUserData(e)}
+        contentStyle={{ border: `10px solid ${userData.color}` }}>
           <h2>Past Date Popup: {date.toDateString()}</h2><br />
-          <p>Vibe Meter: {userData.vibe} </p>
-          <p>Journal: {userData.journal} </p>
-          <p>Emotion: {userData.emotion} </p>
+          <p>Vibe Meter: {userData.vibe} </p><br></br>
+          <p>Journal: {userData.journal} </p><br></br>
+          <p>Emotion: {userData.emotion} </p><br></br>
 
             <button onClick={() => setOpenPast(false)}>Close</button>
           
