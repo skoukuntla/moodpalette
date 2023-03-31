@@ -30,18 +30,21 @@
     margin: 20px;
     text-align: center;
     color: cornflowerblue;
+    font-size: x-large;
+    
     /* flex: 1; makes everything the same size  */
     /* display: flex;
     flex-direction: row; 
     justify-content: space-evenly; */
 }
 
+
 /* .allHabitsListing {
     flex-direction: row;
     justify-content: space-evenly;
 } */
 
-.updateButton{
+/* .updateButton{
     height: 25px;
     border-radius: 10px;
     border: none;
@@ -51,7 +54,7 @@
     font-weight: 250;
     cursor: pointer;
     margin-left: 30px;
-}
+} */
 
 .deleteButton{
     height: 25px;
@@ -62,5 +65,5 @@
     font-size: 15px;
     font-weight: 250;
     cursor: pointer;
-    margin-left: 30px;
+    margin: 10px;
 }

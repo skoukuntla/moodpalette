@@ -76,8 +76,8 @@ router.post("/addHabit", async (req, res) => {
 });
 
 router.post("/deleteHabit", async (req, res) => {
-  console.log("entered deleteHabit api call")
-  console.log("req body", req.body)
+  // console.log("entered deleteHabit api call")
+  // console.log("req body", req.body)
   try {
     const currentUser = await User.findOne({ username: req.body.username }); // yourself
     await currentUser.updateOne({ $pull: { userHabits: req.body.habit } }); // remove from your userHabits array
@@ -87,14 +87,15 @@ router.post("/deleteHabit", async (req, res) => {
   }
 });
 
-router.put("/updateHabit", async (req, res) => {
-  try {
-    const currentUser = await User.findOne({ username: req.body.username }); // yourself
-    await currentUser.updateOne({ $set: { userHabits: req.body.habit } }); // updating habit from your userHabits array
-    return res.status(200).json("Habit has been updated!");
-  } catch (err) {
-    return res.status(500).json(err);
-  }
-});
+// router.put("/updateHabit", async (req, res) => {
+//   try {
+//     const currentUser = await User.findOne({ username: req.body.username }); // yourself
+//     await currentUser.updateOne({ $set: { [`userHabits.${req.body.oldHabit}`]: "some new habit"} });
+//     // await currentUser.updateOne({ $set: { userHabits: req.body.habit } }); // updating habit from your userHabits array
+//     return res.status(200).json("Habit has been updated!");
+//   } catch (err) {
+//     return res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;

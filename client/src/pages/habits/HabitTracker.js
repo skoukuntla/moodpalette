@@ -60,6 +60,31 @@ const HabitTracker = () => {
     console.log("updated:", updatedUser);
   };
  
+  // const updateHabit = async (e, habitU) => {
+  //   e.preventDefault(); // stops page from refreshing on button click
+  //   console.log("habit to be updated:",habitU.habit);
+
+  //   const updateHabit = {
+  //     username: user.username,
+  //     oldHabit: habitU.habit,
+  //     newHabit: "something",
+  //   };
+
+  //   console.log("updateHabit", updateHabit)
+  //   const test = await axios.put("/users/updateHabit", updateHabit);
+  //   console.log("test",test)
+
+  //   const res = await axios.get(`/users/${user._id}`);
+    
+  //   console.log("res.data", res.data)
+  //   //setUser(res.data);
+
+  //   //localStorage.setItem("user", JSON.stringify(updatedUser.user))
+  //   localStorage.setItem("user", JSON.stringify(res.data))
+
+  //   window.location.reload(false);
+  //   console.log("updated:", updatedUser);
+  // };
 
 
   return (
@@ -72,7 +97,7 @@ const HabitTracker = () => {
               <div className="listingHabit">
                 <h3>{habit}</h3>
                 <button className="deleteButton" onClick={(e) => deleteHabit(e, {habit})}>Delete</button>
-                <button className="updateButton">Update</button>
+                {/* <button className="updateButton"  onClick={(e) => updateHabit(e, {habit})}>Update</button> */}
               </div>
       ))}
       </div>
@@ -88,6 +113,8 @@ const HabitTracker = () => {
           Add your habit!
         </button>
       </form>
+      <div id="passError" style={{ color: "red" }}></div>
+  
     </div>
   );
 };
