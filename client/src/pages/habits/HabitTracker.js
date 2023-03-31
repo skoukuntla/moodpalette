@@ -45,7 +45,7 @@ const HabitTracker = () => {
     };
 
     console.log("deleteHabit1", deleteHabit)
-    const test = await axios.put("/users/deleteHabit", deleteHabit);
+    const test = await axios.post("/users/deleteHabit", deleteHabit);
     console.log("test",test)
 
     const res = await axios.get(`/users/${user._id}`);
@@ -56,7 +56,7 @@ const HabitTracker = () => {
     //localStorage.setItem("user", JSON.stringify(updatedUser.user))
     localStorage.setItem("user", JSON.stringify(res.data))
 
-    //window.location.reload(false);
+    window.location.reload(false);
     console.log("updated:", updatedUser);
   };
  

@@ -75,7 +75,7 @@ router.post("/addHabit", async (req, res) => {
   }
 });
 
-router.put("/deleteHabit", async (req, res) => {
+router.post("/deleteHabit", async (req, res) => {
   console.log("entered deleteHabit api call")
   console.log("req body", req.body)
   try {
