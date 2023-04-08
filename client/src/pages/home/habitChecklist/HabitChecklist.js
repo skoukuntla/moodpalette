@@ -9,7 +9,7 @@ const HabitChecklist = () => {
   const { user } = useContext(AuthContext);
   const [currentUser, setUser] = useState(user);
   const habits = currentUser.userHabits; // all of a user's habits
-  console.log("size", habits.length)
+  //console.log("size", habits.length)
 
   const [edit, setEdit] = useState(false);
 
