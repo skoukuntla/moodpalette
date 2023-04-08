@@ -92,8 +92,8 @@ const HabitTracker = () => {
       {<NavBar></NavBar>}
       <br></br>
       <h1 className="header1"> {user.username}'s Habits!!</h1>
-      <div className="allHabitsListing">
-      {allHabits.map((habit, index) => (
+      <div>
+      {allHabits?.map((habit, index) => (
               <div className="listingHabit">
                 <h3>{index + 1} . {habit}</h3>
                 <button className="deleteButton" onClick={(e) => deleteHabit(e, {habit})}>Delete</button>
