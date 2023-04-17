@@ -37,9 +37,6 @@ function CalendarHeatmap() {
     return (
         <div className='control-pane'>
             <div className='control-section'>
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
-            </style>
                 <HeatMapComponent id='heatmap-container' titleSettings={{
             text: '',
             textStyle: {
