@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -31,9 +33,12 @@ function OutfitCard(props) {
   const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary]
   const [outfitIndex, setOutfitIndex] = useState(props.outfitIndex + 1)
   const [outfit, setOutfit] = useState(outfits[props.outfitIndex])
-  console.log("outfit:", outfitIndex)
+  //console.log("outfit:", outfitIndex)
   let balance = 80;
 
+  const { user } = useContext(AuthContext);
+  const currentOutfit = user.mooPalOutfit;
+  const purchasedOutfits = user.outfitInventory; 
 
   const [ notEnough, setNotEnough ] = React.useState(false);
   const [ enough, setEnough ] = React.useState(false);
@@ -48,10 +53,26 @@ function OutfitCard(props) {
 
   const handleButtonClickEnough = () => {
     setEnough(true);
+    addOutfitToInventory();
     setTimeout(() => {
         setEnough(false);
     }, 3000);
-}
+  }
+
+  async function addOutfitToInventory() {
+    var inventoryOutfitIndex = outfitIndex;
+    if (outfitIndex % 2 == 1) {
+      inventoryOutfitIndex -= 1
+    }
+
+    const newOutfit = {
+        username: user.username,
+        outfitIndex: inventoryOutfitIndex
+    };
+
+    await axios.post("/users/addOutfitToInventory", newOutfit);
+    //TODO: update local storage
+  }
 
   const move = () => {
     setOutfitIndex(((outfitIndex + 1) % 2) + props.outfitIndex)
@@ -60,13 +81,34 @@ function OutfitCard(props) {
   }
 
   const purchase = () => {
-    if (balance < props.cost) {
-      handleButtonClickNotEnough()
+    if (props.status === "Purchase!") {
+      if (balance < props.cost) {
+        handleButtonClickNotEnough()
+      }
+      else {
+        //document.getElementById("purchase").visible = false;
+        handleButtonClickEnough()
+      }
     }
     else {
-      document.getElementById("purchase").visible = false;
-      handleButtonClickEnough()
+      setAsOutfit();
     }
+  }
+
+  async function setAsOutfit() {
+    var currentOutfitIndex = outfitIndex;
+    if (outfitIndex % 2 == 1) {
+      currentOutfitIndex -= 1
+    }
+
+    const currentOutfit = {
+        username: user.username,
+        outfitIndex: currentOutfitIndex
+    };
+
+    await axios.post("/users/updateCurrentOutfit", currentOutfit);
+    //TODO: update local storage
+    document.getElementById("purchase").disabled = true; //TODO: this is wrong figure this out
   }
 
   return (
@@ -94,7 +136,7 @@ function OutfitCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <button id="purchase" onClick={purchase} disabled={props.owned}>Purchase!</button>        
+        <button id="purchase" onClick={purchase}>{props.status}</button>        
       </CardActions>
     </Card>
   );

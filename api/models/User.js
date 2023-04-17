@@ -44,8 +44,17 @@ const UserSchema = new mongoose.Schema({
     userHabits: {
         type: Array,
         default: [],
-      },
+    },
 
+    mooPalOutfit: {
+        type: Number,
+        default: -1
+    },
+
+    outfitInventory: {
+        type: Array,
+        default: []
+    }
 
 },
 

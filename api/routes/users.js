@@ -131,6 +131,27 @@ module.exports = router;
     }
   });
 
+  //add purchased outfit to inventory
+  router.post("/addOutfitToInventory", async (req, res) => {
+    try {
+      const currentUser = await User.findOne({ username: req.body.username });
+      await currentUser.updateOne({ $push: { outfitInventory: req.body.outfitIndex } });
+      return res.status(200).json("Outfit has been added!");
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
+
+  //update Moo Pal's current outfit
+  router.post("/updateCurrentOutfit", async (req, res) => {
+    try {
+      const currentUser = await User.findOne({ username: req.body.username });
+      await currentUser.updateOne({ $set: { mooPalOutfit: req.body.outfitIndex }});
+      return res.status(200).json("Current outfit has been updated!");
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
   
 
  module.exports = router
