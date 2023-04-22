@@ -70,8 +70,20 @@ function OutfitCard(props) {
         outfitIndex: inventoryOutfitIndex
     };
 
-    await axios.post("/users/addOutfitToInventory", newOutfit);
-    //TODO: update local storage
+    //update DB
+    await axios.post("/users/addOutfitToInventory", newOutfit)
+
+    // update user object for this page
+    user.outfitInventory.push(inventoryOutfitIndex)
+    
+    // update user object in local (browser) storage
+    const newUser = JSON.parse(localStorage.getItem("user"))
+    newUser["outfitInventory"].push(inventoryOutfitIndex)
+    localStorage.setItem("user", JSON.stringify(newUser))
+
+    // update buttons
+    var newCard = document.getElementById(props.outfitIndex)
+    newCard.innerHTML = "Set as outfit!"
   }
 
   const move = () => {
@@ -81,16 +93,16 @@ function OutfitCard(props) {
   }
 
   const purchase = () => {
-    if (props.status === "Purchase!") {
+    var currentCard = document.getElementById(props.outfitIndex)
+    if (currentCard.innerHTML === "Purchase!") {
       if (balance < props.cost) {
         handleButtonClickNotEnough()
       }
       else {
-        //document.getElementById("purchase").visible = false;
         handleButtonClickEnough()
       }
     }
-    else {
+    else if (currentCard.innerHTML === "Set as outfit!") {
       setAsOutfit();
     }
   }
@@ -100,15 +112,36 @@ function OutfitCard(props) {
     if (outfitIndex % 2 == 1) {
       currentOutfitIndex -= 1
     }
+    var oldOutfitIndex = user.mooPalOutfit
 
     const currentOutfit = {
         username: user.username,
         outfitIndex: currentOutfitIndex
     };
 
-    await axios.post("/users/updateCurrentOutfit", currentOutfit);
-    //TODO: update local storage
-    document.getElementById("purchase").disabled = true; //TODO: this is wrong figure this out
+    //update DB
+    await axios.post("/users/updateCurrentOutfit", currentOutfit)
+
+    // update user object for this page
+    user.mooPalOutfit = currentOutfitIndex
+    
+    // update user object in local (browser) storage
+    const newUser = JSON.parse(localStorage.getItem("user"))
+    newUser["mooPalOutfit"] = currentOutfitIndex
+    localStorage.setItem("user", JSON.stringify(newUser))
+
+    // update buttons
+    var newCard = document.getElementById(props.outfitIndex)
+    newCard.disabled = true
+    newCard.innerHTML = "Current outfit!"
+
+    var oldCard = document.getElementById(oldOutfitIndex)
+    oldCard.disabled = false
+    oldCard.innerHTML = "Set as outfit!"
+  }
+
+  function checkStatus(currentStatus) {
+    return (currentStatus === "Current outfit!") ? true : false
   }
 
   return (
@@ -136,7 +169,7 @@ function OutfitCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <button id="purchase" onClick={purchase}>{props.status}</button>        
+        <button id={props.outfitIndex} onClick={purchase} disabled={checkStatus(props.status)}>{props.status}</button>        
       </CardActions>
     </Card>
   );
