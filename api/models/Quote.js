@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const QuoteSchema = new mongoose.Schema({
+    quote_id: {
+        type:String,
+        required:true
+    },
     quote_text: {
         type:String,
         required:true
