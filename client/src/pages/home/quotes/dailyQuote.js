@@ -2,6 +2,7 @@ import React, {useState, useContext} from "react"
 import {AuthContext} from "../../../context/AuthContext";
 import axios from "axios";
 import "./dailyQuote.css"
+import image from "../colby.png"
 
 import partyprimary from '../../shop/outfits/party-primary.png'
 import partysecondary from '../../shop/outfits/party-secondary.png'
@@ -25,10 +26,6 @@ import discoprimary from '../../shop/outfits/disco-primary.png'
 import discosecondary from '../../shop/outfits/disco-secondary.png'
 import cow from '../../shop/outfits/cow.png'
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
 function GetDailyQuote() {
     const [quote,setQuote] = useState('');
     const [author,setAuthor]= useState('');
@@ -47,19 +44,18 @@ function GetDailyQuote() {
     console.log("moo pal image:", user.mooPalOutfit)
 
     return (
-        <div className="quoteDiv">
-            <center>
-                <div className="cow">
-                    <img src={mooPalImg} alt="MooPal"/>
+        <div>
+            <div className="cow">
+                <img className="cowPic" src={mooPalImg} alt="MooPal"/>
+            </div>
+            <br />
+            <div className="quote">
+                <div class="box sb1">
+                    {quote}
+                    <br/><br/>
+                    - {author}
                 </div>
-                <div className="quote">
-                    <div class="box sb1">
-                        {quote}
-                        <br/><br/>
-                        - {author}
-                    </div>
-                </div>
-            </center>
+            </div>
         </div>
     )
 }
