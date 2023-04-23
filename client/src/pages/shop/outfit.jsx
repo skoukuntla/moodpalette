@@ -28,34 +28,40 @@ import popstarprimary from './outfits/popstar-primary.png'
 import popstarsecondary from './outfits/popstar-secondary.png'
 import discoprimary from './outfits/disco-primary.png'
 import discosecondary from './outfits/disco-secondary.png'
+import cow from './outfits/cow.png'
 
 function OutfitCard(props) {
-  const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary]
+  const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary, cow]
   const [outfitIndex, setOutfitIndex] = useState(props.outfitIndex + 1)
   const [outfit, setOutfit] = useState(outfits[props.outfitIndex])
   //console.log("outfit:", outfitIndex)
-  let balance = 80;
+  let balance = 85;
 
   const { user } = useContext(AuthContext);
   const currentOutfit = user.mooPalOutfit;
   const purchasedOutfits = user.outfitInventory; 
-
+  
+  const [ dummy, setDummy ] = React.useState(true);
   const [ notEnough, setNotEnough ] = React.useState(false);
   const [ enough, setEnough ] = React.useState(false);
 
 
   const handleButtonClickNotEnough = () => {
       setNotEnough(true);
+      setDummy(false);
       setTimeout(() => {
           setNotEnough(false);
+          setDummy(true);
       }, 3000);
   }
 
   const handleButtonClickEnough = () => {
     setEnough(true);
+    setDummy(false);
     addOutfitToInventory();
     setTimeout(() => {
         setEnough(false);
+        setDummy(true);
     }, 3000);
   }
 
@@ -93,6 +99,7 @@ function OutfitCard(props) {
   }
 
   const purchase = () => {
+    console.log("hi")
     var currentCard = document.getElementById(props.outfitIndex)
     if (currentCard.innerHTML === "Purchase!") {
       if (balance < props.cost) {
@@ -140,7 +147,7 @@ function OutfitCard(props) {
     oldCard.innerHTML = "Set as outfit!"
   }
 
-  function checkStatus(currentStatus) {
+  const checkStatus = (currentStatus) => {
     return (currentStatus === "Current outfit!") ? true : false
   }
 
@@ -151,14 +158,16 @@ function OutfitCard(props) {
         image={outfit}
       />
       <CardActions>
-        <button onClick={move}>{'<'}</button>
-        <button onClick={move}>{'>'}</button>
+        {props.outfitIndex !== 20 && <button onClick={move}>{'<'}</button>}
         {notEnough && <div className='alert-container'>
                <div className='alert-inner' style={{color: "red"}}>Not enough moo lahs!</div>
            </div>}
         {enough && <div className='alert-container'>
             <div className='alert-inner' style={{color: "green"}}>Purchased!</div>
         </div>}
+        {dummy && <div className='alert-container'>
+        </div>}
+        {props.outfitIndex !== 20 && <button onClick={move}>{'>'}</button>}
       </CardActions>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

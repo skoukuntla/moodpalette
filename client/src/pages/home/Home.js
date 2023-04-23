@@ -22,26 +22,22 @@ export default function Home() {
     return (
 
         <div className="homePage">
-        <div className="">
             {/*{ <SpotifyAuth></SpotifyAuth> }*/} {/*TODO: figure out a better way to do this*/}
             {<NavBar></NavBar>}   
             <br></br>
             <br></br>
-            <div className="sprint">
-                { <Calendar></Calendar> }
+            <div className="calendarAndChecklist">
+                <div className="calendar">
+                    { <Calendar></Calendar> }
+                </div>
+                <div className="checklist">
+                    {<HabitChecklist></HabitChecklist> }
+                </div>
             </div>
-            <div className="sprint">
-                { <GetDailyQuote></GetDailyQuote> }
-            </div>
-            <div className="sprint">
-                {<HabitChecklist></HabitChecklist> }
-            </div>
-            { <SongRecs></SongRecs> }
-         </div>
-
-
-        
-        
+            { <GetDailyQuote></GetDailyQuote> }
+            <center>
+            { <SongRecs></SongRecs> }    
+            </center>
         </div> 
     )
 }

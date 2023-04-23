@@ -43,23 +43,22 @@ function GetDailyQuote() {
     const {user} = useContext(AuthContext);
     const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary]
     const mooPalImg = outfits[user.mooPalOutfit]
+    console.log("moo pal image:", user.mooPalOutfit)
 
     return (
         <div className="quoteDiv">
-            <Container>
-                <Row>
-                    <Col>
-                        <img src={mooPalImg} alt="MooPal" width="200"/>
-                    </Col>
-                    <Col>
-                        <div class="box sb1">
-                            {quote}
-                            <br/><br/>
-                            - {author}
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+            <center>
+                <div className="cow">
+                    <img src={mooPalImg} alt="MooPal"/>
+                </div>
+                <div className="quote">
+                    <div class="box sb1">
+                        {quote}
+                        <br/><br/>
+                        - {author}
+                    </div>
+                </div>
+            </center>
         </div>
     )
 }

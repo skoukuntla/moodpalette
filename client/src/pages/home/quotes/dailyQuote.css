@@ -1,11 +1,10 @@
 .quoteDiv {
     width: 50%;
-    margin: 0 auto;
+    margin-left: 35%;
 }
 
 .box {
     width: 300px;
-    margin: 50px auto;
     background: #6f48eb;
     padding: 20px;
     text-align: center;
@@ -32,4 +31,13 @@
     color: #ccc;
     font-size: 5px;
     text-align: right;
+  }
+
+  .quote {
+    float:left;
+    margin-top: 10px;
+  }
+  
+  .cow {
+    float:left;
   }

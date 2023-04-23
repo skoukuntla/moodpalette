@@ -26,8 +26,12 @@ const MooPalShop = () => {
     <div>
     {<NavBar></NavBar>}
     <br></br>
-   Welcome to the Moo Pal Shop!
+    <center>
+    <h1>Welcome to the Moo Pal Shop!</h1>  
     <Grid container spacing={2}>
+      <Grid item xs={4}>
+        <OutfitCard outfitName="Cow" outfitIndex={20} cost={0} status={setAsOutfit(20)}></OutfitCard>
+      </Grid>
       <Grid item xs={4}>
         <OutfitCard outfitName="Party Pal" outfitIndex={0} cost={20} status={setAsOutfit(0)}></OutfitCard>
       </Grid>
@@ -59,6 +63,7 @@ const MooPalShop = () => {
         <OutfitCard outfitName="Disco" outfitIndex={18} cost={250} status={setAsOutfit(18)}></OutfitCard>
       </Grid>
     </Grid>
+    </center>
    </div>
   )
 }

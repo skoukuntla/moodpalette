@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import MooPalImg from "./MooPal.jpeg";
+import MooPalImg from "../shop/outfits/cow.png";
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
@@ -11,8 +11,8 @@ const LogoWrapper = styled.div`
 `;
 
 const LogoButton = styled.button`
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 80px;
   border: none;
   background: none;
 

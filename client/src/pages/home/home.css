@@ -12,3 +12,24 @@
     text-align: center;
     justify-content: space-evenly;
   }
+
+  .calendar{
+    width:55%;
+    margin-right:2%;
+    float: left;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+  }
+
+  .checklist{
+    width:42%;
+    float: left;
+    align-items: left;
+    text-align: left;
+    justify-content: space-evenly;
+  }
+
+  .calendarAndChecklist{
+    height: 400px;
+  }

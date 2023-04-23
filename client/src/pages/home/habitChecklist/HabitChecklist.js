@@ -96,18 +96,14 @@ const HabitChecklist = () => {
       {((habits && dbCompletedHabits.length === 0 && habits.length!==0) || edit) && (
                
         <div>
-          
-          <br></br>
-          <br></br>
-          <br></br>
           <h1>My Habits</h1>
           <br></br>
           <form>
             <div className="habits">
               {habits.map((habit) => (
                 <div className="habit" key={habit}>
-                  <h3>{habit}</h3>
                   <input type="checkbox" />
+                  <label>{habit}</label>
                 </div>
               ))}
             

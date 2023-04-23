@@ -4,10 +4,18 @@
   }
   
   .habit{ /* artist is each artist on its own (styling each of the artist columns */
-    flex: 1; /*makes everything the same size*/ 
-    display: flex;
-    flex-direction: row; 
-    align-items: center;
-    text-align: center;
+    display: block;
+    align-items: left;
+    text-align: left;
     justify-content: space-evenly;
   }
+
+  label {
+    margin-left: 10px;
+    font-size: 20px;
+    display: inline;
+  }
+
+  input[type=checkbox] {
+    display: inline;
+  } 
