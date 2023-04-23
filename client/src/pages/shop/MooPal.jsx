@@ -28,6 +28,7 @@ const MooPalShop = () => {
     <br></br>
     <center>
     <h1>Welcome to the Moo Pal Shop!</h1>  
+    <br />
     <Grid container spacing={2}>
       <Grid item xs={4}>
         <OutfitCard outfitName="Cow" outfitIndex={20} cost={0} status={setAsOutfit(20)}></OutfitCard>

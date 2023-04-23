@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import MooPalImg from "../shop/outfits/cow.png";
+import MooLah from "../shop/moolah.png";
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
@@ -11,7 +12,7 @@ const LogoWrapper = styled.div`
 `;
 
 const LogoButton = styled.button`
-  width: 120px;
+  width: 110px;
   height: 80px;
   border: none;
   background: none;
@@ -37,7 +38,15 @@ const PointsText = styled.h2`
   margin-left: 4px;
   color: #222;
   font-weight: 500;
+  img {
+    position: relative;
+    margin: 0;
+    top: 5px;
+    width: 10%;
+    height: 10%;
+  }
 `;
+
 
 export default function Logo(props) {
   const { user } = useContext(AuthContext);
@@ -50,7 +59,9 @@ export default function Logo(props) {
       </Link>
       <div>
         <LogoText>Mood Palette</LogoText>
-        <PointsText>Moo Lahs: {user.mooLahs}</PointsText>
+        <div>
+          <PointsText>Moo Lahs: {user.mooLahs}<img src={MooLah}/></PointsText>
+        </div>
       </div>
     </LogoWrapper>
   );

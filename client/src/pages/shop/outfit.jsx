@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import './outfit.css'
+import moolah from './moolah.png';
 import partyprimary from './outfits/party-primary.png'
 import partysecondary from './outfits/party-secondary.png'
 import crownprimary from './outfits/crown-primary.png'
@@ -44,7 +45,6 @@ function OutfitCard(props) {
   const [ dummy, setDummy ] = React.useState(true);
   const [ notEnough, setNotEnough ] = React.useState(false);
   const [ enough, setEnough ] = React.useState(false);
-
 
   const handleButtonClickNotEnough = () => {
       setNotEnough(true);
@@ -160,8 +160,8 @@ function OutfitCard(props) {
       <CardActions>
         {props.outfitIndex !== 20 && <button onClick={move}>{'<'}</button>}
         {notEnough && <div className='alert-container'>
-               <div className='alert-inner' style={{color: "red"}}>Not enough moo lahs!</div>
-           </div>}
+              <div className='alert-inner' style={{color: "red"}}>Not enough moo lahs!</div>
+          </div>}
         {enough && <div className='alert-container'>
             <div className='alert-inner' style={{color: "green"}}>Purchased!</div>
         </div>}
@@ -171,10 +171,10 @@ function OutfitCard(props) {
       </CardActions>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {props.outfitName}
+          <h3>{props.outfitName}</h3>
         </Typography>
-        <Typography gutterBottom variant="body" component="div">
-          {props.cost} moo lahs
+        <Typography gutterBottom variant="h6" component="div">
+          <p>{props.cost} <img src={moolah}/></p>
         </Typography>
       </CardContent>
       <CardActions>
