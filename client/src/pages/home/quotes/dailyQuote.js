@@ -23,6 +23,7 @@ import popstarprimary from '../../shop/outfits/popstar-primary.png'
 import popstarsecondary from '../../shop/outfits/popstar-secondary.png'
 import discoprimary from '../../shop/outfits/disco-primary.png'
 import discosecondary from '../../shop/outfits/disco-secondary.png'
+import cow from '../../shop/outfits/cow.png'
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -41,7 +42,7 @@ function GetDailyQuote() {
     }
 
     const {user} = useContext(AuthContext);
-    const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary]
+    const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary, cow]
     const mooPalImg = outfits[user.mooPalOutfit]
     console.log("moo pal image:", user.mooPalOutfit)
 

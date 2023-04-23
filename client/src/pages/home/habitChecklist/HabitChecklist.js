@@ -60,6 +60,7 @@ const HabitChecklist = () => {
     const habitsLog = {
       username: currentUser.username,
       completedHabits: completedHabits,
+      date: new Date().toDateString(),
     };
 
     console.log(completedHabits);

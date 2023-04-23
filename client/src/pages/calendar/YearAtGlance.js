@@ -15,23 +15,23 @@ function App() {
         const context = canvasRefH.current.getContext("2d");
         let count = 0
         let width = window.innerWidth;
-        console.log("width", width);
-        for (let i = 6; i >= 0; i--) {
-            for (let j = 52; j >= 0; j--) {
+        //console.log("width", width);
+        for (let j = 0; j < 53; j++) {
+            for (let i = 0; i < 7; i++) {
                 let day = getDateString(j*7 + i);
                 if (day !== "") {
                     try {
                         const res = await axios.get(`day/getDailyData/${currentUser.username}/${getDateString(j*7 + i)}`)
                         const latestres = res.data[res.data.length - 1];
                         if (typeof latestres !== 'undefined') {
-                            console.log(latestres)
-                            console.log(latestres.color);
+                            //console.log(latestres)
+                            //console.log(latestres.color);
                             context.fillStyle = latestres.color;
                         }
                         else {
                             context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
                         }
-                        console.log(latestres);
+                        //console.log(latestres);
                     }
                     catch (error) {
                         console.log(error);
@@ -41,17 +41,12 @@ function App() {
                     context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
                 }
                 context.fillRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
-                if (j*7 + i < 365) {
-                    context.strokeStyle = '#000000';
-                }
-                else {
-                    context.strokeStyle = "#ffffff";
-                }
+                context.strokeStyle = '#000000';
                 context.lineWidth = 0.5;
                 context.strokeRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
             }
         }
-        console.log(count);
+        //console.log(count);
     };
 
     // write a text
@@ -73,7 +68,7 @@ function App() {
     useEffect(() => {
         const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         for (let i = 0; i < 7; i++) {
-            console.log("look here", 30 + 27*i)
+            //console.log("look here", 30 + 27*i)
             writeTextH({text: daysOfWeek[i], x: 30, y: 27 + (24*i)});
         }
 
@@ -85,7 +80,7 @@ function App() {
                 numDays += monthTab[j];
             }
             var numWeeks = Math.floor(numDays/7);
-            console.log(numWeeks);
+            //console.log(numWeeks);
             writeTextH({ text: monthNames[i], x: 64 + (numWeeks * 24.5), y: 0 + (numWeeks * 0)})
         }
         drawRectangleH();
@@ -98,23 +93,23 @@ function App() {
         const context = canvasRefV.current.getContext("2d");
         let count = 0
         let width = window.innerWidth;
-        console.log("width", width);
-        for (let i = 52; i >= 0; i--) {
-            for (let j = 6; j >= 0; j--) {
+        //console.log("width", width);
+        for (let i = 0; i < 53; i++) {
+            for (let j = 0; j < 7; j++) {
                 let day = getDateString(i*7 + j);
                 if (day !== "") {
                     try {
                         const res = await axios.get(`day/getDailyData/${currentUser.username}/${getDateString(i*7 + j)}`)
                         const latestres = res.data[res.data.length - 1];
                         if (typeof latestres !== 'undefined') {
-                            console.log(latestres)
-                            console.log(latestres.color);
+                            //console.log(latestres)
+                            //console.log(latestres.color);
                             context.fillStyle = latestres.color;
                         }
                         else {
                             context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
                         }
-                        console.log(latestres);
+                        //console.log(latestres);
                     }
                     catch (error) {
                         console.log(error);
@@ -123,18 +118,14 @@ function App() {
                 else {
                     context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
                 }
-                if (i*7 + j < 365) {
-                    context.strokeStyle = '#000000';
-                }
-                else {
-                    context.strokeStyle = "#ffffff";
-                }
+                
+                context.strokeStyle = '#000000';
                 context.fillRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
                 context.lineWidth = 1.2;
                 context.strokeRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
             }
         }
-        console.log(count);
+        //console.log(count);
     };
 
     // write a text
@@ -166,14 +157,14 @@ function App() {
                 numDays += monthTab[j];
             }
             var numWeeks = Math.floor(numDays/7);
-            console.log(numWeeks);
+            //console.log(numWeeks);
             writeTextV({ text: monthNames[i], x: 30, y: 27 + (numWeeks * 25)})
         }
         drawRectangleV();
     }, []);
     
     function getDateString(dayOfYear) {
-        console.log(dayOfYear)
+        //console.log(dayOfYear)
         if (dayOfYear > 364) {
             return "";
         }
@@ -188,7 +179,7 @@ function App() {
         if (date > new Date()) {
             return "";
         }
-        console.log(dateString, date.toDateString());
+        //console.log(dateString, date.toDateString());
         return date.toDateString();
     }
     // return (

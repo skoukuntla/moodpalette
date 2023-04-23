@@ -59,6 +59,7 @@ router.post("/addCompletedHabits", async (req, res) => {
                 const newDay = new Day({
                     username: req.body.username,
                     completedHabits: req.body.completedHabits,
+                    date: req.body.date,
                 });
                 
                 const day = await newDay.save();

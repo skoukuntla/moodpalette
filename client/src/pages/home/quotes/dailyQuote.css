@@ -41,3 +41,7 @@
   .cow {
     float:left;
   }
+
+  img {
+    height: 100%;
+  }
