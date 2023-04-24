@@ -145,11 +145,23 @@ const HabitChecklist = () => {
           <br></br>
 
           <div className="habits">
-            {dbCompletedHabits.map((habit) => (
+            {/*{dbCompletedHabits.map((habit) => (
+
               <div className="habit" key={habit}>
                 <h3>{habit}</h3>
               </div>
-            ))}
+            ))}*/}
+
+      <ul>
+      {habits.map((habit) => (
+        <li
+          key={habit.id}
+          style={dbCompletedHabits.includes(habit) ? { textDecoration: 'line-through' } : {}}
+        >
+          {habit}
+        </li>
+      ))}
+     </ul>
 
             <br></br>
             <button className="loginButton" type="submit" onClick={onEditClick}>
