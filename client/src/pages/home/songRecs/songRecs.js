@@ -76,10 +76,10 @@ function SongRecs() {
     
     <div className="recs">
         <div className="recsWrapper">
-            <span className="recsTitle">
+            <h1 className="recsTitle">
               <br/> 
                 View your Song Reccomendation!
-            </span>
+            </h1>
                 <br/>
                 <br/>
                 <div className="recsRight"></div>
