@@ -72,6 +72,14 @@ router.post("/addCompletedHabits", async (req, res) => {
    
   });
 
+  router.delete("/deleteUpdateHack/:username/:date", async (req, res) => { //delete day object with completedHabits
+    try {
+      const day = await Day.findOneAndDelete({username: req.params.username, date: req.params.date, vibe: { $exists: false }});
+      res.status(200).json("Day has been deleted");
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
 
 
   router.get("/getCompletedHabits/:username", async (req, res) => {

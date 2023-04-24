@@ -76,6 +76,11 @@ const HabitChecklist = () => {
         
       }*/
 
+     const date = new Date().toDateString()
+    
+  //  await axios.delete("/day/deleteUpdateHack/:username/:date");
+    const res = await axios.delete(`day/deleteUpdateHack/${currentUser.username}/${date}`);
+		console.log(res)
     await axios.post("/day/addCompletedHabits", habitsLog);
 
     // fetch user
