@@ -21,14 +21,14 @@
     left: -19px;
     top: 45px;
   }
-
- a.aStyle {
+ 
+  a.aStyle {
     color: #ccc;
     font-size: 5px;
     text-align: right;
   }
-
-  .quote {
+/*
+ .quote {
     float: left;
     margin-left: -20px;
   }
@@ -40,4 +40,4 @@
 
   .cowPic {
     width: 200px;
-  }
+  }*/

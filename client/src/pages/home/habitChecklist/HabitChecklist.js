@@ -164,7 +164,9 @@ const HabitChecklist = () => {
      </ul>
 
             <br></br>
-            <button className="loginButton" type="submit" onClick={onEditClick}>
+            <button  
+            style={{ marginRight: "10px"}}
+            className="loginButton" type="submit" onClick={onEditClick}>
               Edit
             </button>
           </div>
