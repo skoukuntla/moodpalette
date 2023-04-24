@@ -60,8 +60,10 @@ const HabitChecklist = () => {
     const habitsLog = {
       username: currentUser.username,
       completedHabits: completedHabits,
+      allHabits: habits,
       date: new Date().toDateString(),
     };
+
 
     console.log(completedHabits);
     /*if(!edit){

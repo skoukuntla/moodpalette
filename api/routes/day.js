@@ -59,6 +59,7 @@ router.post("/addCompletedHabits", async (req, res) => {
                 const newDay = new Day({
                     username: req.body.username,
                     completedHabits: req.body.completedHabits,
+                    allHabits: req.body.allHabits,
                     date: req.body.date,
                 });
                 
@@ -70,6 +71,8 @@ router.post("/addCompletedHabits", async (req, res) => {
       }
    
   });
+
+
 
   router.get("/getCompletedHabits/:username", async (req, res) => {
 	try {

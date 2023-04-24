@@ -27,6 +27,11 @@ const DaySchema = new mongoose.Schema({
         default: [],
     },
 
+    allHabits: {
+        type: Array,
+        default: [],
+    },
+
     url:{
         type:String //url
     },
