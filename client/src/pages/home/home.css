@@ -3,7 +3,6 @@
   flex-direction: row;
   justify-content: space-evenly;
   width:100%;
-  
 }
 
 .rowItems{
@@ -12,6 +11,7 @@
   flex-direction: row; 
   align-items: center;
   width:100%;
+  min-height: auto;
 }
 
 
@@ -19,12 +19,13 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  margin-bottom: 0%;
 }
 
 
 
 .calendar{
-  width:55%;
+  width:58%;
   margin-right:2%;
   float: left;
   align-items: center;
@@ -34,9 +35,8 @@
 }
 
 .checklist{
-  width:30%;
+   width:auto;
   text-align: left;
-  justify-content: space-evenly;
 }
 
 
@@ -51,6 +51,6 @@
 }
 
 .col + .col {
-  margin-left: 5%;
-  margin-right: 20%;
+  margin-left: 4%;
+  margin-right: 18%;
 }
