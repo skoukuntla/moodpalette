@@ -156,7 +156,7 @@ const HabitChecklist = () => {
       {habits.map((habit) => (
         <li
           key={habit.id}
-          style={dbCompletedHabits.includes(habit) ? { textDecoration: 'line-through' } : {}}
+          style={dbCompletedHabits.includes(habit) ? { textDecoration: 'line-through' ,fontSize:20 } : {fontSize:20}}
         >
           {habit}
         </li>
