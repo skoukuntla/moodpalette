@@ -18,6 +18,7 @@
 
   input[type=checkbox] {
     display: inline;
+    margin-left:20px;
   } 
 
   .loginButton{
