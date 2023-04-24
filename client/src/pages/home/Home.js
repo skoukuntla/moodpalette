@@ -20,7 +20,7 @@ export default function Home() {
       <br />
       <br />
       <div className="calendarAndChecklist">
-        <div className="sprint">
+        <div className="rowItems">
           <div className="calendar">
             <Calendar />
           </div>
@@ -30,7 +30,7 @@ export default function Home() {
         </div>
       </div>
       <div className = "secondRow">
-      <div className="sprint">
+      <div className="rowItems">
         <div className="col">
           <GetDailyQuote />
         </div>

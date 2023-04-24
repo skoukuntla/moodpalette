@@ -145,12 +145,7 @@ const HabitChecklist = () => {
           <br></br>
 
           <div className="habits">
-            {/*{dbCompletedHabits.map((habit) => (
-
-              <div className="habit" key={habit}>
-                <h3>{habit}</h3>
-              </div>
-            ))}*/}
+      
 
       <ul>
       {habits.map((habit) => (
