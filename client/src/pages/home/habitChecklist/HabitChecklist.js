@@ -11,6 +11,7 @@ const HabitChecklist = () => {
   const habits = currentUser.userHabits; // all of a user's habits
   //console.log("size", habits.length)
 
+  const date = new Date().toDateString()
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
@@ -23,13 +24,14 @@ const HabitChecklist = () => {
 
   console.log("currentUser", currentUser);
 
+
   const [dbCompletedHabits, setCompHabits] = useState([]);
   useEffect(() => {
     const fetchAllCompHabits = async () => {
       // async function since making api request
       try {
         const res = await axios.get(
-          `day/getCompletedHabits/${currentUser.username}`
+          `day/getCompletedHabits/${currentUser.username}/${date}`
         ); // have to specify date
         let length = res.data.length;
         setCompHabits(res.data[length - 1].completedHabits);
@@ -76,7 +78,6 @@ const HabitChecklist = () => {
         
       }*/
 
-     const date = new Date().toDateString()
     
   //  await axios.delete("/day/deleteUpdateHack/:username/:date");
     const res = await axios.delete(`day/deleteUpdateHack/${currentUser.username}/${date}`);

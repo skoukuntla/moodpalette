@@ -82,10 +82,10 @@ router.post("/addCompletedHabits", async (req, res) => {
   });
 
 
-  router.get("/getCompletedHabits/:username", async (req, res) => {
+  router.get("/getCompletedHabits/:username/:date", async (req, res) => {
 	try {
 		//const user = await User.findOne({ username: req.params.username });
-		const habitsDays = await Day.find({ username: req.params.username });
+		const habitsDays = await Day.find({username: req.params.username, date: req.params.date, vibe: { $exists: false }});
 		res.status(200).json(habitsDays);
 	} catch (err) {
 		res.status(500).json("error fetching completed habits");
