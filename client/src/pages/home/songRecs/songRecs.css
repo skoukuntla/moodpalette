@@ -8,6 +8,8 @@
     height: 150px;
     margin: auto;
     width: 50%;
+    margin-top: -20%;
+
 
   }
 
@@ -21,8 +23,11 @@
   }
 
   .recsDesc {
+    font-size: 20px;
+  }
+
+  .recsTitle{
     font-size: 24px;
-    margin-top: 5%;
   }
 
   .songButton {

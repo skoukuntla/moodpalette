@@ -76,7 +76,7 @@ function SongRecs() {
     
     <div className="recs">
         <div className="recsWrapper">
-            <span className="recsDesc">
+            <span className="recsTitle">
               <br/> 
                 View your Song Reccomendation!
             </span>
@@ -85,7 +85,9 @@ function SongRecs() {
                 <div className="recsRight"></div>
                 <button className="songButton" onClick={getRecs}>Song of the Day!</button>
                 <div className="song">
-                <a href={currRec.url}><img src={currRec.albumArt}/></a>
+                <a href={currRec.url}>
+                  <img src={currRec.albumArt} style={currRec.albumArt? { width: '100px', height: '100px' } : {}} />
+                  </a>
                   <br/> <br/>
                   <span className="recsDesc">
                   {currRec.name}

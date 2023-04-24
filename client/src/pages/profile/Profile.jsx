@@ -177,7 +177,7 @@ export default function Profile() {
         <div className="entireProfile">
           <img
             className="profileUserImg"
-			alt="mooPal"
+			      alt="mooPal"
             src={mooPalImg}
           />
           <h4 className="profileInfoName">{user.username}</h4>
