@@ -40,10 +40,12 @@ function CalendarHeatmap() {
                         let numTotal = 0;
                         for (var k = 0; k < res.data.length; k++) {
                             if (!res.data[k].color) {
+                                console.log(res.data[k], dateString);
                                 numCompleted = res.data[k].completedHabits.length
                                 numTotal = res.data[k].allHabits.length //THIS HAS TO BE CHANGED TO TOTALHABITS.LENGTH
                             }
                         }
+                        console.log(numCompleted, numTotal)
                         if (numTotal > 0) {
                             //console.log(latestres.completedHabits.length);
                             //console.log(latestres.color);
@@ -103,8 +105,12 @@ function CalendarHeatmap() {
             totalDay += monthTab[i];
         }
         totalDay += day;
-        let week = (totalDay / 7).toFixed(0);
-        args.content = [(args.value === 0 ? 'No' : (totalData[week][index]).toFixed(0)) + ' ' + ' habits completed' + '<br>' + value];
+        let week = Math.floor(totalDay / 7);
+        console.log("in tooltip");
+        console.log(totalDay);
+        console.log(percentData[week][index], totalData[week][index]);
+        console.log(week, index)
+        args.content = [(args.value === 0 ? 'No' : (totalData[week][index])) + ' ' + ' habits completed' + '<br>' + value];
     }
     ;
     function load(args) {
