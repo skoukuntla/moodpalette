@@ -48,12 +48,12 @@ const UserSchema = new mongoose.Schema({
 
     mooPalOutfit: {
         type: Number,
-        default: -1
+        default: 20
     },
 
     outfitInventory: {
         type: Array,
-        default: []
+        default: [20]
     }
 
 },

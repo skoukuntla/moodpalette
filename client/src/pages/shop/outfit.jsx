@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import Card from '@mui/material/Card';
@@ -39,12 +39,18 @@ function OutfitCard(props) {
   let balance = 85;
 
   const { user } = useContext(AuthContext);
-  const currentOutfit = user.mooPalOutfit;
-  const purchasedOutfits = user.outfitInventory; 
-  
+
   const [ dummy, setDummy ] = React.useState(true);
   const [ notEnough, setNotEnough ] = React.useState(false);
   const [ enough, setEnough ] = React.useState(false);
+
+  useEffect(() => {
+    const setDisabled = () => {
+      var currentCard = document.getElementById(user.mooPalOutfit)
+      currentCard.disabled = true
+    };
+    setDisabled();
+  }, []);
 
   const handleButtonClickNotEnough = () => {
       setNotEnough(true);
@@ -67,7 +73,7 @@ function OutfitCard(props) {
 
   async function addOutfitToInventory() {
     var inventoryOutfitIndex = outfitIndex;
-    if (outfitIndex % 2 == 1) {
+    if (outfitIndex % 2 === 1) {
       inventoryOutfitIndex -= 1
     }
 
@@ -116,7 +122,7 @@ function OutfitCard(props) {
 
   async function setAsOutfit() {
     var currentOutfitIndex = outfitIndex;
-    if (outfitIndex % 2 == 1) {
+    if (outfitIndex % 2 === 1) {
       currentOutfitIndex -= 1
     }
     var oldOutfitIndex = user.mooPalOutfit
@@ -147,10 +153,6 @@ function OutfitCard(props) {
     oldCard.innerHTML = "Set as outfit!"
   }
 
-  const checkStatus = (currentStatus) => {
-    return (currentStatus === "Current outfit!") ? true : false
-  }
-
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -178,7 +180,7 @@ function OutfitCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <button id={props.outfitIndex} onClick={purchase} disabled={checkStatus(props.status)}>{props.status}</button>        
+        <button id={props.outfitIndex} onClick={purchase}>{props.status}</button>        
       </CardActions>
     </Card>
   );
