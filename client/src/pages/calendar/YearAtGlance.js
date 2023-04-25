@@ -19,26 +19,20 @@ function App() {
         for (let j = 0; j < 53; j++) {
             for (let i = 0; i < 7; i++) {
                 let day = getDateString(j*7 + i);
+                context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
                 if (day !== "") {
                     try {
                         const res = await axios.get(`day/getDailyData/${currentUser.username}/${getDateString(j*7 + i)}`)
-                        const latestres = res.data[res.data.length - 1];
-                        if (typeof latestres !== 'undefined') {
-                            //console.log(latestres)
-                            //console.log(latestres.color);
-                            context.fillStyle = latestres.color;
-                        }
-                        else {
-                            context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
+                        for (let k = 0; k < res.data.length; k++) {
+                            if (res.data[k].color) {
+                                context.fillStyle = res.data[k].color;
+                            }
                         }
                         //console.log(latestres);
                     }
                     catch (error) {
                         console.log(error);
                     }
-                }
-                else {
-                    context.fillStyle = "#" + (0xffffff).toString(16).slice(0, 6);
                 }
                 context.fillRect(j*24.46+42, i*25.07+20, 24.67, 25.07);
                 context.strokeStyle = '#000000';
