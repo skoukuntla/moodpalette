@@ -174,6 +174,7 @@ export default function Profile() {
   return (
     <>
       {<NavBar></NavBar>}
+      <div className="entirePage">
         <div className="entireProfile">
           <img
             className="profileUserImg"
@@ -305,6 +306,7 @@ export default function Profile() {
             </div>
             <ToastContainer/>
             </div>
+        </div>
         </div>
     </>
     
