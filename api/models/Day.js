@@ -27,8 +27,12 @@ const DaySchema = new mongoose.Schema({
         default: [],
     },
 
-    url:{
-        type:String //url
+    playlistId:{
+        type:String //PLAYLIST id: use with embedding code to display
+    },
+
+    songId:{
+        type:String //SONG id: use with embedding code to display
     },
 
     emotion:{

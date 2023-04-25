@@ -7,7 +7,7 @@ import NavBar from "../navbar/index"
 import GetDailyQuote from "./quotes/dailyQuote";
 
 import HabitChecklist from "./habitChecklist/HabitChecklist";
-import SpotifyAuth from "./spotify/spotifyAuth";
+import SpotifyAuth from "./spotify/spotifyAuth"; 
 import SongRecs from "./songRecs/songRecs"
 
 import Colby from "./colby.png";
@@ -31,7 +31,6 @@ export default function Home() {
             <div className="sprint">
             { <Calendar></Calendar> }
             </div>
-          
             { <GetDailyQuote></GetDailyQuote> }
             <div className="sprint">
             {<HabitChecklist></HabitChecklist> }
@@ -40,6 +39,7 @@ export default function Home() {
             <img src={Colby} alt="cow or something" width="200"/>
             </div>
             { <SongRecs></SongRecs> }
+            
          </div>
 
 

@@ -9,7 +9,7 @@ const HabitChecklist = () => {
   const { user } = useContext(AuthContext);
   const [currentUser, setUser] = useState(user);
   const habits = currentUser.userHabits; // all of a user's habits
-  console.log("size", habits.length)
+  //console.log("size", habits.length)
 
   const [edit, setEdit] = useState(false);
 
@@ -93,7 +93,7 @@ const HabitChecklist = () => {
 
   return (
     <>
-      {((habits && dbCompletedHabits.length === 0 && habits.length!==0) || edit) && (
+      {((habits && dbCompletedHabits.length === 0) || edit) && (
         <div>
           <br></br>
           <br></br>

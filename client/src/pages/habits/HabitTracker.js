@@ -92,9 +92,10 @@ const HabitTracker = () => {
       {<NavBar></NavBar>}
       <br></br>
       <h1 className="header1"> {user.username}'s Habits!!</h1>
-      <div className="allHabitsListing">
+      <div>
         
-      {allHabits.map((habit) => (
+        
+      {allHabits?.map((habit) => (
               <div className="listingHabit">
                 <h3>{habit}</h3>
                 <button className="deleteButton" onClick={(e) => deleteHabit(e, {habit})}>Delete</button>
