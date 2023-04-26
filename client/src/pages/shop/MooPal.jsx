@@ -10,7 +10,7 @@ const MooPalShop = () => {
   const currentOutfit = user.mooPalOutfit;
   const purchasedOutfits = user.outfitInventory ? user.outfitInventory : [];
 
-  function setAsOutfit(index) {
+  function setStatus(index) {
     if (index == currentOutfit) {
       return "Current outfit!"
     }
@@ -31,37 +31,37 @@ const MooPalShop = () => {
     <br />
     <Grid container spacing={2}>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Cow" outfitIndex={20} cost={0} status={setAsOutfit(20)}></OutfitCard>
+        <OutfitCard outfitName="Cow" outfitIndex={20} cost={0} status={setStatus(20)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Party Pal" outfitIndex={0} cost={20} status={setAsOutfit(0)}></OutfitCard>
+        <OutfitCard outfitName="Party Pal" outfitIndex={0} cost={20} status={setStatus(0)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Crowned Cow" outfitIndex={2} cost={35} status={setAsOutfit(2)}></OutfitCard>
+        <OutfitCard outfitName="Crowned Cow" outfitIndex={2} cost={35} status={setStatus(2)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Cowboy Cow" outfitIndex={4} cost={45} status={setAsOutfit(4)}></OutfitCard>
+        <OutfitCard outfitName="Cowboy Cow" outfitIndex={4} cost={45} status={setStatus(4)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Fancy" outfitIndex={6} cost={50} status={setAsOutfit(6)}></OutfitCard>
+        <OutfitCard outfitName="Fancy" outfitIndex={6} cost={50} status={setStatus(6)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Employee" outfitIndex={8} cost={65} status={setAsOutfit(8)}></OutfitCard>
+        <OutfitCard outfitName="Employee" outfitIndex={8} cost={65} status={setStatus(8)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Chef" outfitIndex={10} cost={85} status={setAsOutfit(10)}></OutfitCard>
+        <OutfitCard outfitName="Chef" outfitIndex={10} cost={85} status={setStatus(10)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Athlete" outfitIndex={12} cost={110} status={setAsOutfit(12)}></OutfitCard>
+        <OutfitCard outfitName="Athlete" outfitIndex={12} cost={110} status={setStatus(12)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Ninja" outfitIndex={14} cost={150} status={setAsOutfit(14)}></OutfitCard>
+        <OutfitCard outfitName="Ninja" outfitIndex={14} cost={150} status={setStatus(14)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Popstar" outfitIndex={16} cost={195} status={setAsOutfit(16)}></OutfitCard>
+        <OutfitCard outfitName="Popstar" outfitIndex={16} cost={195} status={setStatus(16)}></OutfitCard>
       </Grid>
       <Grid item xs={4}>
-        <OutfitCard outfitName="Disco" outfitIndex={18} cost={250} status={setAsOutfit(18)}></OutfitCard>
+        <OutfitCard outfitName="Disco" outfitIndex={18} cost={250} status={setStatus(18)}></OutfitCard>
       </Grid>
     </Grid>
     </center>

@@ -4,6 +4,8 @@ import "./home.css";
 import Calendar from "./calendar/calendar";
 import NavBar from "../navbar/index";
 import GetDailyQuote from "./quotes/dailyQuote";
+import PlaylistNotify from "./notify/playlistNotify"
+
 import HabitChecklist from "./habitChecklist/HabitChecklist";
 import SpotifyAuth from "./spotify/spotifyAuth";
 import SongRecs from "./songRecs/songRecs";
@@ -19,6 +21,7 @@ export default function Home() {
       <NavBar />
       <br />
       <br />
+      { <PlaylistNotify /> }
       <div className="calendarAndChecklist">
         <div className="rowItems">
           <div className="calendar">
