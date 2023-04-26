@@ -7,6 +7,8 @@ import { useContext, useState } from "react";
 
 const spotifyApi = new SpotifyWebApi();
 const MoodPaletteUserId = "31kh76sx7m4ox754hcf46zckulsy";
+const currDate = new Date().toDateString();
+
 
 function SongRecs() {
 
@@ -17,8 +19,8 @@ function SongRecs() {
   const { user } = useContext(AuthContext);
   console.log(user)
 
-  const {date} = useState();
-  const month = 4; //TODO change to db var
+  const {date, setDate} = useState(currDate);
+  const month = 3; //TODO change to db var
 
   const PlaylistDB = async () => {
     try {
@@ -26,7 +28,7 @@ function SongRecs() {
         username: user.username,
         playlistId: playlistID.id
       };
-      await axios.post("/day/addPlaylistID", inp).then((response) => {
+      await axios.post("/song/addPlaylistID", inp).then((response) => {
         console.log(response.data);
         // handle successful response
       })
@@ -40,14 +42,17 @@ function SongRecs() {
     }
   }
 
-
-  const SongDB = async () => {
+  const SongDB = async (e) => {
     try {
       const inp = {
         username: user.username,
-        songId: currRec.id
+        songId: currRec.id,
+        date: currDate,
+        playlistId: playlistID.id
       };
-      await axios.post("/day/addSongID", inp).then((response) => {
+      const res = await axios.delete(`song/deleteSongHack/${user.username}/${currDate}`);
+		  console.log(res)
+      await axios.post("/song/addSongID", inp).then((response) => {
         console.log(response.data);
         // handle successful response
       })
@@ -57,9 +62,28 @@ function SongRecs() {
         // handle error response
       });
     } catch(err) {
-      console.log(err.response.data)
+      console.log("SONG DB" + err.response.data)
     }
   }
+
+  const getSongDB = async () => {
+    try {
+        const res = await axios.get(
+          `/song/getSongID/${user.username}/${currDate}`
+          );
+        console.log("ATTEMPT " , res);
+        if (typeof res !== 'undefined') {
+          setCurrRec({username: user.username, date:currDate, id: res.data[0].songID});
+        } else {
+          //setCurrRec({username: user.username, date:currDate, id: ""});
+        }
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  }
+
+
+  
 
   const newPlaylist = async () => {
     const id = {
@@ -80,7 +104,7 @@ function SongRecs() {
               setPlaylistID({
                 id: response.id
               }) 
-              PlaylistDB();
+              //PlaylistDB();
 
 
           });
@@ -124,7 +148,7 @@ function SongRecs() {
       console.log("THIS IS MY REC:", response)
           const dateMonth = new Date().getMonth();
           if (month != dateMonth) {
-            //newPlaylist()
+            newPlaylist();
             //add playlist to db
             //month = dateMonth; //TODO change to db var
           } 
@@ -136,9 +160,8 @@ function SongRecs() {
             id: response.tracks[0].id,
             uri: response.tracks[0].uri
           })
+          //addTrackToPlaylist();
           SongDB();
-          //addTrackToPlaylist()
-          //add trackto the playlist 
           try {
            // axios.put("/days/" + date._id, { url: currRec.url });
           } catch (err) {
@@ -150,6 +173,7 @@ function SongRecs() {
         console.log(error);
     });
     /*
+    
                       <iframe src={"https://open.spotify.com/embed/playlist/" + playlistID.id + "?utm_source=generator"} width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                       */
   }
@@ -158,23 +182,37 @@ function SongRecs() {
     
     <div className="recs">
         <div className="recsWrapper">
-            <h1 className="recsTitle">
+            <span className="recsDesc">
               <br/> 
                 View your Song Reccomendation!
-            </h1>
-                <br/>
+            </span>
                 <br/>
                 <div className="recsRight"></div>
-                <button className="songButton" onClick={getRecs}>Song of the Day!</button>
-                <div className="song">
+                <div className="song" value={currRec.id} data-hide-if="">
                   <br/> <br/> <br/>
-                  <br/>
-                  <iframe className="songEmbed" src= {"https://open.spotify.com/embed/track/" + currRec.id + "?utm_source=generator"} width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                  <br/> <br/>
+                  <br/> 
+                  {getSongDB}
+                  <button onClick={getSongDB}>GET REC ID</button>
+                  {currRec.id == undefined ? (
+                  <div>
+                    <button className="songButton" onClick={getRecs}>Song of the Day!         
+                  
+                </button>
+                  </div>
+              ) : (
+                <div>
+                  <button className="songButton" onClick={getRecs}>Generate a New Song of the Day!         
+                  </button>
+                  <br/> <br/> <br/>
+                  <br/> 
+                  <iframe className="songEmbed" src= {"https://open.spotify.com/embed/track/" + currRec.id + "?utm_source=generator"} width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>             
+                </div>
+                  )}
 
+                  <br/> <br/>
                   <br/> <br/> <br/>
                 </div>
-        </div>J
+        </div>
     </div>
   );
 }

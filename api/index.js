@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
+const songRoute = require("./routes/song");
 const morgan = require("morgan");
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
@@ -39,6 +40,7 @@ app.use(morgan("common"));
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/day",dayRoute)
+app.use("/api/song",songRoute)
 app.use("/api/spotify", spotifyRoute);
 app.use("/api/quote", quoteRoute);
 

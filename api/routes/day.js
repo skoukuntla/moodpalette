@@ -53,6 +53,7 @@ router.put("/getDailyData/:username/:date/:id", async (req, res)=>{
 })
 
 
+
 router.post("/addCompletedHabits", async (req, res) => {
       try {
                 const newDay = new Day({
@@ -126,22 +127,7 @@ router.put("/updateCompletedHabits/:username", async (req, res) => {
    
   });
 
-  router.post("/addSongID", async (req, res) => {
-    try {
-              console.log("SONG PUSH TO DB");
-              const newDay = new Day({
-                  username: req.body.username,
-                  songId: req.body.songId,
-              });
-              
-              const day = await newDay.save();
-              return res.status(200).json(day); // send success (200)
-      
-    } catch (err) {
-      return res.status(500).json(err);
-    }
- 
-});
+
   
 
  module.exports = router
