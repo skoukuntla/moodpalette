@@ -5,6 +5,7 @@ import "./home.css"
 import Calendar from "./calendar/calendar"
 import NavBar from "../navbar/index"
 import GetDailyQuote from "./quotes/dailyQuote";
+import PlaylistNotify from "./notify/playlistNotify"
 
 import HabitChecklist from "./habitChecklist/HabitChecklist";
 import SpotifyAuth from "./spotify/spotifyAuth";
@@ -34,6 +35,7 @@ export default function Home() {
                     {<HabitChecklist></HabitChecklist> }
                 </div>
             </div>
+            { <PlaylistNotify></PlaylistNotify> }
             { <GetDailyQuote></GetDailyQuote> }
             <center>
             { <SongRecs></SongRecs> }    

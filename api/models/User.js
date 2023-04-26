@@ -54,8 +54,12 @@ const UserSchema = new mongoose.Schema({
     outfitInventory: {
         type: Array,
         default: [20]
-    }
+    },
 
+    monthlyNotify: {
+        type: Boolean,
+        default: false
+    }
 },
 
 {timestamps:true});
