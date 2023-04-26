@@ -13,6 +13,9 @@ import Row from 'react-bootstrap/Row';
 import { ChromePicker } from 'react-color'
 import axios from "axios";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
 //userContext for storing/accessing user specific data 
@@ -43,6 +46,9 @@ const {user} = useContext(AuthContext)
   emotion: ""
  })
  
+ let mooLahs = user.mooLahs;
+ const[firstDailyEntry, setDailyEntry] = useState(true);
+
 
 const getUserData = async (e) => {
   console.log("DATE:", date.toDateString());
@@ -59,7 +65,8 @@ const getUserData = async (e) => {
     }
   }
   if (foundData) {
-    console.log("found data");
+    console.log("found data: user has already submitted once");
+    setDailyEntry(false);
     setUserData({username: user.username, date: date.toDateString(), color: latestres.color, vibe: latestres.vibe, journal: latestres.journal, emotion: latestres.emotion});
     setColor(latestres.color);
     setVibe(latestres.vibe);
@@ -67,7 +74,7 @@ const getUserData = async (e) => {
     setEmotion(latestres.emotion)
   }
   else {
-    console.log("did not find data");
+    console.log("did not find data: first entry of today");
     setUserData({username: user.username, date: date.toDateString(), color: "#ffffff", vibe: 25, journal: "", emotion: ""});
   }
   return "";
@@ -76,6 +83,7 @@ const getUserData = async (e) => {
 
 // to handle submission of data to the backend API
 const handleSubmit = async (e) => {
+
     e.preventDefault();
     console.log("user: ", user.username, " date: ", date.toDateString, " color: ", color, " vibe: ", vibe, " journal: ", journal, " emotion: ", emotion);
     const apiData = {
@@ -94,6 +102,7 @@ const handleSubmit = async (e) => {
         setOpenExtra(false);
         setOpenPast(true);
         console.log(apiData);
+        // submit data into db
         await axios.post("/day/addDayInputs", apiData).then((response) => {
           console.log(response.data);
           // handle successful response
@@ -103,6 +112,8 @@ const handleSubmit = async (e) => {
           console.log(error);
           // handle error response
         });
+      
+      
       }
       //await axios.post("/day/addDayInput", apiData);
     }
@@ -131,6 +142,36 @@ const handleSubmit = async (e) => {
   //   emotion: emotion,
   // });
 };
+
+const handleMooLahs = async (e) => {
+  setOpenPast(false)
+  window.location.reload(false);
+
+//  increment mooLahs
+      console.log("firstdailyentry", firstDailyEntry)
+       if(firstDailyEntry){
+          mooLahs = mooLahs + 5;
+          setDailyEntry(false);
+          // update user
+          try {
+            axios.put("/users/" + user._id, { mooLahs: mooLahs });
+            // update local storage
+        
+             // update user object for this page
+             user.mooLahs = mooLahs;
+             
+             // update user object in local (browser) storage
+             const newUser = JSON.parse(localStorage.getItem("user"))
+             newUser.mooLahs = mooLahs;
+             localStorage.setItem("user", JSON.stringify(newUser))
+             toast("You earned 5 MooLahs for filling out todays daily entry! Hooray!");
+          } catch (err) {
+            console.log("error with adding mooLahs");
+          }
+        }
+    
+       
+}
 
 const marks = [
   { value: 0, label: '0'},
@@ -203,7 +244,7 @@ return (
           <p>Journal: {userData.journal} </p><br></br>
           <p>Emotion: {userData.emotion} </p><br></br>
 
-            <button onClick={() => setOpenPast(false)}>Close</button>
+            <button onClick={handleMooLahs}>Close</button>
           
         </Popup>
         <Popup open={openExtra} closeOnDocumentClick onClose={() => setOpenExtra(false)}>
@@ -248,6 +289,7 @@ return (
             <button style={{float: "right"}} onClick={handleSubmit}>Done</button>
             {console.log("color", color, "vibe", vibe, "journal", journal, "emotion", emotion)}
         </Popup>
+        <ToastContainer/>
   </div>
   )
 }
