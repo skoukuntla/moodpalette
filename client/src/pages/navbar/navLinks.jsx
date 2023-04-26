@@ -28,7 +28,7 @@ const LinkItem = styled.li`
     transition: all 220ms ease-in-out;
 
     &:hover {
-        border-top: 2px solid #2ecc71;
+        border-top: 2px solid darkseagreen;
     }
 
 `;
@@ -44,7 +44,7 @@ export default function NavLinks(props) {
         <LinksWrapper>
             <LinkItem><Link href="/calendar-view">Calendar View</Link></LinkItem>
             <LinkItem><Link href="/habit">Habit Tracker</Link></LinkItem>
-            <LinkItem><Link href="/shop">Moo Pal Shop</Link></LinkItem>
+            <LinkItem><Link href="/shop">MooMart</Link></LinkItem>
             <LinkItem><Link href="/profile">My Profile</Link></LinkItem>
         </LinksWrapper>
     </NavLinksContainer>

@@ -184,17 +184,7 @@ const HabitTracker = () => {
           <option value="3">Low</option>
         </select>
         </div>
-        {/* <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Choose your priority
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1" style={{backgroundColor:"red"}}>High</Dropdown.Item>
-        <Dropdown.Item href="#/action-2" style={{backgroundColor:"yellow"}}>Medium</Dropdown.Item>
-        <Dropdown.Item href="#/action-3" style={{backgroundColor:"green"}}>Low</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown> */}
+        
         <button
           className="addHabitButton"
           type="submit"

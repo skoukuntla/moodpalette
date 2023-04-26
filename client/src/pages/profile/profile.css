@@ -99,11 +99,12 @@
 .email 
 {
     width: 100vw;
-    height: 70vh;
+    height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: 2%;
+    margin-top: 8%;
 }
 
   
