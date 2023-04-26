@@ -31,6 +31,17 @@ router.post("/addDayInputs", async (req,res)=>{
    
 })
 
+router.post("/deleteHabit", async (req, res) => {
+  try {
+    const currentDay = await Day.findOne({ username: req.body.username, date: req.body.date, vibe: { $exists: false }}); // yourself
+    await currentDay.updateOne({ $pull: { completedHabits: req.body.habit, allHabits: req.body.habit} }); // remove from your completedHabits array
+    return res.status(200).json("Habit has been deleted!");
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
+
 router.get("/getDailyData/:username/:date", async (req, res)=>{
     try {
 		//const user = await User.findOne({ username: req.params.username });
