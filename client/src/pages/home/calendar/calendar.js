@@ -48,13 +48,22 @@ const getUserData = async (e) => {
   console.log("DATE:", date.toDateString());
   const res = await axios.get(`day/getDailyData/${user.username}/${date.toDateString()}`)
   console.log("inside getUserData");
-  const latestres = res.data[res.data.length - 1];
+  let latestres = 'undefined';
+  let foundData = false
   console.log("inside getUserData");
   console.log("latestres:", latestres);
-  if (typeof latestres !== 'undefined') {
+  for (let k = 0; k < res.data.length; k++) {
+    if (typeof res.data[k] !== 'undefined' && res.data[k].color) {
+      foundData = true;
+      latestres = res.data[k];
+    }
+  }
+  if (foundData) {
+    console.log("found data");
     setUserData({username: user.username, date: date.toDateString(), color: latestres.color, vibe: latestres.vibe, journal: latestres.journal, emotion: latestres.emotion});
   }
   else {
+    console.log("did not find data");
     setUserData({username: user.username, date: date.toDateString(), color: "#ffffff", vibe: 25, journal: "", emotion: ""});
   }
   return "";
@@ -130,7 +139,7 @@ const marks = [
 
 return (
  <div className="app">
-   <h1 className="header"> {user.username}'s Calendar !! </h1>
+   <h1 className="homeHeader"> {user.username}'s Calendar !! </h1>
    <div className="calendar-container">
      <Calendar 
         onChange={setDate} 

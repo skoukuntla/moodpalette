@@ -3,6 +3,10 @@
   flex-direction: column; 
 }
 
+.homeHeader{
+  font-size: 27px;
+}
+
 .calendarStyle {
     margin-top: 5%;
     text-align: center;

@@ -44,11 +44,20 @@ const HabitTracker = () => {
       habit: habitD.habit,
     };
 
-    console.log("deleteHabit1", deleteHabit)
+    const deleteDayHabit = {
+      username: user.username,
+      habit: habitD.habit,
+      date: new Date().toDateString()
+    }
+
     const test = await axios.post("/users/deleteHabit", deleteHabit);
     console.log("test",test)
+    const test1 = await axios.post("/day/deleteHabit", deleteDayHabit);
+    console.log("test1",test1) //deleting from days object
 
     const res = await axios.get(`/users/${user._id}`);
+
+    //const res1 = await axios.get(`/day/${user._id}/${new Date().toDateString}`);
     
     console.log("res.data", res.data)
     //setUser(res.data);
