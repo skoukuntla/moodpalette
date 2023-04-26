@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
+const cron = require('node-cron');
 
 //params --> what is in the url
 //body --> what is sent in the request
@@ -170,6 +171,35 @@ module.exports = router;
       return res.status(500).json(err);
     }
   });
+
+  var notifyTask = cron.schedule('0 0 1 * *', async function() { // runs first day of each month
+    console.log("spotify cron job executing!")
+    try {
+      await User.updateMany({}, { $set: { monthlyNotify: true }});
+      return res.status(200).json("Notify flag has been set to true for all users!");
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
+
+router.get("/fetchNotifyFlag", async (req, res) => {
+  try {
+    const currentUser = await User.findOne({ username: req.body.username });
+		res.status(200).json({ monthlyNotify: currentUser.monthlyNotify });
+	} catch (err) {
+		res.status(500).json(err);
+	}
+})
+
+router.post("/updateNotifyFlag", async (req, res) => {
+  try {
+    const currentUser = await User.findOne({ username: req.body.username });
+    await currentUser.updateOne({ $set: { monthlyNotify: false }});
+    return res.status(200).json("Monthly notify has been set to false!");
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+})
   
 
  module.exports = router
