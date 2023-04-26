@@ -49,4 +49,12 @@
   img {
     margin-top: 5%;
     height:150px;
+
+  }
+
+  .songEmbed {
+    display: block;
+    margin-top: auto;
+    margin-right: auto;
+    width: 372;
   }

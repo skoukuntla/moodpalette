@@ -54,3 +54,22 @@
   margin-left: 4%;
   margin-right: 18%;
 }
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+  }
+  
+  .sprint{ /* artist is each artist on its own (styling each of the artist columns */
+    flex: 1; /*makes everything the same size*/ 
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+  }
+
+  .songEmbed {
+    display: block;
+    margin-top: auto;
+    margin-right: auto;
+  }

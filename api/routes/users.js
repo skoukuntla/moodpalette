@@ -98,6 +98,24 @@ router.post("/deleteHabit", async (req, res) => {
 //   }
 // });
 
+
+router.post("/addPlaylistID", async (req, res) => {
+  try {
+            console.log("SONG PUSH TO DB");
+            const newDay = new Day({
+                username: req.body.username,
+                playlistId: req.body.playlistId,
+            });
+            
+            const day = await newDay.save();
+            return res.status(200).json(day); // send success (200)
+    
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+
+});
+
 module.exports = router;
   //add genre
   router.post("/addGenre", async (req, res) => {
