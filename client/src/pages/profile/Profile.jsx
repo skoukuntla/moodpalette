@@ -118,7 +118,7 @@ export default function Profile() {
   };
 
   let editButton = (
-    <button variant="contained" className="blueBtnEdit">
+    <button variant="contained" className="purpleBtnEdit">
       Edit Profile
     </button>
   );

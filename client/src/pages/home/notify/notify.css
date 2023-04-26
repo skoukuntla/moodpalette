@@ -5,7 +5,7 @@
 
 .notifyYesBtn:hover {
     color: #fff;
-    background-color: #6f48eb;
+    background-color: mediumpurple;
 }
 
 .notifyYesBtn {
@@ -17,7 +17,7 @@
     font-weight: 500;
     border-radius: 20px;
     background-color: transparent;
-    border: 2px solid #6f48eb;
+    border: 2px solid mediumpurple;
     transition: all 240ms ease-in-out;
     cursor: pointer;
     margin: 5px;

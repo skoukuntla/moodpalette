@@ -36,6 +36,19 @@
     margin:10px;
 }
 
+
+.purpleBtnEdit {
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: mediumpurple;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    margin:10px;
+}
+
 .greenBtnCancel {
     height: 50px;
     border-radius: 10px;
