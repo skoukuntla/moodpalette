@@ -4,7 +4,7 @@ import { useEffect } from "react";
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URI = 'http://localhost:3000/'
 const CLIENT_ID = "1f57088263ff49bebe219245a8e8c6c9" //TODO: figure out why process.env.SPOTIFY_CLIENT_ID doesn't work
-const SCOPES = ['user-read-private', 'user-read-email', 'user-read-playback-state']
+const SCOPES = ['user-read-private', 'user-top-read', 'user-read-email', 'user-read-playback-state', 'playlist-modify-public', 'playlist-modify-private']
 const SCOPES_URL = SCOPES.join("%20");
 const STATE = 'some-state-of-my-choice'; //TODO: generate random number
 

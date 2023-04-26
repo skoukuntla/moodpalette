@@ -1,4 +1,4 @@
-.profile {
+.entirePage {
 	display: flex;
     justify-content: center;
    
@@ -9,7 +9,7 @@
 	height: 150px;
 	border-radius: 50%;
 	object-fit: cover;
-    flex: auto;
+    /*flex: auto;*/
     margin-top: 10px;
 	border: 3px solid antiquewhite;
 }
@@ -77,20 +77,21 @@
     align-items: center; /*aligns the contents inside the div*/
     border: 2px solid black;
     border-radius: 10%;
-    width:fit-content;
-    justify-content: center;
-    margin-left: 40%;
-    margin-top: 10%;
+    width:1000px;
+    height: 400px;
+    margin-left: 10%;
+    margin-top:8%
 }
 
 .email 
 {
     width: 100vw;
     height: 100vh;
-    background-color:rgb(255, 255, 255);
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 2%;
+    margin-top:-7%
   }
 
   
@@ -117,7 +118,7 @@
 
 .notify {
     width: 250px;
-    height: 50px;
+    height: 100px;
     margin: 0 auto;
     padding: 0;
     display: table-cell;

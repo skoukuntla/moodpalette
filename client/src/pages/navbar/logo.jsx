@@ -6,6 +6,28 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 
+import partyprimary from '../shop/outfits/party-primary.png'
+import partysecondary from '../shop/outfits/party-secondary.png'
+import crownprimary from '../shop/outfits/crown-primary.png'
+import crownsecondary from '../shop/outfits/crown-secondary.png'
+import cowboyprimary from '../shop/outfits/cowboy-primary.png'
+import cowboysecondary from '../shop/outfits/cowboy-secondary.png'
+import fancyprimary from '../shop/outfits/fancy-primary.png'
+import fancysecondary from '../shop/outfits/fancy-secondary.png'
+import employeeprimary from '../shop/outfits/employee-primary.png'
+import employeesecondary from '../shop/outfits/employee-secondary.png'
+import chefprimary from '../shop/outfits/chef-primary.png'
+import chefsecondary from '../shop/outfits/chef-secondary.png'
+import sportsprimary from '../shop/outfits/sports-primary.png'
+import sportssecondary from '../shop/outfits/sports-secondary.png'
+import ninjaprimary from '../shop/outfits/ninja-primary.png'
+import ninjasecondary from '../shop/outfits/ninja-secondary.png'
+import popstarprimary from '../shop/outfits/popstar-primary.png'
+import popstarsecondary from '../shop/outfits/popstar-secondary.png'
+import discoprimary from '../shop/outfits/disco-primary.png'
+import discosecondary from '../shop/outfits/disco-secondary.png'
+import cow from '../shop/outfits/cow.png'
+
 const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -50,6 +72,9 @@ const PointsText = styled.h2`
 
 export default function Logo(props) {
   const { user } = useContext(AuthContext);
+  const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary, cow]
+  const MooPalImg = outfits[user.mooPalOutfit]
+  console.log("moo pal image:", user.mooPalOutfit)
   return (
     <LogoWrapper>
       <Link to="/home">

@@ -175,10 +175,11 @@ export default function Profile() {
   return (
     <>
       {<NavBar></NavBar>}
+      <div className="entirePage">
         <div className="entireProfile">
           <img
             className="profileUserImg"
-			alt="mooPal"
+			      alt="mooPal"
             src={mooPalImg}
           />
           <h4 className="profileInfoName">{user.username}</h4>
@@ -306,6 +307,7 @@ export default function Profile() {
             </div>
             <ToastContainer/>
             </div>
+        </div>
         </div>
     </>
     

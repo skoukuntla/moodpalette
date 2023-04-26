@@ -45,7 +45,7 @@ function GetDailyQuote() {
     return (
         <div>
             <div className="cow">
-                <img className="cowPic" src={mooPalImg} alt="MooPal"/>
+                <img className="cowPic" src={mooPalImg}/>
             </div>
             <br />
             <div className="quote">
