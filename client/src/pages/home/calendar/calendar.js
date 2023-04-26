@@ -61,6 +61,10 @@ const getUserData = async (e) => {
   if (foundData) {
     console.log("found data");
     setUserData({username: user.username, date: date.toDateString(), color: latestres.color, vibe: latestres.vibe, journal: latestres.journal, emotion: latestres.emotion});
+    setColor(latestres.color);
+    setVibe(latestres.vibe);
+    setText(latestres.journal);
+    setEmotion(latestres.emotion)
   }
   else {
     console.log("did not find data");
@@ -109,6 +113,7 @@ const handleSubmit = async (e) => {
  //to specify popups
  const handleDateClick = (clickedDate) => {
   if (clickedDate.toDateString() === new Date().toDateString()) {
+    getUserData();
     setOpen(true);
     setDate(clickedDate);
   } else if (clickedDate < new Date()) {
