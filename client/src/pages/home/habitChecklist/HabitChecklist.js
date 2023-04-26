@@ -102,7 +102,7 @@ const HabitChecklist = () => {
 
   return (
     <>
-      {((habits && dbCompletedHabits.length === 0 && habits.length!==0) || edit) && (
+      {((habits && dbCompletedHabits.length === 0) || edit) && (
                
         <div>
           <h1 className="homeHeader">My Habits</h1>
@@ -119,7 +119,7 @@ const HabitChecklist = () => {
             </div>
 
             <br></br>
-
+            {habits.length > 0 &&
             <button
               className="loginButton"
               type="submit"
@@ -127,7 +127,7 @@ const HabitChecklist = () => {
             >
               Submit
             </button>
-
+            }
             <br></br>
             <br></br>
             <br></br>
