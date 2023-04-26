@@ -24,6 +24,7 @@
 .inputHabit {
     text-align: center;
     margin-top: 40px;
+    
 }
 
 .listingHabit {
@@ -65,5 +66,16 @@
     font-size: 15px;
     font-weight: 250;
     cursor: pointer;
+    margin: 10px;
+}
+
+#HabitError{
+    color: red;
+    text-align: center;
+    padding: 10px;
+    font-size: large;
+}
+
+.priorityLevel{
     margin: 10px;
 }
