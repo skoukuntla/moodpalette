@@ -317,6 +317,7 @@ export default function Profile() {
             </div>
         </div>
         </div>
+        <div className="entireProfile"></div>
         <div className="helpButton" onMouseOver={displayHelp} onMouseOut={displayQuestion}>{helpText}</div>
     </>
     
