@@ -139,7 +139,7 @@ const marks = [
 
 return (
  <div className="app">
-   <h1 className="homeHeader"> {user.username}'s Calendar !! </h1>
+   <h2 className="homeHeader"> My Calendar </h2>
    <div className="calendar-container">
      <Calendar 
         onChange={setDate} 

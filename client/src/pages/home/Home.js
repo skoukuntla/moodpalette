@@ -32,6 +32,7 @@ export default function Home() {
         <br></br>
         <br></br>
         <div className="calendarAndChecklist">
+          <h1 className = "header1"><u>Hi, {user.username}!</u></h1>
             <div className="calendar">
                 { <Calendar></Calendar> }
             </div>
