@@ -18,12 +18,13 @@ const HabitTracker = () => {
 
   const habit = useRef();
   const priority = useRef();
+  const frequency = useRef();
 
   const enterHabit = async (e) => {
     e.preventDefault(); // stops page from refreshing on button click
     console.log(habit.current.value);
     for (let i = 0; i < allHabits.length; i++) {
-      if (allHabits[i].substring(1) === habit.current.value) {
+      if (allHabits[i].substring(4) === habit.current.value) {
         document.getElementById("HabitError").innerHTML =
 				"You've already entered this habit!";
 			  console.log("habit already exists");
@@ -39,12 +40,12 @@ const HabitTracker = () => {
       return;
     }
     setErrorHandling("")
-    const prioritizeHabit = priority.current.value + habit.current.value;
-    console.log(prioritizeHabit);
+    const fullHabitString = priority.current.value + frequency.current.value +habit.current.value;
+    console.log(fullHabitString);
 
     const addHabit = {
       username: user.username,
-      habit: prioritizeHabit,
+      habit: fullHabitString,
     };
 
     console.log(priority.current.value);
@@ -138,22 +139,12 @@ const HabitTracker = () => {
 
         {allHabits?.map((habit, index) => (
           <div className="listingHabit">
-            {habit.substring(0, 1) === "1" && (
-              <h3 style={{color:"red"}}>
-                {index + 1} . {habit.substring(1)}
+            {habit.substring(0, 1) === "1" && (habit.substring(1, 4) === "Day" || habit.substring(1, 4) === new Date().toDateString().split(' ')[0]) &&  (
+             <div>
+             <h3 style={{color:"red"}}>
+                {index + 1} . {habit.substring(4)}
               </h3>
-            )}
-            {habit.substring(0, 1) === "2" && (
-              <h3 style={{color:"#D29E1E"}}>
-                {index + 1} . {habit.substring(1)}
-              </h3>
-            )}
-            {habit.substring(0, 1) === "3" && (
-              <h3 style={{color:"green"}}>
-                {index + 1} . {habit.substring(1)}
-              </h3>
-            )}
-            <button
+              <button
               className="deleteButton"
               onClick={(e) => deleteHabit(e, { habit })}
             >
@@ -165,6 +156,48 @@ const HabitTracker = () => {
             >
               Update
             </button>
+            </div>
+            )}
+            {habit.substring(0, 1) === "2" && (habit.substring(1, 4) === "Day" || habit.substring(1, 4) === new Date().toDateString().split(' ')[0]) &&(
+              <div>
+              <h3 style={{color:"#D29E1E"}}>
+                {index + 1} . {habit.substring(4)}
+              </h3>
+              <button
+              className="deleteButton"
+              onClick={(e) => deleteHabit(e, { habit })}
+            >
+              Delete
+            </button>
+            <button
+              className="updateButton"
+              onClick={(e) => updateHabit(e, { habit })}
+            >
+              Update
+            </button>
+            </div>
+            )}
+            {habit.substring(0, 1) === "3" && (habit.substring(1, 4) === "Day" || habit.substring(1, 4) === new Date().toDateString().split(' ')[0]) &&(
+              <div>
+              <h3 style={{color:"green"}}>
+                {index + 1} . {habit.substring(4)}
+              </h3>
+              
+                <button
+              className="deleteButton"
+              onClick={(e) => deleteHabit(e, { habit })}
+            >
+              Delete
+            </button>
+            <button
+              className="updateButton"
+              onClick={(e) => updateHabit(e, { habit })}
+            >
+              Update
+            </button>
+            </div>
+            )}
+            
           </div>
         ))}
       </div>
@@ -179,9 +212,28 @@ const HabitTracker = () => {
         <label for="priority">Choose a priority level: </label>
 
         <select name="priority" id="levels" ref={priority}>
+        <optgroup label="Priority Level">
           <option value="1">High</option>
           <option value="2">Medium</option>
           <option value="3">Low</option>
+          </optgroup>
+        </select>
+        </div>
+
+        <div className="frequencyLevel">
+        <label for="priority">Choose a frequency for your habit: </label>
+
+        <select name="priority" id="levels" ref={frequency}>
+        <optgroup label="Frequency Level">
+        <option value="Day">Daily</option>
+          <option value="Sun">Sunday</option>
+          <option value="Mon">Monday</option>
+          <option value="Tue">Tuesday</option>
+          <option value="Wed">Wednesday</option>
+          <option value="Thu">Thursday</option>
+          <option value="Fri">Friday</option>
+          <option value="Sat">Saturday</option>
+          </optgroup>
         </select>
         </div>
         

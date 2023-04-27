@@ -112,7 +112,7 @@ const HabitChecklist = () => {
               {habits.map((habit) => (
                 <div className="habit" key={habit}>
                   <input type="checkbox" />
-                  <label>{habit.substring(1)}</label>
+                  <label>{habit.substring(4)}</label>
                 </div>
               ))}
             
@@ -151,7 +151,7 @@ const HabitChecklist = () => {
           key={habit.id}
           style={dbCompletedHabits.includes(habit) ? { textDecoration: 'line-through' ,fontSize:20 } : {fontSize:20}}
         >
-          {habit.substring(1)}
+          {habit.substring(4)}
         </li>
       ))}
      </ul>
