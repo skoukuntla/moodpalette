@@ -43,7 +43,7 @@ function OutfitCard(props) {
   const { user } = useContext(AuthContext);
   let mooLahs = user.mooLahs;
   const notify = (amt) => {
-    toast(`Deducting ${amt} MooLahs into your account!`);
+    toast(`Deducting ${amt} MooLahs from your account!`);
   }
 
   
@@ -92,7 +92,7 @@ function OutfitCard(props) {
         notify(amt);
         setTimeout(function(){
           window.location.reload(false);
-        }, 5000);
+        }, 2000);
         //toast("You earned 5 MooLahs for filling out todays daily entry! Hooray!");
         
     } catch (err) {
@@ -220,7 +220,7 @@ function OutfitCard(props) {
       <CardActions>
         <button id={props.outfitIndex} onClick={purchase}>{props.status}</button>        
       </CardActions>
-      <ToastContainer autoClose={3000}></ToastContainer>
+      <ToastContainer autoClose={2000}></ToastContainer>
     </Card>
   );
 }

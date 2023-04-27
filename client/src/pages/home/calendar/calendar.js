@@ -185,7 +185,7 @@ const handleMooLahs = async (e) => {
         notify();
         setTimeout(function(){
           window.location.reload(false);
-        }, 5000);
+        }, 2000);
         //window.location.reload();
         
        
@@ -319,7 +319,7 @@ return (
             {/*<button onClick={notify}>TEST</button>*/}
             {console.log("color", color, "vibe", vibe, "journal", journal, "emotion", emotion)}
         </Popup>
-        <ToastContainer autoClose={5000}></ToastContainer>
+        <ToastContainer autoClose={2000}></ToastContainer>
   </div>
   )
 }
