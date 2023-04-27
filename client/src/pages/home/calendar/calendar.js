@@ -41,7 +41,7 @@ const {user} = useContext(AuthContext)
  //to store the retrieved data
 
  const notify = () => {
-  toast("Loading 5 MooLahs into your account!");
+  toast("Loading 5 MooLahs into your account for completing your daily entry!");
 }
  
 
