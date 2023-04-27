@@ -31,14 +31,22 @@ import discoprimary from './outfits/disco-primary.png'
 import discosecondary from './outfits/disco-secondary.png'
 import cow from './outfits/cow.png'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function OutfitCard(props) {
   const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary, cow]
   const [outfitIndex, setOutfitIndex] = useState(props.outfitIndex + 1)
   const [outfit, setOutfit] = useState(outfits[props.outfitIndex])
   //console.log("outfit:", outfitIndex)
-  let balance = 85;
-
+  //let balance = 85;
   const { user } = useContext(AuthContext);
+  let mooLahs = user.mooLahs;
+  const notify = (amt) => {
+    toast(`Deducting ${amt} MooLahs into your account!`);
+  }
+
+  
 
   const [ dummy, setDummy ] = React.useState(true);
   const [ notEnough, setNotEnough ] = React.useState(false);
@@ -64,6 +72,34 @@ function OutfitCard(props) {
   const handleButtonClickEnough = () => {
     setEnough(true);
     setDummy(false);
+
+    // deduct from moo lah and notify
+    const amt = props.cost
+    mooLahs = mooLahs-amt;
+    // update user
+    try {
+      axios.put("/users/" + user._id, { mooLahs: mooLahs });
+      // update local storage
+  
+        // update user object for this page
+        user.mooLahs = mooLahs;
+        
+        // update user object in local (browser) storage
+        const newUser = JSON.parse(localStorage.getItem("user"))
+        newUser.mooLahs = mooLahs;
+        localStorage.setItem("user", JSON.stringify(newUser))
+        
+        notify(amt);
+        setTimeout(function(){
+          window.location.reload(false);
+        }, 5000);
+        //toast("You earned 5 MooLahs for filling out todays daily entry! Hooray!");
+        
+    } catch (err) {
+      console.log("error with adding mooLahs");
+    }
+
+
     addOutfitToInventory();
     setTimeout(() => {
         setEnough(false);
@@ -108,7 +144,7 @@ function OutfitCard(props) {
     console.log("hi")
     var currentCard = document.getElementById(props.outfitIndex)
     if (currentCard.innerHTML === "Purchase!") {
-      if (balance < props.cost) {
+      if (mooLahs < props.cost) {
         handleButtonClickNotEnough()
       }
       else {
@@ -151,6 +187,8 @@ function OutfitCard(props) {
     var oldCard = document.getElementById(oldOutfitIndex)
     oldCard.disabled = false
     oldCard.innerHTML = "Set as outfit!"
+
+    window.location.reload()
   }
 
   return (
@@ -182,6 +220,7 @@ function OutfitCard(props) {
       <CardActions>
         <button id={props.outfitIndex} onClick={purchase}>{props.status}</button>        
       </CardActions>
+      <ToastContainer autoClose={3000}></ToastContainer>
     </Card>
   );
 }
