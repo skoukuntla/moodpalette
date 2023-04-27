@@ -1,15 +1,24 @@
 .optionContainer li:hover,
 .optionContainer .highlight {
+<<<<<<< HEAD
   background: cornflowerblue;
+=======
+  background: red;
+>>>>>>> 5cef0b9dcac4f32fc1446d3c21862e051f4ac540
   color: #fff;
 }
 /* Ends overriding */
 
 /* Placehoolder Color Change */
 .searchBox#css_custom_input::placeholder {
+<<<<<<< HEAD
   color: cornflowerblue;
 }
 
 .otheroptions {
     font-size: 30px;
   }
+=======
+  color: red;
+}
+>>>>>>> 5cef0b9dcac4f32fc1446d3c21862e051f4ac540

@@ -4,10 +4,14 @@ import { AuthContext } from "../../context/AuthContext";
 import "./habittracker.css";
 import "reactjs-popup/dist/index.css";
 import axios, { all } from "axios";
+import Dropdown from 'react-bootstrap/Dropdown';
+
 
 const HabitTracker = () => {
   const { user } = useContext(AuthContext);
   const [updatedUser, setUser] = useState({ user });
+
+  const [errorHandling, setErrorHandling] = useState("")
 
   //SINCE WE HAVE LABELED PRIORITIES AS 1,2,3 --> HIGHER PRIORITIES should theoretically BE FIRST ON LIST
   const allHabits = user.userHabits.sort();
@@ -15,16 +19,36 @@ const HabitTracker = () => {
   const habit = useRef();
   const priority = useRef();
 
+  const [helpText, setHelpText] = useState("?");
+
+  const displayHelp = () => {
+    setHelpText("Welcome to your Habit Tracker! Enter different habits that you want to track! You can prioritize them and change their frequency to your liking!")
+  }
+
+  const displayQuestion = () => {
+    setHelpText("?");
+  }
+
   const enterHabit = async (e) => {
     e.preventDefault(); // stops page from refreshing on button click
     console.log(habit.current.value);
     for (let i = 0; i < allHabits.length; i++) {
-      if (allHabits[i] === habit.current.value) {
+      if (allHabits[i].substring(1) === habit.current.value) {
+        document.getElementById("HabitError").innerHTML =
+				"You've already entered this habit!";
+			  console.log("habit already exists");
         return;
-        //RVTODO: CREATE AN ERROR STATEMENT
       }
     }
 
+    if (allHabits.length >= 10) {
+      setErrorHandling("You've reached the maximum number (10) of habits!")
+      // document.getElementById("HabitError").innerHTML =
+      // "You've reached the maximum number (10) of habits!";
+      console.log("habit limit reached");
+      return;
+    }
+    setErrorHandling("")
     const prioritizeHabit = priority.current.value + habit.current.value;
     console.log(prioritizeHabit);
 
@@ -161,7 +185,7 @@ const HabitTracker = () => {
           className="habitInput"
           ref={habit}
         />
-
+        <div className="priorityLevel">
         <label for="priority">Choose a priority level: </label>
 
         <select name="priority" id="levels" ref={priority}>
@@ -169,18 +193,24 @@ const HabitTracker = () => {
           <option value="2">Medium</option>
           <option value="3">Low</option>
         </select>
-
+        </div>
+        
         <button
           className="addHabitButton"
           type="submit"
-          disabled={allHabits.length >= 10}
+          // disabled={allHabits.length >= 10}
+          
         >
           Add your habit!
         </button>
+        
+        <p id="HabitError">{errorHandling}</p>
+
         <br></br>
         <br></br>
       </form>
-      <div id="passError" style={{ color: "red" }}></div>
+      <div id="HabitError"></div>
+      <div className="helpButton" onMouseOver={displayHelp} onMouseOut={displayQuestion}>{helpText}</div>
     </div>
   );
 };

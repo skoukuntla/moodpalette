@@ -33,3 +33,18 @@
 .calendarAndChecklist{
   height: 400px;
 }
+
+.helpButton {
+  position: fixed;
+  background-color: darkseagreen;
+  border-radius: 20px;
+  right: 25px;
+  bottom: 25px;
+  padding: 10px;
+  max-width: 300px;
+}
+
+body {
+  background-color: #f7e2f0;
+
+}

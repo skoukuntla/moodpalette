@@ -47,7 +47,15 @@ const notify = () => {
 export default function Profile() {
 
   const [currRec, setCurrRec] = useState("");
+  const [helpText, setHelpText] = useState("?");
 
+  const displayHelp = () => {
+    setHelpText("Welcome to your profile page! Feel free to edit your profile information on the left. On the right, input a time at which you'd like to be reminded to enter your daily data!")
+  }
+
+  const displayQuestion = () => {
+    setHelpText("?");
+  }
   const form = useRef();
     function sendEmail(e) {
         e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
@@ -309,6 +317,7 @@ export default function Profile() {
             </div>
         </div>
         </div>
+        <div className="helpButton" onMouseOver={displayHelp} onMouseOut={displayQuestion}>{helpText}</div>
     </>
     
   );
