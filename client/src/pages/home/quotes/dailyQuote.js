@@ -41,12 +41,11 @@ function GetDailyQuote() {
     const {user} = useContext(AuthContext);
     const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary, cow]
     const mooPalImg = outfits[user.mooPalOutfit]
-    console.log("moo pal image:", user.mooPalOutfit)
 
     return (
         <div>
             <div className="cow">
-                <img className="cowPic" src={mooPalImg} alt="MooPal"/>
+                <img className="cowPic" src={mooPalImg}/>
             </div>
             <br />
             <div className="quote">

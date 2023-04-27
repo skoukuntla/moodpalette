@@ -18,13 +18,13 @@ const LogoutButton = styled.button`
   font-weight: 500;
   border-radius: 20px;
   background-color: transparent;
-  border: 2px solid #2ecc71;
+  border: 2px solid darkseagreen;
   transition: all 240ms ease-in-out;
   cursor: pointer;
 
   &:hover {
     color: #fff;
-    background-color: #2ecc71;
+    background-color: darkseagreen;
   }
 
   &:not(:last-of-type) {

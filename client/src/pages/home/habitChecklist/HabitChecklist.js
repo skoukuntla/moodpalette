@@ -11,6 +11,7 @@ const HabitChecklist = () => {
   const habits = currentUser.userHabits; // all of a user's habits
   //console.log("size", habits.length)
 
+  const date = new Date().toDateString()
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
@@ -23,13 +24,14 @@ const HabitChecklist = () => {
 
   console.log("currentUser", currentUser);
 
+
   const [dbCompletedHabits, setCompHabits] = useState([]);
   useEffect(() => {
     const fetchAllCompHabits = async () => {
       // async function since making api request
       try {
         const res = await axios.get(
-          `day/getCompletedHabits/${currentUser.username}`
+          `day/getCompletedHabits/${currentUser.username}/${date}`
         ); // have to specify date
         let length = res.data.length;
         setCompHabits(res.data[length - 1].completedHabits);
@@ -76,6 +78,10 @@ const HabitChecklist = () => {
         
       }*/
 
+    
+  //  await axios.delete("/day/deleteUpdateHack/:username/:date");
+    const res = await axios.delete(`day/deleteUpdateHack/${currentUser.username}/${date}`);
+		console.log(res)
     await axios.post("/day/addCompletedHabits", habitsLog);
 
     // fetch user
@@ -96,24 +102,24 @@ const HabitChecklist = () => {
 
   return (
     <>
-      {((habits && dbCompletedHabits.length === 0 && habits.length!==0) || edit) && (
+      {((habits && dbCompletedHabits.length === 0) || edit) && (
                
         <div>
-          <h1>My Habits</h1>
+          <h2 className="homeHeader">My Habits</h2>
           <br></br>
           <form>
             <div className="habits">
               {habits.map((habit) => (
                 <div className="habit" key={habit}>
                   <input type="checkbox" />
-                  <label>{habit}</label>
+                  <label>{habit.substring(4)}</label>
                 </div>
               ))}
             
             </div>
 
             <br></br>
-
+            {habits.length > 0 &&
             <button
               className="loginButton"
               type="submit"
@@ -121,7 +127,7 @@ const HabitChecklist = () => {
             >
               Submit
             </button>
-
+            }
             <br></br>
             <br></br>
             <br></br>
@@ -132,21 +138,28 @@ const HabitChecklist = () => {
 
       {dbCompletedHabits && dbCompletedHabits.length > 0 && !edit && (
         <div>
-          <br></br>
-          <br></br>
-          <br></br>
-          <h1>My Completed Habits</h1>
+          
+          <h1 className="homeHeader">My Completed Habits</h1>
           <br></br>
 
           <div className="habits">
-            {dbCompletedHabits.map((habit) => (
-              <div className="habit" key={habit}>
-                <h3>{habit}</h3>
-              </div>
-            ))}
+      
+
+      <ul>
+      {habits.map((habit) => (
+        <li
+          key={habit.id}
+          style={dbCompletedHabits.includes(habit) ? { textDecoration: 'line-through' ,fontSize:20 } : {fontSize:20}}
+        >
+          {habit.substring(4)}
+        </li>
+      ))}
+     </ul>
 
             <br></br>
-            <button className="loginButton" type="submit" onClick={onEditClick}>
+            <button  
+            style={{ marginRight: "10px"}}
+            className="loginButton" type="submit" onClick={onEditClick}>
               Edit
             </button>
           </div>

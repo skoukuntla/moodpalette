@@ -4,6 +4,7 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import Multiselect from 'multiselect-react-dropdown';
 import SpotifyWebApi from 'spotify-web-api-js';
+import './genre.css';
 import { useEffect, useContext, useState } from "react";
 
 const spotifyApi = new SpotifyWebApi();
@@ -98,7 +99,22 @@ function SpotifyGenres() {
                 onRemove={onRemove}
                 onSearch={function noRefCheck(){}}
                 onSelect={onSelect}
-            />
+                id="css_custom"
+                customCloseIcon={<p style={{fontStyle: "normal", paddingLeft: "5px"}}>✕</p>}
+                style={{
+                    chips: {
+                        background: 'cornflowerblue'
+                    },
+                    multiselectContainer: {
+                        color: 'cornflowerblue'
+                    },
+                    searchBox: {
+                        border: 'none',
+                        'border-bottom': '1px solid cornflowerblue',
+                        'border-radius': '0px'
+                    }
+                }}
+        />
         </div>
     )
 }

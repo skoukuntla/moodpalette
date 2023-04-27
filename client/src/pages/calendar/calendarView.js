@@ -3,8 +3,19 @@ import Heatmap from './Heatmap'
 import YearAtGlance from './YearAtGlance'
 import NavBar from "../navbar/index"
 import Grid from '@mui/material/Grid';
+import { useState } from 'react';
 
-export default function calendarView() {
+export default function CalendarView() {
+
+    const [helpText, setHelpText] = useState("?");
+
+    const displayHelp = () => {
+      setHelpText("Welcome to your calendar view! Here you can see your data throughout the year!")
+    }
+  
+    const displayQuestion = () => {
+      setHelpText("?");
+    }
 
     return (
         <React.StrictMode>
@@ -19,7 +30,7 @@ export default function calendarView() {
             <YearAtGlance></YearAtGlance>
             </div>
             </div>
-
+            <div className="helpButton" onMouseOver={displayHelp} onMouseOut={displayQuestion}>{helpText}</div>
         </React.StrictMode>
     )
 }

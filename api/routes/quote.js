@@ -1,11 +1,10 @@
-const Spotify = require("../models/Spotify");
 const Quote = require("../models/Quote");
 const router = require("express").Router();
 const cron = require('node-cron');
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
 var task = cron.schedule('0 0 * * *', async function() { // runs every midnight
-    console.log("cron job executing!")
+    console.log("quote cron job executing!")
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = async function() {
         if (this.readyState == 4 && this.status == 200) {

@@ -39,19 +39,17 @@ function CalendarHeatmap() {
                         let numCompleted = 0;
                         let numTotal = 0;
                         for (var k = 0; k < res.data.length; k++) {
-                            console.log(res.data[k]);
                             if (!res.data[k].color) {
-                                console.log("inside")
+                                console.log(res.data[k], dateString);
                                 numCompleted = res.data[k].completedHabits.length
-                                numTotal = res.data[k].completedHabits.length //THIS HAS TO BE CHANGED TO TOTALHABITS.LENGTH
+                                numTotal = res.data[k].allHabits.length //THIS HAS TO BE CHANGED TO TOTALHABITS.LENGTH
                             }
                         }
-                        console.log(numCompleted)
-                        const latestres = res.data[res.data.length - 1];
-                        if (typeof latestres !== 'undefined') {
+                        console.log(numCompleted, numTotal)
+                        if (numTotal > 0) {
                             //console.log(latestres.completedHabits.length);
                             //console.log(latestres.color);
-                            handleChange(i, j, numCompleted, (numTotal*1.0) / numCompleted);
+                            handleChange(i, j, numCompleted, (numCompleted*1.0) / numTotal);
                         }
                         else {
                             handleChange(i, j, 0, 0);
@@ -68,31 +66,7 @@ function CalendarHeatmap() {
         }
         console.log(percentData);
         console.log(totalData);
-    }
-
-    function Mounting() {      
-        const isCancelled = React.useRef(false);
-        const [text, setText] = React.useState("waiting...");
-
-        React.useEffect(() => {
-            fetch();
-
-            return () => {
-            isCancelled.current = true;
-            };
-        }, []);
-
-        function fetch() {
-            // fillHeatmap().then(() => {
-            // if (!isCancelled.current) {
-            //     setText("done!");
-            // }
-            // });
-        }
-
-        return <h2>{text}</h2>;
-      }
-      
+    } 
 
     function getDateString(dayOfYear) {
         //console.log(dayOfYear)
@@ -115,7 +89,6 @@ function CalendarHeatmap() {
     }
 
     function tooltipTemplate(args) {
-        var totals = totalData;
         let intl = new Internationalization();
         let format = intl.getDateFormat({ format: 'EEE MMM dd, yyyy' });
         let newDate = new Date(args.xValue);
@@ -132,8 +105,12 @@ function CalendarHeatmap() {
             totalDay += monthTab[i];
         }
         totalDay += day;
-        let week = (totalDay / 7).toFixed(0);
-        args.content = [(args.value === 0 ? 'No' : (args.value*totals[week][index]).toFixed(0)) + ' ' + ' habits completed' + '<br>' + value];
+        let week = Math.floor(totalDay / 7);
+        console.log("in tooltip");
+        console.log(totalDay);
+        console.log(percentData[week][index], totalData[week][index]);
+        console.log(week, index)
+        args.content = [(args.value === 0 ? 'No' : (totalData[week][index])) + ' ' + ' habits completed' + '<br>' + value];
     }
     ;
     function load(args) {

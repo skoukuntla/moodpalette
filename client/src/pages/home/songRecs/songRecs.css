@@ -8,6 +8,8 @@
     height: 150px;
     margin: auto;
     width: 50%;
+    margin-top: -20%;
+
 
   }
 
@@ -18,12 +20,14 @@
     height: 70%;
     align-items: center;
     margin:auto;
-
   }
 
   .recsDesc {
+    font-size: 20px;
+  }
+
+  .recsTitle{
     font-size: 24px;
-    margin-top: 5%;
   }
 
   .songButton {
@@ -35,14 +39,22 @@
     font-weight: 500;
     border-radius: 20px;
     background-color: transparent;
-    border: 2px solid #2ecc71;
+    border: 2px solid darkseagreen;
     transition: all 240ms ease-in-out;
     cursor: pointer;
     margin: 5px;
+    margin-top: -15px;
     margin-left: 10px;
   }
   img {
     margin-top: 5%;
     height:150px;
 
+  }
+
+  .songEmbed {
+    display: block;
+    margin-top: auto;
+    margin-right: auto;
+    width: 372;
   }

@@ -24,6 +24,7 @@
 .inputHabit {
     text-align: center;
     margin-top: 40px;
+    
 }
 
 .listingHabit {
@@ -66,4 +67,26 @@
     font-weight: 250;
     cursor: pointer;
     margin: 10px;
+}
+
+#HabitError{
+    color: red;
+    text-align: center;
+    padding: 10px;
+    font-size: large;
+}
+
+#HabitErrorPopup{
+    color: red;
+    text-align: center;
+    padding: 10px;
+    font-size: large;
+}
+
+.priorityLevel{
+    margin: 2%;
+}
+
+.frequencyLevel{
+    margin: 2%;
 }

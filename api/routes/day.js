@@ -20,7 +20,7 @@ router.post("/addDayInputs", async (req,res)=>{
         });
         console.log(newDay);
         const day = await newDay.save();
-        return res.status(200).json(day); // send success (200)
+        return res.status(200).json(day); //send success (200)
            
         
     }catch(err){
@@ -30,6 +30,17 @@ router.post("/addDayInputs", async (req,res)=>{
     }
    
 })
+
+router.post("/deleteHabit", async (req, res) => {
+  try {
+    const currentDay = await Day.findOne({ username: req.body.username, date: req.body.date, vibe: { $exists: false }}); // yourself
+    await currentDay.updateOne({ $pull: { completedHabits: req.body.habit, allHabits: req.body.habit} }); // remove from your completedHabits array
+    return res.status(200).json("Habit has been deleted!");
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 
 router.get("/getDailyData/:username/:date", async (req, res)=>{
     try {
@@ -41,9 +52,8 @@ router.get("/getDailyData/:username/:date", async (req, res)=>{
 	}
 })
 
-router.put("/getDailyData/:username/:date/:url", async (req, res)=>{
+router.put("/getDailyData/:username/:date/:id", async (req, res)=>{
     try {
-		//const user = await User.findOne({ username: req.params.username });
 		const day = await Day.find({ username: req.params.username, date: req.params.date });
         console.log(day)
         await day.updatOne({url: req.params.url})
@@ -52,6 +62,7 @@ router.put("/getDailyData/:username/:date/:url", async (req, res)=>{
 		res.status(500).json("err");
 	}
 })
+
 
 
 router.post("/addCompletedHabits", async (req, res) => {
@@ -72,12 +83,20 @@ router.post("/addCompletedHabits", async (req, res) => {
    
   });
 
+  router.delete("/deleteUpdateHack/:username/:date", async (req, res) => { //delete day object with completedHabits
+    try {
+      const day = await Day.findOneAndDelete({username: req.params.username, date: req.params.date, vibe: { $exists: false }});
+      res.status(200).json("Day has been deleted");
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
 
 
-  router.get("/getCompletedHabits/:username", async (req, res) => {
+  router.get("/getCompletedHabits/:username/:date", async (req, res) => {
 	try {
 		//const user = await User.findOne({ username: req.params.username });
-		const habitsDays = await Day.find({ username: req.params.username });
+		const habitsDays = await Day.find({username: req.params.username, date: req.params.date, vibe: { $exists: false }});
 		res.status(200).json(habitsDays);
 	} catch (err) {
 		res.status(500).json("error fetching completed habits");
@@ -85,8 +104,6 @@ router.post("/addCompletedHabits", async (req, res) => {
 });
 
 router.put("/updateCompletedHabits/:username", async (req, res) => {
-
-   
 
         try {
           /*const day = await Day.find({username: req.body.username}, {
@@ -103,6 +120,25 @@ router.put("/updateCompletedHabits/:username", async (req, res) => {
         }
       
     });
+
+    router.post("/addPlaylistID", async (req, res) => {
+      try {
+                console.log("PLAYLIST PUSH TO DB");
+                const newDay = new Day({
+                    username: req.body.username,
+                    playlistId: req.body.playlistId,
+                });
+                
+                const day = await newDay.save();
+                return res.status(200).json(day); // send success (200)
+        
+      } catch (err) {
+        return res.status(500).json(err);
+      }
+   
+  });
+
+
   
 
  module.exports = router

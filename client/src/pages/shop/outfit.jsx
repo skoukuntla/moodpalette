@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import Card from '@mui/material/Card';
@@ -39,12 +39,21 @@ function OutfitCard(props) {
   let balance = 85;
 
   const { user } = useContext(AuthContext);
-  const currentOutfit = user.mooPalOutfit;
-  const purchasedOutfits = user.outfitInventory; 
-  
+
   const [ dummy, setDummy ] = React.useState(true);
   const [ notEnough, setNotEnough ] = React.useState(false);
   const [ enough, setEnough ] = React.useState(false);
+
+  useEffect(() => {
+    const setDisabled = () => {
+      var currentCard = document.getElementById(user.mooPalOutfit)
+      currentCard.disabled = true
+
+      var currentCard = document.getElementById(user.mooPalOutfit + 1)
+      currentCard.style.background = "lightblue"
+    };
+    setDisabled();
+  }, []);
 
   const handleButtonClickNotEnough = () => {
       setNotEnough(true);
@@ -58,6 +67,7 @@ function OutfitCard(props) {
   const handleButtonClickEnough = () => {
     setEnough(true);
     setDummy(false);
+    //setSelectedButtonIndex(-1);
     addOutfitToInventory();
     setTimeout(() => {
         setEnough(false);
@@ -67,7 +77,7 @@ function OutfitCard(props) {
 
   async function addOutfitToInventory() {
     var inventoryOutfitIndex = outfitIndex;
-    if (outfitIndex % 2 == 1) {
+    if (outfitIndex % 2 === 1) {
       inventoryOutfitIndex -= 1
     }
 
@@ -98,8 +108,11 @@ function OutfitCard(props) {
     setOutfit(outfits[outfitIndex])
   }
 
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
+
   const purchase = () => {
     console.log("hi")
+    //setSelectedButtonIndex(index);
     var currentCard = document.getElementById(props.outfitIndex)
     if (currentCard.innerHTML === "Purchase!") {
       if (balance < props.cost) {
@@ -116,7 +129,7 @@ function OutfitCard(props) {
 
   async function setAsOutfit() {
     var currentOutfitIndex = outfitIndex;
-    if (outfitIndex % 2 == 1) {
+    if (outfitIndex % 2 === 1) {
       currentOutfitIndex -= 1
     }
     var oldOutfitIndex = user.mooPalOutfit
@@ -142,17 +155,20 @@ function OutfitCard(props) {
     newCard.disabled = true
     newCard.innerHTML = "Current outfit!"
 
+    var newCard = document.getElementById(props.outfitIndex + 1)
+    console.log(newCard)
+    newCard.style.background = "lightblue"
+
     var oldCard = document.getElementById(oldOutfitIndex)
     oldCard.disabled = false
     oldCard.innerHTML = "Set as outfit!"
-  }
 
-  const checkStatus = (currentStatus) => {
-    return (currentStatus === "Current outfit!") ? true : false
+    var oldCard = document.getElementById(oldOutfitIndex + 1)
+    oldCard.style.background  = "white"
   }
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card id={props.id} Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 288 }}
         image={outfit}
@@ -177,8 +193,14 @@ function OutfitCard(props) {
           <p>{props.cost} <img src={moolah}/></p>
         </Typography>
       </CardContent>
-      <CardActions>
-        <button id={props.outfitIndex} onClick={purchase} disabled={checkStatus(props.status)}>{props.status}</button>        
+      <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+        <button id={props.outfitIndex} 
+                onClick={purchase} 
+                style={{
+                  backgroundColor: 'darkseagreen', color: 'white'
+                }}>
+          {props.status}
+        </button>        
       </CardActions>
     </Card>
   );

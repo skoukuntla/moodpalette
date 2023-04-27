@@ -35,6 +35,7 @@ import popstarprimary from '../shop/outfits/popstar-primary.png'
 import popstarsecondary from '../shop/outfits/popstar-secondary.png'
 import discoprimary from '../shop/outfits/disco-primary.png'
 import discosecondary from '../shop/outfits/disco-secondary.png'
+import cow from '../shop/outfits/cow.png'
 
 //import { checkAccessToken } from "../home/spotify/spotifyAuth";
 const spotifyApi = new SpotifyWebApi();
@@ -46,7 +47,15 @@ const notify = () => {
 export default function Profile() {
 
   const [currRec, setCurrRec] = useState("");
+  const [helpText, setHelpText] = useState("?");
 
+  const displayHelp = () => {
+    setHelpText("Welcome to your profile page! Feel free to edit your profile information on the left. On the right, input a time at which you'd like to be reminded to enter your daily data!")
+  }
+
+  const displayQuestion = () => {
+    setHelpText("?");
+  }
   const form = useRef();
     function sendEmail(e) {
         e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
@@ -117,7 +126,7 @@ export default function Profile() {
   };
 
   let editButton = (
-    <button variant="contained" className="blueBtnEdit">
+    <button variant="contained" className="purpleBtnEdit">
       Edit Profile
     </button>
   );
@@ -168,16 +177,17 @@ export default function Profile() {
     });
   }
 
-  const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary]
+  const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary, cow]
   const mooPalImg = outfits[user.mooPalOutfit]
 
   return (
     <>
       {<NavBar></NavBar>}
+      <div className="entirePage">
         <div className="entireProfile">
           <img
             className="profileUserImg"
-			alt="mooPal"
+			      alt="mooPal"
             src={mooPalImg}
           />
           <h4 className="profileInfoName">{user.username}</h4>
@@ -306,6 +316,8 @@ export default function Profile() {
             <ToastContainer/>
             </div>
         </div>
+        </div>
+        <div className="helpButton" onMouseOver={displayHelp} onMouseOut={displayQuestion}>{helpText}</div>
     </>
     
   );

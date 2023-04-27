@@ -147,7 +147,7 @@ export default function Login() {
               {isFetching ? <CircularProgress size="20px" /> : "Log In"}
             </button>
             <div id="lockoutError" style={{ color: "red" }}></div>
-            <span className="loginForgot">Forgot Password?</span>
+            {/* <span className="loginForgot">Forgot Password?</span> */}
             <button className="loginRegisterButton" onClick={registerRedirect}>
               {isFetching ? (
                 <CircularProgress size="20px" />
