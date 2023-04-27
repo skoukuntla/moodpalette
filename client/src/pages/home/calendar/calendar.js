@@ -13,6 +13,8 @@ import Row from 'react-bootstrap/Row';
 import { ChromePicker } from 'react-color'
 import axios from "axios";
 
+
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -39,7 +41,7 @@ const {user} = useContext(AuthContext)
  //to store the retrieved data
 
  const notify = () => {
-  toast("here ya go 5 points");
+  toast("Loading 5 MooLahs into your account!");
 }
  
 
@@ -172,6 +174,7 @@ const handleMooLahs = async (e) => {
              const newUser = JSON.parse(localStorage.getItem("user"))
              newUser.mooLahs = mooLahs;
              localStorage.setItem("user", JSON.stringify(newUser))
+             
              //toast("You earned 5 MooLahs for filling out todays daily entry! Hooray!");
              
           } catch (err) {
@@ -179,12 +182,13 @@ const handleMooLahs = async (e) => {
           }
         }
         setOpenPast(false)
-        /*
+        notify();
         setTimeout(function(){
           window.location.reload(false);
-        }, 5000);*/
-        window.location.reload();
-        notify();
+        }, 5000);
+        //window.location.reload();
+        
+       
         //e.preventDefault();
         //toast("suppp")
    
@@ -315,7 +319,7 @@ return (
             {/*<button onClick={notify}>TEST</button>*/}
             {console.log("color", color, "vibe", vibe, "journal", journal, "emotion", emotion)}
         </Popup>
-        <ToastContainer autoClose={10000}></ToastContainer>
+        <ToastContainer autoClose={5000}></ToastContainer>
   </div>
   )
 }
