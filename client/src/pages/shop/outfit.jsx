@@ -48,6 +48,9 @@ function OutfitCard(props) {
     const setDisabled = () => {
       var currentCard = document.getElementById(user.mooPalOutfit)
       currentCard.disabled = true
+
+      var currentCard = document.getElementById(user.mooPalOutfit + 1)
+      currentCard.style.background = "lightblue"
     };
     setDisabled();
   }, []);
@@ -64,6 +67,7 @@ function OutfitCard(props) {
   const handleButtonClickEnough = () => {
     setEnough(true);
     setDummy(false);
+    //setSelectedButtonIndex(-1);
     addOutfitToInventory();
     setTimeout(() => {
         setEnough(false);
@@ -104,8 +108,11 @@ function OutfitCard(props) {
     setOutfit(outfits[outfitIndex])
   }
 
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState(-1);
+
   const purchase = () => {
     console.log("hi")
+    //setSelectedButtonIndex(index);
     var currentCard = document.getElementById(props.outfitIndex)
     if (currentCard.innerHTML === "Purchase!") {
       if (balance < props.cost) {
@@ -148,13 +155,20 @@ function OutfitCard(props) {
     newCard.disabled = true
     newCard.innerHTML = "Current outfit!"
 
+    var newCard = document.getElementById(props.outfitIndex + 1)
+    console.log(newCard)
+    newCard.style.background = "lightblue"
+
     var oldCard = document.getElementById(oldOutfitIndex)
     oldCard.disabled = false
     oldCard.innerHTML = "Set as outfit!"
+
+    var oldCard = document.getElementById(oldOutfitIndex + 1)
+    oldCard.style.background  = "white"
   }
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card id={props.id} Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 288 }}
         image={outfit}
@@ -179,8 +193,14 @@ function OutfitCard(props) {
           <p>{props.cost} <img src={moolah}/></p>
         </Typography>
       </CardContent>
-      <CardActions>
-        <button id={props.outfitIndex} onClick={purchase}>{props.status}</button>        
+      <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+        <button id={props.outfitIndex} 
+                onClick={purchase} 
+                style={{
+                  backgroundColor: 'darkseagreen', color: 'white'
+                }}>
+          {props.status}
+        </button>        
       </CardActions>
     </Card>
   );
