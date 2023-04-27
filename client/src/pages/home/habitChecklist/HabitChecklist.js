@@ -25,6 +25,13 @@ const HabitChecklist = () => {
   console.log("currentUser", currentUser);
 
 
+
+
+
+
+
+
+
   const [dbCompletedHabits, setCompHabits] = useState([]);
   useEffect(() => {
     const fetchAllCompHabits = async () => {
@@ -100,6 +107,11 @@ const HabitChecklist = () => {
     setEdit(true);
   };
 
+  const [completedHabits, setCompletedHabits] = useState(dbCompletedHabits);
+
+ 
+  
+
   return (
     <>
       {((habits && dbCompletedHabits.length === 0) || edit) && (
@@ -111,7 +123,7 @@ const HabitChecklist = () => {
             <div className="habits">
               {habits.map((habit) => (
                 <div className="habit" key={habit}>
-                  <input type="checkbox" />
+                  <input type="checkbox" defaultChecked={dbCompletedHabits.includes(habit)}/>
                   <label>{habit}</label>
                 </div>
               ))}

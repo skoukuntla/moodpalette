@@ -16,10 +16,10 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 function App() {
 //userContext for storing/accessing user specific data 
 // use the auth context to get this user //from AuthContext.js
+
 const {user} = useContext(AuthContext)
  //to track selected date
  const [date, setDate] = useState(new Date())
@@ -37,6 +37,12 @@ const {user} = useContext(AuthContext)
  //to save text within the textbox- for journal
  const [journal, setText] = useState("");
  //to store the retrieved data
+
+ const notify = () => {
+  toast("here ya go 5 points");
+}
+ 
+
  const [userData, setUserData] = useState({
   username: "",
   date: "",
@@ -46,8 +52,10 @@ const {user} = useContext(AuthContext)
   emotion: ""
  })
  
+
+ //const [mooLahs, setMooLahs] = useState[user.mooLahs];
  let mooLahs = user.mooLahs;
- const[firstDailyEntry, setDailyEntry] = useState(true);
+ const[firstDailyEntry, setDailyEntry] = useState(false);
 
 
 const getUserData = async (e) => {
@@ -66,7 +74,7 @@ const getUserData = async (e) => {
   }
   if (foundData) {
     console.log("found data: user has already submitted once");
-    setDailyEntry(false);
+   
     setUserData({username: user.username, date: date.toDateString(), color: latestres.color, vibe: latestres.vibe, journal: latestres.journal, emotion: latestres.emotion});
     setColor(latestres.color);
     setVibe(latestres.vibe);
@@ -75,6 +83,7 @@ const getUserData = async (e) => {
   }
   else {
     console.log("did not find data: first entry of today");
+    setDailyEntry(true);
     setUserData({username: user.username, date: date.toDateString(), color: "#ffffff", vibe: 25, journal: "", emotion: ""});
   }
   return "";
@@ -144,14 +153,13 @@ const handleSubmit = async (e) => {
 };
 
 const handleMooLahs = async (e) => {
-  setOpenPast(false)
-  window.location.reload(false);
+  console.log("NOTIFY");
 
 //  increment mooLahs
-      console.log("firstdailyentry", firstDailyEntry)
+      console.log("here", firstDailyEntry);
        if(firstDailyEntry){
-          mooLahs = mooLahs + 5;
-          setDailyEntry(false);
+          //setMooLahs(mooLahs+5)
+          mooLahs = mooLahs+5;
           // update user
           try {
             axios.put("/users/" + user._id, { mooLahs: mooLahs });
@@ -164,12 +172,29 @@ const handleMooLahs = async (e) => {
              const newUser = JSON.parse(localStorage.getItem("user"))
              newUser.mooLahs = mooLahs;
              localStorage.setItem("user", JSON.stringify(newUser))
-             toast("You earned 5 MooLahs for filling out todays daily entry! Hooray!");
+             //toast("You earned 5 MooLahs for filling out todays daily entry! Hooray!");
+             
           } catch (err) {
             console.log("error with adding mooLahs");
           }
         }
-    
+        setOpenPast(false)
+        /*
+        setTimeout(function(){
+          window.location.reload(false);
+        }, 5000);*/
+        window.location.reload();
+        notify();
+        //e.preventDefault();
+        //toast("suppp")
+   
+   
+        //notify();
+
+        /*
+        if(firstDailyEntry){
+          notify();
+        }*/
        
 }
 
@@ -287,9 +312,10 @@ return (
                 setOpen(true);
             }}>Back</button>
             <button style={{float: "right"}} onClick={handleSubmit}>Done</button>
+            {/*<button onClick={notify}>TEST</button>*/}
             {console.log("color", color, "vibe", vibe, "journal", journal, "emotion", emotion)}
         </Popup>
-        <ToastContainer/>
+        <ToastContainer autoClose={10000}></ToastContainer>
   </div>
   )
 }

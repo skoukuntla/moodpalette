@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import MooPalImg from "../shop/outfits/cow.png";
 import MooLah from "../shop/moolah.png";
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import axios from "axios";
 
 import partyprimary from '../shop/outfits/party-primary.png'
 import partysecondary from '../shop/outfits/party-secondary.png'
@@ -75,6 +76,19 @@ export default function Logo(props) {
   const outfits = [partyprimary, partysecondary, crownprimary, crownsecondary, cowboyprimary, cowboysecondary, fancyprimary, fancysecondary, employeeprimary, employeesecondary, chefprimary, chefsecondary, sportsprimary, sportssecondary, ninjaprimary, ninjasecondary, popstarprimary, popstarsecondary, discoprimary, discosecondary, cow]
   const MooPalImg = outfits[user.mooPalOutfit]
   console.log("moo pal image:", user.mooPalOutfit)
+  const [currentUser, setUser] = useState(user);
+
+  useEffect(() => {
+    console.log("inside use effect")
+    const fetchUser = async () => {
+      const res = await axios.get(`/users?username=${user.username}`);
+      setUser(res.data);
+    };
+    fetchUser();
+
+    console.log("moneyy" , currentUser.mooLahs)
+  }, []);
+
   return (
     <LogoWrapper>
       <Link to="/home">
@@ -85,7 +99,7 @@ export default function Logo(props) {
       <div>
         <LogoText>Mood Palette</LogoText>
         <div>
-          <PointsText>Moo Lahs: {user.mooLahs}<img src={MooLah}/></PointsText>
+          <PointsText id="mooLahNav">Moo Lahs: {currentUser.mooLahs}<img src={MooLah}/></PointsText>
         </div>
       </div>
     </LogoWrapper>
