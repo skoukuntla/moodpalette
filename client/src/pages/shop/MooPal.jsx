@@ -9,6 +9,16 @@ const MooPalShop = () => {
   const { user } = useContext(AuthContext);
   const currentOutfit = user.mooPalOutfit;
   const purchasedOutfits = user.outfitInventory ? user.outfitInventory : [];
+  const [helpText, setHelpText] = useState("?");
+
+  const displayHelp = () => {
+    setHelpText("Welcome to MooMart! Here, you can purchase different outfits to dress your Moo Pal to your liking!")
+  }
+
+  const displayQuestion = () => {
+    setHelpText("?");
+  }
+
 
   function setStatus(index) {
     if (index == currentOutfit) {
@@ -65,6 +75,7 @@ const MooPalShop = () => {
       </Grid>
     </Grid>
     </center>
+    <div className="helpButton" onMouseOver={displayHelp} onMouseOut={displayQuestion}>{helpText}</div>
    </div>
   )
 }

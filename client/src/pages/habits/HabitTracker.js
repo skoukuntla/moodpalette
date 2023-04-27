@@ -19,6 +19,16 @@ const HabitTracker = () => {
   const habit = useRef();
   const priority = useRef();
 
+  const [helpText, setHelpText] = useState("?");
+
+  const displayHelp = () => {
+    setHelpText("Welcome to your Habit Tracker! Enter different habits that you want to track! You can prioritize them and change their frequency to your liking!")
+  }
+
+  const displayQuestion = () => {
+    setHelpText("?");
+  }
+
   const enterHabit = async (e) => {
     e.preventDefault(); // stops page from refreshing on button click
     console.log(habit.current.value);
@@ -200,6 +210,7 @@ const HabitTracker = () => {
         <br></br>
       </form>
       <div id="HabitError"></div>
+      <div className="helpButton" onMouseOver={displayHelp} onMouseOut={displayQuestion}>{helpText}</div>
     </div>
   );
 };

@@ -1,0 +1,11 @@
+.optionContainer li:hover,
+.optionContainer .highlight {
+  background: red;
+  color: #fff;
+}
+/* Ends overriding */
+
+/* Placehoolder Color Change */
+.searchBox#css_custom_input::placeholder {
+  color: red;
+}
