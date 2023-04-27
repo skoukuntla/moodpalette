@@ -76,6 +76,13 @@
     font-size: large;
 }
 
+#HabitErrorPopup{
+    color: red;
+    text-align: center;
+    padding: 10px;
+    font-size: large;
+}
+
 .priorityLevel{
     margin: 2%;
 }

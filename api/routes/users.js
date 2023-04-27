@@ -77,8 +77,8 @@ router.post("/addHabit", async (req, res) => {
 });
 
 router.post("/deleteHabit", async (req, res) => {
-  // console.log("entered deleteHabit api call")
-  // console.log("req body", req.body)
+   console.log("entered deleteHabit api call")
+   console.log("req body", req.body)
   try {
     const currentUser = await User.findOne({ username: req.body.username }); // yourself
     await currentUser.updateOne({ $pull: { userHabits: req.body.habit } }); // remove from your userHabits array

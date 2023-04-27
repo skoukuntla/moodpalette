@@ -12,7 +12,7 @@ const HabitTracker = () => {
 
   const [open, setOpen] = useState(false);
 
-  const [updatedHabit, setUpdatedHabit] = useState("");
+  const [oldUpdatedHabit, setOldUpdatedHabit] = useState("");
 
   const [errorHandling, setErrorHandling] = useState("");
 
@@ -124,6 +124,45 @@ const HabitTracker = () => {
     console.log("updated:", updatedUser);
   };
 
+  const updateHabitPopup = async (e) => {
+    e.preventDefault(); // stops page from refreshing on button click
+    console.log("habit to be updated:", popupHabit);
+
+    if (popupHabit !== oldUpdatedHabit.substring(4)) {
+      for (let i = 0; i < allHabits.length; i++) {
+        if (allHabits[i].substring(4) === popupHabit) {
+          document.getElementById("HabitErrorPopup").innerHTML = "You've already entered this habit!";
+          console.log("habit already exists");
+          return;
+        }
+      }
+    }
+
+    const deleteHabit = {
+      username: user.username,
+      habit: oldUpdatedHabit,
+    };
+    console.log(deleteHabit)
+
+    await axios.post("/users/deleteHabit", deleteHabit);
+
+    const concatHabit = popupPriority + popupFreq + popupHabit;
+    console.log(concatHabit);
+
+    const addHabit = {
+      username: user.username,
+      habit: concatHabit,
+    };
+
+    await axios.post("/users/addHabit", addHabit); // call login api call, asccessing the req.body.habit in users.
+
+    const res = await axios.get(`/users/${user._id}`);
+    console.log("res.data", res.data);
+    localStorage.setItem("user", JSON.stringify(res.data));
+    window.location.reload(false);
+    console.log("updatedUser:", updatedUser);
+  }
+
   const updateHabit = async (e, habitU) => {
     // e.preventDefault(); // stops page from refreshing on button click
     // console.log("habit to be updated:", habitU.habit);
@@ -150,7 +189,7 @@ const HabitTracker = () => {
     // console.log("updated:", updatedUser);
     setOpen(true);
     console.log(habitU);
-    setUpdatedHabit(habitU.habit);
+    setOldUpdatedHabit(habitU.habit);
 
     //habitU is basically an object that contains the habit string
     //.habit is getting the habit for it
@@ -231,7 +270,7 @@ const HabitTracker = () => {
                     onClose={() => setOpen(false)}
                     contentStyle={{ border: `5px solid black` }}
                   >
-                    <form className="updateHabit" onSubmit={enterHabit}>
+                    <form className="updateHabit" onSubmit={updateHabitPopup}>
                       <input
                         value={popupHabit}
                         className="habitInput"
@@ -280,10 +319,10 @@ const HabitTracker = () => {
                         type="submit"
                         // disabled={allHabits.length >= 10}
                       >
-                        Add your habit!
+                        Update your habit!
                       </button>
 
-                      <p id="HabitError">{errorHandling}</p>
+                      <p id="HabitErrorPopup">{errorHandling}</p>
 
                       <br></br>
                       <br></br>
