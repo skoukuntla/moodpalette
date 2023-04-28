@@ -182,10 +182,16 @@ const handleMooLahs = async (e) => {
           }
         }
         setOpenPast(false)
-        notify();
-        setTimeout(function(){
-          window.location.reload(false);
-        }, 2000);
+  
+        if(firstDailyEntry){
+          notify();
+          setTimeout(function(){
+            window.location.reload(false);
+          }, 2000);
+        }else{
+          window.location.reload()
+        }
+        
         //window.location.reload();
         
        
