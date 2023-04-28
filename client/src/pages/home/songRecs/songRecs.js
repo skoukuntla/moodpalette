@@ -172,11 +172,13 @@ function SongRecs() {
     
     <div className="recs">
         <div className="recsWrapper">
-            <span className="recsDesc">
+        <h2 className="homeHeader"> My Song Recommendation </h2>
+            {/* <span className="recsDesc">
               <br/> 
+              
                 View your Song Reccomendation!
             </span>
-                <br/>
+                <br/> */}
                 <div className="recsRight"></div>
                 <div className="song" value={currRec.id} data-hide-if="">
                   <br/> <br/> <br/>
