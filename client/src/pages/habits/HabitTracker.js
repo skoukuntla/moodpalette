@@ -146,8 +146,9 @@ const HabitTracker = () => {
 
     await axios.post("/users/deleteHabit", deleteHabit);
 
-    const concatHabit = popupPriority + popupFreq + popupHabit;
-    console.log(concatHabit);
+    
+    const concatHabit = priority1.current.value + frequency1.current.value + popupHabit;
+    console.log("concatHabit", concatHabit);
 
     const addHabit = {
       username: user.username,
@@ -228,7 +229,8 @@ const HabitTracker = () => {
                   new Date().toDateString().split(" ")[0]) && (
                 <div>
                   <h3 style={{ color: "red" }}>
-                    {index + 1} . {habit.substring(4)}
+                    {/* {index + 1} . {habit.substring(4)} */}
+                    {habit.substring(4)} 
                   </h3>
                   <button
                     className="deleteButton"
@@ -250,7 +252,8 @@ const HabitTracker = () => {
                   new Date().toDateString().split(" ")[0]) && (
                 <div>
                   <h3 style={{ color: "#D29E1E" }}>
-                    {index + 1} . {habit.substring(4)}
+                    {/* {index + 1} . {habit.substring(4)} */}
+                    {habit.substring(4)} 
                   </h3>
                   <button
                     className="deleteButton"
@@ -335,7 +338,8 @@ const HabitTracker = () => {
                   new Date().toDateString().split(" ")[0]) && (
                 <div>
                   <h3 style={{ color: "green" }}>
-                    {index + 1} . {habit.substring(4)}
+                    {/* {index + 1} . {habit.substring(4)} */}
+                    {habit.substring(4)} 
                   </h3>
 
                   <button
