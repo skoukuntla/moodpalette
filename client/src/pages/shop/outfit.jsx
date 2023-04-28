@@ -198,12 +198,9 @@ function OutfitCard(props) {
     oldCard.disabled = false
     oldCard.innerHTML = "Set as outfit!"
 
-<<<<<<< HEAD
     var oldCard = document.getElementById(oldOutfitIndex + 1)
     oldCard.style.background  = "white"
-=======
     window.location.reload()
->>>>>>> mooLahSucks
   }
 
   return (
