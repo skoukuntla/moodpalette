@@ -40,6 +40,9 @@ const {user} = useContext(AuthContext)
  const [journal, setText] = useState("");
  //to store the retrieved data
 
+const [currRec, setCurrRec] = useState("");
+ const [clickedDate, setClickedDate] = useState(new Date());
+
  const notify = () => {
   toast("Loading 5 MooLahs into your account for completing your daily entry!");
 }
@@ -63,6 +66,11 @@ const {user} = useContext(AuthContext)
 const getUserData = async (e) => {
   console.log("DATE:", date.toDateString());
   const res = await axios.get(`day/getDailyData/${user.username}/${date.toDateString()}`)
+  
+  const song = await axios.get(`/song/getSongID/${user.username}/${clickedDate.toDateString()}`);
+  console.log("song res", song);
+  setCurrRec(song.data.songId);
+
   console.log("inside getUserData");
   let latestres = 'undefined';
   let foundData = false
@@ -134,6 +142,9 @@ const handleSubmit = async (e) => {
 
  //to specify popups
  const handleDateClick = (clickedDate) => {
+  setClickedDate(clickedDate);
+  console.log("Clicked Date", clickedDate)
+  getUserData();
   if (clickedDate.toDateString() === new Date().toDateString()) {
     getUserData();
     setOpen(true);
@@ -212,6 +223,8 @@ const marks = [
   { value: 100, label: '100' },
 ];
 
+
+
 return (
  <div className="app">
    <h2 className="homeHeader"> My Calendar </h2>
@@ -273,6 +286,13 @@ return (
           <p>Journal: {userData.journal} </p><br></br>
           <p>Emotion: {userData.emotion} </p><br></br>
 
+          <p>Song of the Day!:  </p><br></br>
+          <p>{currRec}</p>
+          
+                  <iframe className="songEmbed" src= {"https://open.spotify.com/embed/track/" + currRec + "?utm_source=generator"} width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>             
+                  
+         
+         
             <button onClick={handleMooLahs}>Close</button>
           
         </Popup>
