@@ -85,7 +85,7 @@ export default function Logo(props) {
       <div>
         <LogoText>Mood Palette</LogoText>
         <div>
-          <PointsText>Moo Lahs: {user.mooLahs}<img src={MooLah}/></PointsText>
+          <PointsText>Moo Lahs: {user.mooLahs} <img src={MooLah}/></PointsText>
         </div>
       </div>
     </LogoWrapper>

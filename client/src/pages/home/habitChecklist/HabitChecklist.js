@@ -5,11 +5,20 @@ import "./habitChecklist.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const HabitChecklist = () => {
   const { user } = useContext(AuthContext);
+  
   const [currentUser, setUser] = useState(user);
   const habits = currentUser.userHabits; // all of a user's habits
   //console.log("size", habits.length)
+
+  const notify = () => {
+    toast("Loading 5 MooLahs into your account for using your Habit Checklist!");
+  }
+
 
   const date = new Date().toDateString()
   const [edit, setEdit] = useState(false);
@@ -23,7 +32,7 @@ const HabitChecklist = () => {
   }, [currentUser.username]);
 
   console.log("currentUser", currentUser);
-
+  let mooLahs = user.mooLahs;
 
   const [dbCompletedHabits, setCompHabits] = useState([]);
   useEffect(() => {
@@ -66,27 +75,59 @@ const HabitChecklist = () => {
       date: new Date().toDateString(),
     };
 
-
-    console.log(completedHabits);
-    /*if(!edit){
-        await axios.post("/day/addCompletedHabits", habitsLog);
-      }else{
-
-        await axios.put("/day/updateCompletedHabits/"+ currentUser.username, {
-            completedHabits: completedHabits
-          });
-        
-      }*/
-
     
-  //  await axios.delete("/day/deleteUpdateHack/:username/:date");
+    const firstDailyEntry = await axios.get(`day/getChecklist/${currentUser.username}/${date}`);
+   // console.log("firstDailyEntry: ", firstDailyEntry.data[0].completedHabits.length);
+    let updateMoolah = false;
+    if(firstDailyEntry.data.length == 0){
+       updateMoolah = true;
+    }/*else if(firstDailyEntry.data[0].completedHabits.length!=habits.length){
+      updateMoolah = true;
+    }*/
+     
+    
     const res = await axios.delete(`day/deleteUpdateHack/${currentUser.username}/${date}`);
-		console.log(res)
+		console.log("delete res", res)
+  
     await axios.post("/day/addCompletedHabits", habitsLog);
-
+    console.log("array lengths", habits.length, completedHabits.length);
+    //if (habits.length === completedHabits.length) {
+      
+      if(updateMoolah){
+        //setMooLahs(mooLahs+5)
+        mooLahs = mooLahs+5;
+        // update user
+        try {
+          axios.put("/users/" + user._id, { mooLahs: mooLahs });
+          // update local storage
+      
+           // update user object for this page
+           user.mooLahs = mooLahs;
+           
+           // update user object in local (browser) storage
+           const newUser = JSON.parse(localStorage.getItem("user"))
+           newUser.mooLahs = mooLahs;
+           localStorage.setItem("user", JSON.stringify(newUser))
+           
+           //toast("You earned 5 MooLahs for filling out todays daily entry! Hooray!");
+           
+        } catch (err) {
+          console.log("error with adding mooLahs");
+        }
+      }
+   // }
     // fetch user
     // update local storage
-    window.location.reload(false);
+    if(updateMoolah){
+      notify();
+      setTimeout(function(){
+        window.location.reload(false);
+      }, 2000);
+    }else{
+      window.location.reload(false);
+    }
+    
+
   };
 
   // user.spotifyAccessToken = res.data.access_token;
@@ -100,6 +141,11 @@ const HabitChecklist = () => {
     setEdit(true);
   };
 
+  const [completedHabits, setCompletedHabits] = useState(dbCompletedHabits);
+
+ 
+  
+
   return (
     <>
       {((habits && dbCompletedHabits.length === 0) || edit) && (
@@ -111,7 +157,7 @@ const HabitChecklist = () => {
             <div className="habits">
               {habits.map((habit) => (
                 <div className="habit" key={habit}>
-                  <input type="checkbox" />
+                  <input type="checkbox" defaultChecked={dbCompletedHabits.includes(habit)}/>
                   <label>{habit.substring(4)}</label>
                 </div>
               ))}
@@ -168,8 +214,10 @@ const HabitChecklist = () => {
           <br></br>
 
           {/* This div important for formatting? */}
+
         </div>
       )}
+      <ToastContainer autoClose={2000}></ToastContainer>
     </>
   );
 };

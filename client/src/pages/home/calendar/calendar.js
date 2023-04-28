@@ -14,9 +14,14 @@ import { ChromePicker } from 'react-color'
 import axios from "axios";
 
 
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
 //userContext for storing/accessing user specific data 
 // use the auth context to get this user //from AuthContext.js
+
 const {user} = useContext(AuthContext)
  //to track selected date
  const [date, setDate] = useState(new Date())
@@ -34,6 +39,12 @@ const {user} = useContext(AuthContext)
  //to save text within the textbox- for journal
  const [journal, setText] = useState("");
  //to store the retrieved data
+
+ const notify = () => {
+  toast("Loading 5 MooLahs into your account for completing your daily entry!");
+}
+ 
+
  const [userData, setUserData] = useState({
   username: "",
   date: "",
@@ -43,6 +54,11 @@ const {user} = useContext(AuthContext)
   emotion: ""
  })
  
+
+ //const [mooLahs, setMooLahs] = useState[user.mooLahs];
+ let mooLahs = user.mooLahs;
+ const[firstDailyEntry, setDailyEntry] = useState(false);
+
 
 const getUserData = async (e) => {
   console.log("DATE:", date.toDateString());
@@ -59,11 +75,17 @@ const getUserData = async (e) => {
     }
   }
   if (foundData) {
-    console.log("found data");
+    console.log("found data: user has already submitted once");
+   
     setUserData({username: user.username, date: date.toDateString(), color: latestres.color, vibe: latestres.vibe, journal: latestres.journal, emotion: latestres.emotion});
+    setColor(latestres.color);
+    setVibe(latestres.vibe);
+    setText(latestres.journal);
+    setEmotion(latestres.emotion)
   }
   else {
-    console.log("did not find data");
+    console.log("did not find data: first entry of today");
+    setDailyEntry(true);
     setUserData({username: user.username, date: date.toDateString(), color: "#ffffff", vibe: 25, journal: "", emotion: ""});
   }
   return "";
@@ -72,6 +94,7 @@ const getUserData = async (e) => {
 
 // to handle submission of data to the backend API
 const handleSubmit = async (e) => {
+
     e.preventDefault();
     console.log("user: ", user.username, " date: ", date.toDateString, " color: ", color, " vibe: ", vibe, " journal: ", journal, " emotion: ", emotion);
     const apiData = {
@@ -90,6 +113,7 @@ const handleSubmit = async (e) => {
         setOpenExtra(false);
         setOpenPast(true);
         console.log(apiData);
+        // submit data into db
         await axios.post("/day/addDayInputs", apiData).then((response) => {
           console.log(response.data);
           // handle successful response
@@ -99,6 +123,8 @@ const handleSubmit = async (e) => {
           console.log(error);
           // handle error response
         });
+      
+      
       }
       //await axios.post("/day/addDayInput", apiData);
     }
@@ -109,6 +135,7 @@ const handleSubmit = async (e) => {
  //to specify popups
  const handleDateClick = (clickedDate) => {
   if (clickedDate.toDateString() === new Date().toDateString()) {
+    getUserData();
     setOpen(true);
     setDate(clickedDate);
   } else if (clickedDate < new Date()) {
@@ -126,6 +153,54 @@ const handleSubmit = async (e) => {
   //   emotion: emotion,
   // });
 };
+
+const handleMooLahs = async (e) => {
+  console.log("NOTIFY");
+
+//  increment mooLahs
+      console.log("here", firstDailyEntry);
+       if(firstDailyEntry){
+          //setMooLahs(mooLahs+5)
+          mooLahs = mooLahs+5;
+          // update user
+          try {
+            axios.put("/users/" + user._id, { mooLahs: mooLahs });
+            // update local storage
+        
+             // update user object for this page
+             user.mooLahs = mooLahs;
+             
+             // update user object in local (browser) storage
+             const newUser = JSON.parse(localStorage.getItem("user"))
+             newUser.mooLahs = mooLahs;
+             localStorage.setItem("user", JSON.stringify(newUser))
+             
+             //toast("You earned 5 MooLahs for filling out todays daily entry! Hooray!");
+             
+          } catch (err) {
+            console.log("error with adding mooLahs");
+          }
+        }
+        setOpenPast(false)
+        notify();
+        setTimeout(function(){
+          window.location.reload(false);
+        }, 2000);
+        //window.location.reload();
+        
+       
+        //e.preventDefault();
+        //toast("suppp")
+   
+   
+        //notify();
+
+        /*
+        if(firstDailyEntry){
+          notify();
+        }*/
+       
+}
 
 const marks = [
   { value: 0, label: '0'},
@@ -198,7 +273,7 @@ return (
           <p>Journal: {userData.journal} </p><br></br>
           <p>Emotion: {userData.emotion} </p><br></br>
 
-            <button onClick={() => setOpenPast(false)}>Close</button>
+            <button onClick={handleMooLahs}>Close</button>
           
         </Popup>
         <Popup open={openExtra} closeOnDocumentClick onClose={() => setOpenExtra(false)}>
@@ -241,8 +316,10 @@ return (
                 setOpen(true);
             }}>Back</button>
             <button style={{float: "right"}} onClick={handleSubmit}>Done</button>
+            {/*<button onClick={notify}>TEST</button>*/}
             {console.log("color", color, "vibe", vibe, "journal", journal, "emotion", emotion)}
         </Popup>
+        <ToastContainer autoClose={2000}></ToastContainer>
   </div>
   )
 }

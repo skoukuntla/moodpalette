@@ -52,6 +52,16 @@ router.get("/getDailyData/:username/:date", async (req, res)=>{
 	}
 })
 
+router.get("/getChecklist/:username/:date", async (req, res)=>{
+  try {
+  //const user = await User.findOne({ username: req.params.username });
+  const day = await Day.find({ username: req.params.username, date: req.params.date, vibe: { $exists: false }  });
+  res.status(200).json(day);
+} catch (err) {
+  res.status(404).json("not found");
+}
+})
+
 router.put("/getDailyData/:username/:date/:id", async (req, res)=>{
     try {
 		const day = await Day.find({ username: req.params.username, date: req.params.date });
