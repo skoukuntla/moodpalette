@@ -10,7 +10,7 @@ Welcome to the Mood Palette App! This is an interactive application designed to 
 
 - **Daily Engagement Points:** Earn points for using the app daily and exchange them for outfits for your virtual companion, the Moo Pal.
 
-- **Sentiment Analysis:** Describe your day, and the app will analyze the sentiment and convert it to a numerical value.
+- **Sentiment Analysis:** Describe your day, and the app will analyze the sentiment and convert it to a numerical value to determine you're mood and thus song of the day. 
 
 - **Daily Reminders:** Receive reminders to input your daily color, vibe, and a brief description of your day's highlights.
 
